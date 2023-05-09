@@ -1,0 +1,21 @@
+{
+  "name": "buoy-platform",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server:dev": "cd ./server && npm run dev",
+    "client:dev": "cd ./client && npm run dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BUI-studies/buoy-platform.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BUI-studies/buoy-platform/issues"
+  },
+  "homepage": "https://github.com/BUI-studies/buoy-platform#readme"
+}
