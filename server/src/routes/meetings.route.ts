@@ -1,5 +1,5 @@
 import express from "express"
-import MeetingsController from "../controllers/meetings.controller.ts"
+import MeetingsController from "../controllers/meetings.controller"
 
 const meetingsRoutes = express.Router()
 

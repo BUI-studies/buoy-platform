@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 
-// import MeetingsModel from "../model/meetings.model.ts"
+// import MeetingsModel from "../model/meetings.model"
 
 const getAll = async (req: Request, res: Response) => []
 
