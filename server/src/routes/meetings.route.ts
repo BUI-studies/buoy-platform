@@ -1,11 +1,9 @@
 import express from "express"
-import MeetingsController from "../controllers/meetings.controller"
+import { MeetingsController } from "../controllers"
 
-const meetingsRoutes = express.Router()
+export const meetingsRoutes = express.Router()
 
 meetingsRoutes.get("/", MeetingsController.getAll)
 meetingsRoutes.post("/", MeetingsController.save)
 meetingsRoutes.put("/", MeetingsController.update)
 meetingsRoutes.delete("/:id", MeetingsController.delete)
-
-export default meetingsRoutes

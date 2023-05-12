@@ -3,7 +3,7 @@ import mongoose, { ConnectOptions } from "mongoose"
 import express, { json, urlencoded } from "express"
 import * as dotenv from "dotenv"
 
-import meetings from "./routes/meetings.route"
+import { meetingsRoutes, usersRoutes } from "./routes/"
 import auth from "./utils/auth"
 
 const app = express()
@@ -12,9 +12,9 @@ dotenv.config()
 app.use(json())
 app.use(urlencoded({ extended: false }))
 app.use(express.static(path.resolve(path.dirname("")) + "/public/"))
-app.use("*", auth)
 
-app.use("/api/meetings", meetings)
+app.use("/api/meetings", auth, meetingsRoutes)
+app.use("/api/users", usersRoutes)
 
 mongoose
   .connect(process.env.DB_URL || "", {

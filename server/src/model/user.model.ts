@@ -8,7 +8,7 @@ export interface User extends mongoose.Document {
   password: string
 }
 
-export const UserSchema = new Schema<User>({
+export const UsersSchema = new Schema<User>({
   fullName: {
     type: String,
     required: true,
@@ -27,4 +27,4 @@ export const UserSchema = new Schema<User>({
   },
 })
 
-export const UserModel = mongoose.model<User>("User", UserSchema)
+export const UsersModel = mongoose.model<User>("User", UsersSchema)

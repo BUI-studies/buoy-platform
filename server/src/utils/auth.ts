@@ -1,18 +1,19 @@
-import jwt, {
-  VerifyCallback,
-  JsonWebTokenError,
-  JwtPayload,
-} from "jsonwebtoken"
+import jwt from "jsonwebtoken"
 import { Request, Response } from "express"
 
-import { User, UserModel } from "../model/"
+import { User, UsersModel } from "../model/"
+import { decode } from "./authHelpers"
 
 const freeOfAuth: string[] = ["/api/users/login", "/api/users", "/public"]
 
-const theKey: string = process.env.SECRET_KEY || "secret"
-
 export default async (req: Request, res: Response, next: Function) => {
   if (!freeOfAuth.some((url) => url === req.baseUrl)) {
+    console.log(
+      "RERQUEST",
+      req.method,
+      req.baseUrl,
+      req.headers["authorization"]
+    )
     if (!req.headers["authorization"]) {
       res.status(403)
       res.send({ message: "permission denied" })
@@ -20,7 +21,7 @@ export default async (req: Request, res: Response, next: Function) => {
     }
 
     const token: string = req.headers["authorization"]
-    const decoded = await jwt.verify(token, theKey)
+    const decoded = await decode(token)
 
     if (!decoded) {
       res.status(550)
@@ -29,7 +30,7 @@ export default async (req: Request, res: Response, next: Function) => {
     }
 
     const { email } = decoded as User
-    const userFromDB = await UserModel.findOne({
+    const userFromDB = await UsersModel.findOne({
       email,
     })
 
