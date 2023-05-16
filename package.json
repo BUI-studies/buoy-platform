@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server:dev": "cd ./server && yarn dev",
-    "client:dev": "cd ./client && yarn dev"
+    "dev:server": "cd ./server && yarn dev",
+    "dev:client": "cd ./client && yarn dev"
   },
   "repository": {
     "type": "git",
@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/BUI-studies/buoy-platform/issues"
   },
-  "homepage": "https://github.com/BUI-studies/buoy-platform#readme"
+  "homepage": "https://github.com/BUI-studies/buoy-platform#readme",
+  "dependencies": {
+    "react-router-dom": "^6.11.1"
+  }
 }
