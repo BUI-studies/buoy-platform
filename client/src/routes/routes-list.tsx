@@ -1,7 +1,7 @@
 import React from "react"
 import { RouteObject } from "react-router-dom"
 
-import { Layout } from "@/components"
+import { Layout } from "@/template"
 import { Home, Login } from "@/pages"
 import ProtectedRoute from "./ProtectedRoute"
 

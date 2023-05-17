@@ -18,7 +18,5 @@
     "url": "https://github.com/BUI-studies/buoy-platform/issues"
   },
   "homepage": "https://github.com/BUI-studies/buoy-platform#readme",
-  "dependencies": {
-    "react-router-dom": "^6.11.1"
-  }
+  "dependencies": {}
 }
