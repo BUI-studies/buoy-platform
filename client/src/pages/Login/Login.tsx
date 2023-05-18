@@ -5,7 +5,10 @@ import { SubmitHandler } from "react-hook-form"
 import { Input } from "@/components"
 import { useAuth } from "@/context"
 import { REQUEST_STATUS } from "@/types"
+import { API } from "@/api"
+
 import { LoginInputs, useLoginForm } from "./Login.helper"
+import classes from "./Login.module.scss"
 
 export const Login = () => {
   const { setUser }: any = useAuth()
@@ -18,26 +21,14 @@ export const Login = () => {
   } = useLoginForm()
 
   const onSubmit: SubmitHandler<LoginInputs> = (formData) => {
-    fetch("/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
+    API.login(formData).then((data) => {
+      setUser({ data, status: REQUEST_STATUS.SUCCESS })
+      navigate("/")
     })
-      .then((res) => res.json())
-      .then((data) => {
-        setUser({ data, status: REQUEST_STATUS.SUCCESS })
-        navigate("/")
-      })
   }
-  console.log(errors)
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="grid gap-6 mb-6 md:grid-cols-1"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
       <Input
         name="email"
         label="Email"
@@ -53,9 +44,7 @@ export const Login = () => {
         error={errors.password}
         required
       />
-      <button className="inline-block bg-yellow-500 text-yellow-800 rounded shadow py-2 px-5 text-sm">
-        log in
-      </button>
+      <button className={classes.btn}>log in</button>
     </form>
   )
 }

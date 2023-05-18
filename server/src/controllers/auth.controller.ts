@@ -53,6 +53,7 @@ const verifyToken = async (req: Request, res: Response) => {
   }
 
   const token = req.query.token as string
+
   try {
     const verified = verify(
       token,

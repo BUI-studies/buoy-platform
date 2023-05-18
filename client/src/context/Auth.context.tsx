@@ -1,6 +1,8 @@
-import React, { useState, createContext, useContext } from "react"
+import React, { useState, createContext, useContext, useEffect } from "react"
 
 import { REQUEST_STATUS } from "@/types"
+import { API } from "@/api"
+import { Storage } from "@/utils"
 
 export const AuthContext = createContext({})
 export const useAuth = () => useContext(AuthContext)
@@ -21,14 +23,23 @@ type UserState = {
 }
 
 export const AuthProvider = ({ children }: any) => {
-  const token = localStorage.getItem("user") || null
+  const token = Storage.get("user")
   const [user, setUserState] = useState<UserState>({
     data: {
-      token: localStorage.getItem("user") || null,
+      token,
       data: null,
     },
-    status: token ? REQUEST_STATUS.SUCCESS : REQUEST_STATUS.IDLE,
+    status: token ? REQUEST_STATUS.LOADING : REQUEST_STATUS.IDLE,
   })
+
+  useEffect(() => {
+    if (!token) return
+
+    API.verify(token).then(({ data }) => {
+      setUserState({ data, status: REQUEST_STATUS.SUCCESS })
+    })
+  }, [])
+
   const setUser = (newUser: UserState) => {
     setUserState(newUser)
     localStorage.setItem("user", JSON.stringify(newUser.data.token))

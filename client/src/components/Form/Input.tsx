@@ -23,17 +23,15 @@ export const Input: FC<InputProps> = ({
   placeholder,
 }) => {
   return (
-    <label className={`${classes.label} ${error ? "text-red-400" : ""}`}>
+    <label className={`${classes.label} ${error ? classes.error : ""}`}>
       {label}
       <input
         type={type}
-        className={`${classes.input} ${
-          error ? "text-red-300 border-red-400" : ""
-        }`}
+        className={`${classes.input} ${error ? "border-rose-400" : ""}`}
         placeholder={placeholder}
         {...register(name, { required })}
       />
-      {error && <p className="mt-2">{error.message}</p>}
+      {error && <p>{error.message}</p>}
     </label>
   )
 }

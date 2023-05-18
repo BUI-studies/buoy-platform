@@ -13,8 +13,8 @@ app.use(json())
 app.use(urlencoded({ extended: false }))
 app.use(express.static(path.resolve(path.dirname("")) + "/public/"))
 
-app.use("/api/meetings", auth, meetingsRoutes)
 app.use("/api/auth", authRoutes)
+app.use("/api/meetings", auth, meetingsRoutes)
 app.use("/api/users", auth, usersRoutes)
 
 mongoose
