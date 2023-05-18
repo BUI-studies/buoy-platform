@@ -1,2 +1,3 @@
-export * from "./Users.controller"
-export * from "./Meetings.controller"
+export * from "./users.controller"
+export * from "./meetings.controller"
+export * from "./auth.controller"

@@ -1,6 +1,5 @@
 /** @type {import('tailwindcss').Config} */
 import TypographyPlugin from "@tailwindcss/typography"
-import FormsPlugin from "@tailwindcss/forms"
 
 export default {
   darkMode: "class",

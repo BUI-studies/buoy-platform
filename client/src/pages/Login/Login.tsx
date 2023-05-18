@@ -2,11 +2,10 @@ import React from "react"
 import { useNavigate } from "react-router-dom"
 import { SubmitHandler } from "react-hook-form"
 
+import { Input } from "@/components"
 import { useAuth } from "@/context"
 import { REQUEST_STATUS } from "@/types"
 import { LoginInputs, useLoginForm } from "./Login.helper"
-import { getInputClassName } from "@/components/Form/From.helper"
-import { Input } from "@/components"
 
 export const Login = () => {
   const { setUser }: any = useAuth()
@@ -19,7 +18,7 @@ export const Login = () => {
   } = useLoginForm()
 
   const onSubmit: SubmitHandler<LoginInputs> = (formData) => {
-    fetch("/api/users/login", {
+    fetch("/api/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

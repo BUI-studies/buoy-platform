@@ -1,16 +1,15 @@
 import jwt from "jsonwebtoken"
 
-import { User } from "../model/user.model.js"
+import { UserDTO } from "../model/user.model.js"
 
-export const getToken = (userFromDB: User) => {
+export const getToken = (userFromDB: UserDTO) => {
   if (!process.env.SECRET_KEY) return null
   const payload = {
     _id: userFromDB._id,
     email: userFromDB.email,
   }
   let token = jwt.sign(payload, process.env.SECRET_KEY, {
-    expiresIn: "2 days",
-    // expiresIn: 60
+    expiresIn: process.env.TOKEN_EXPIRES_IN,
   })
   return token
 }

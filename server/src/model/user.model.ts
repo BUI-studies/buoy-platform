@@ -1,6 +1,18 @@
 import mongoose from "mongoose"
 const Schema = mongoose.Schema
 
+export interface UserDTO {
+  _id: string
+  fullName: string
+  tel: string
+  email: string
+}
+
+export interface UserJWTPayload {
+  _id: string
+  email: string
+}
+
 export interface User extends mongoose.Document {
   fullName: string
   tel: string
