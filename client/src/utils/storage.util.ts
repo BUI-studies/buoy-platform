@@ -3,7 +3,10 @@ export const Storage = {
     const value = localStorage.getItem(key)
     return value ? JSON.parse(value) : null
   },
-  set: (key: string, value: any) => {
+  set: (key: string, value: unknown) => {
     localStorage.setItem(key, JSON.stringify(value))
+  },
+  remove: (key: string) => {
+    localStorage.removeItem(key)
   },
 }

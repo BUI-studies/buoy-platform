@@ -1,8 +1,8 @@
-import { useForm, FieldError } from "react-hook-form"
+import { useForm, FieldValues } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 
-export type LoginInputs = {
+export interface LoginInputs extends FieldValues {
   email: string
   password: string
 }

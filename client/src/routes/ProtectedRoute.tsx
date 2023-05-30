@@ -1,28 +1,32 @@
-import React from "react"
-import { Navigate } from "react-router-dom"
-import { useAuth } from "@/context/"
+import React, { FC, PropsWithChildren, ReactNode } from "react"
+import { Navigate, useNavigate } from "react-router-dom"
+import { AuthContextType, useAuth } from "@/context/"
 import { REQUEST_STATUS } from "@/types"
 
-const ProtectedRoute = ({ children }: any) => {
-  const { user }: any = useAuth()
+type ProtectedRouteProps = PropsWithChildren<{
+  children?: ReactNode
+}>
 
-  if (user.status === REQUEST_STATUS.IDLE) {
-    return <Navigate to={"/login"} />
-  }
+const ProtectedRoute: FC<ProtectedRouteProps> = ({ children }) => {
+  const { user }: AuthContextType = useAuth()
+  const navigate = useNavigate()
 
-  if (user.status === REQUEST_STATUS.LOADING)
-    return (
-      <main className="py-8 prose dark:prose-invert flex items-center justify-center flex-col">
-        <h2>Loading...</h2>
-      </main>
-    )
-
-  if (user.status === REQUEST_STATUS.SUCCESS) {
-    return user ? children : <Navigate to={"/login"} />
-  }
-
-  if (user.status === REQUEST_STATUS.FAILED) {
-    throw new Error("Login failed")
+  switch (user.status) {
+    case REQUEST_STATUS.LOADING:
+      return (
+        <main className="py-8 prose dark:prose-invert flex items-center justify-center flex-col">
+          <h2>Loading...</h2>
+        </main>
+      )
+    case REQUEST_STATUS.SUCCESS:
+      return user ? <>{children}</> : <Navigate to={"/login"} />
+    case REQUEST_STATUS.FAILED:
+      console.error("Login failed")
+      return <Navigate to={"/login"} />
+    case REQUEST_STATUS.IDLE:
+      return <Navigate to={"/login"} />
+    default:
+      return <Navigate to={"/login"} />
   }
 }
 
