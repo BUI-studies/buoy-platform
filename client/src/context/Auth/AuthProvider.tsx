@@ -8,7 +8,6 @@ import {
   UserState,
   getInitialUserState,
 } from "@/context"
-import { PrevStateCallback } from "@/types"
 
 const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   const initialState = getInitialUserState()

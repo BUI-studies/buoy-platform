@@ -1,4 +1,4 @@
-import { REQUEST_STATUS, SetStateFunction } from "@/types"
+import { REQUEST_STATUS } from "@/types"
 
 export type User = {
   _id: string

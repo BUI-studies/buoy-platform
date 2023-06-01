@@ -6,9 +6,11 @@ import { useAuth } from "@/context"
 
 import classes from "./Header.module.scss"
 import { _URL } from "@/routes"
+import { Link } from "react-router-dom"
 
 export const Header = () => {
   const { user } = useAuth()
+  const userInfo = user?.data?.data
 
   const buttonData = user?.data?.data
     ? {
@@ -28,8 +30,9 @@ export const Header = () => {
         </picture>
       </a>
 
-      <div>
-        <a href={buttonData.link}>{buttonData.text}</a>
+      <div className="flex items-center gap-4">
+        {userInfo && <p className="text-blue-600">{userInfo.fullName}</p>}
+        <Link to={buttonData.link}>{buttonData.text}</Link>
       </div>
     </header>
   )
