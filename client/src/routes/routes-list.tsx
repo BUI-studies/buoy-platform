@@ -3,14 +3,14 @@ import { RouteObject } from "react-router-dom"
 
 import { Layout } from "@/template"
 import { Home, Login } from "@/pages"
-import ProtectedRoute from "./ProtectedRoute"
+import { ProtectedRoute, _URL } from "@/routes"
 
 const routesList: RouteObject[] = [
   {
     element: <Layout />,
     children: [
       {
-        path: "/",
+        path: _URL.HOME,
         element: (
           <ProtectedRoute>
             <Home />
@@ -18,7 +18,7 @@ const routesList: RouteObject[] = [
         ),
       },
       {
-        path: "/login",
+        path: _URL.LOGIN,
         element: <Login />,
       },
     ],

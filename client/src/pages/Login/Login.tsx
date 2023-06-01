@@ -21,8 +21,8 @@ export const Login = () => {
   } = useLoginForm()
 
   const onSubmit: SubmitHandler<LoginInputs> = (formData) => {
-    API.login(formData).then((data) => {
-      setUser({ data, status: REQUEST_STATUS.SUCCESS })
+    API.login(formData).then(({ data, token }) => {
+      setUser({ data: { data, token }, status: REQUEST_STATUS.SUCCESS })
       navigate("/")
     })
   }
@@ -32,15 +32,13 @@ export const Login = () => {
       <Input
         label="Email"
         error={errors.email}
-        required
-        {...register("email", { required: true })}
+        register={() => register("email", { required: true })}
       />
       <Input
         type="password"
         label="Password"
         error={errors.password}
-        required
-        {...register("password", { required: true })}
+        register={() => register("password", { required: true })}
       />
       <button className={classes.btn}>log in</button>
     </form>

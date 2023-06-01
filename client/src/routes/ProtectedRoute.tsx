@@ -1,7 +1,8 @@
 import React, { FC, PropsWithChildren, ReactNode } from "react"
 import { Navigate, useNavigate } from "react-router-dom"
-import { AuthContextType, useAuth } from "@/context/"
+
 import { REQUEST_STATUS } from "@/types"
+import { AuthContextType, useAuth } from "@/context/"
 
 type ProtectedRouteProps = PropsWithChildren<{
   children?: ReactNode

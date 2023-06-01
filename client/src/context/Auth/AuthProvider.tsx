@@ -8,6 +8,7 @@ import {
   UserState,
   getInitialUserState,
 } from "@/context"
+import { PrevStateCallback } from "@/types"
 
 const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   const initialState = getInitialUserState()
@@ -23,7 +24,7 @@ const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     verifyToken(token, setUserState)
   }, [token])
 
-  const setUser = (newUser: UserState) => {
+  const setUser = (newUser: UserState): void => {
     setUserState(newUser)
     Storage.set("user", newUser.data.token)
   }

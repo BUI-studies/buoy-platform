@@ -2,12 +2,12 @@ import React, { FC } from "react"
 import { FieldError, UseFormRegister, FieldValues } from "react-hook-form"
 
 import classes from "./Form.module.scss"
-import { LoginInputs } from "@/pages/Login/Login.helper"
 
 interface InputProps {
   type?: string
   label: string
   error: FieldError | undefined
+  register: () => object
   placeholder?: string
 }
 
@@ -16,6 +16,7 @@ export const Input: FC<InputProps> = ({
   label,
   error,
   placeholder,
+  register,
 }) => {
   return (
     <label className={`${classes.label} ${error ? classes.error : ""}`}>
@@ -24,6 +25,7 @@ export const Input: FC<InputProps> = ({
         type={type}
         className={`${classes.input} ${error ? "border-rose-400" : ""}`}
         placeholder={placeholder}
+        {...register()}
       />
       {error && <p>{error.message}</p>}
     </label>

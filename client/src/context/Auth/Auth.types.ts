@@ -1,5 +1,4 @@
-import { Dispatch, SetStateAction } from "react"
-import { REQUEST_STATUS } from "@/types"
+import { REQUEST_STATUS, SetStateFunction } from "@/types"
 
 export type User = {
   _id: string
@@ -18,5 +17,5 @@ export type UserState = {
 
 export interface AuthContextType {
   user: UserState
-  setUser: Dispatch<SetStateAction<UserState>>
+  setUser: (value: UserState) => void
 }

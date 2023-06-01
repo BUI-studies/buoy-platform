@@ -31,5 +31,5 @@ export const verifyToken = async (
     return
   }
 
-  setUserState({ data, status: REQUEST_STATUS.SUCCESS })
+  setUserState({ data: { data, token }, status: REQUEST_STATUS.SUCCESS })
 }

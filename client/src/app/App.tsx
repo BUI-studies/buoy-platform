@@ -1,5 +1,5 @@
-import { AppRoutes } from "./routes/AppRoutes"
-import { AuthProvider } from "./context"
+import { AppRoutes } from "@/routes"
+import { AuthProvider } from "@/context"
 
 import "./App.css"
 
