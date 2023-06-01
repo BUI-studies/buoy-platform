@@ -4,6 +4,7 @@ import { RouteObject } from "react-router-dom"
 import { Layout } from "@/template"
 import { Home, Login } from "@/pages"
 import { ProtectedRoute, _URL } from "@/routes"
+import Logout from "./Logout"
 
 const routesList: RouteObject[] = [
   {
@@ -20,6 +21,10 @@ const routesList: RouteObject[] = [
       {
         path: _URL.LOGIN,
         element: <Login />,
+      },
+      {
+        path: _URL.LOGOUT,
+        element: <Logout />,
       },
     ],
   },
