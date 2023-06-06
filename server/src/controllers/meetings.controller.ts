@@ -1,8 +1,10 @@
 import { Request, Response } from "express"
+import { MeetingsModel } from "@/model"
+import Sheets from "@/utils/Sheets"
 
-import { MeetingsModel } from "../model"
-
-const getAll = async (req: Request, res: Response) => res.send([])
+const getAll = async (req: Request, res: Response) => {
+  new Sheets()
+}
 
 const saveMeeting = async (req: Request, res: Response) => {
   res.send({})

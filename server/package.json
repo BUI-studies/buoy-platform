@@ -2,21 +2,25 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "./src/index.ts",
+  "main": "@/index.ts",
   "scripts": {
-    "dev": "nodemon ./src/index.ts"
+    "dev": "nodemon"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/google-spreadsheet": "^3.3.2",
     "bcrypt": "^5.0.0",
     "dotenv": "^16.0.3",
     "express": "^4.17.1",
+    "google-auth-library": "^8.8.0",
+    "google-spreadsheet": "^3.3.0",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^5.4.0",
     "mongose": "^0.0.2-security",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.2.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
