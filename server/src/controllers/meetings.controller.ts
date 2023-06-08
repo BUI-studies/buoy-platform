@@ -20,8 +20,6 @@ const getAllByStudent = async (req: Request, res: Response) => {
   const [name, surname] = (fullname as string)?.split(" ")
   await Sheets.doc?.loadInfo()
 
-  console.log(`${name}_${surname}`)
-
   const allMeetings = Sheets.parseRows(
     Sheets.tables?.[SHEETS_TITLES.MEETINGS]._cells,
     meetingsMapper
