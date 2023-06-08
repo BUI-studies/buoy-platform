@@ -1,7 +1,9 @@
 import path from "path"
+import * as dotenv from "dotenv"
 import mongoose, { ConnectOptions } from "mongoose"
 import express, { json, urlencoded } from "express"
-import * as dotenv from "dotenv"
+
+import Sheets from "@/utils/Sheets/Sheets"
 
 import { meetingsRoutes, usersRoutes, authRoutes } from "./routes/"
 import auth from "./utils/auth"
@@ -26,5 +28,6 @@ mongoose
   .catch((err) => console.error(err))
 
 app.listen(process.env.SERVER_PORT, () => {
+  Sheets.init()
   console.log(`Server is running on port: ${process.env.SERVER_PORT}`)
 })

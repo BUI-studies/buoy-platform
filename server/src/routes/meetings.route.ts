@@ -3,7 +3,7 @@ import { MeetingsController } from "../controllers"
 
 export const meetingsRoutes = express.Router()
 
-meetingsRoutes.get("/", MeetingsController.getAll)
+meetingsRoutes.get("/", MeetingsController.getAllByStudent)
 meetingsRoutes.post("/", MeetingsController.save)
 meetingsRoutes.put("/", MeetingsController.update)
 meetingsRoutes.delete("/:id", MeetingsController.delete)
