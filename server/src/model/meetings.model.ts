@@ -1,5 +1,8 @@
-import { Sheets, TableCell } from "@/utils/Sheets"
 import mongoose from "mongoose"
+
+import { parseTimeStamp } from "@/helprs"
+import { Sheets, TableCell } from "@/utils/Sheets"
+
 const Schema = mongoose.Schema
 
 export interface Meeting extends mongoose.Document {
@@ -16,7 +19,7 @@ export interface Meeting extends mongoose.Document {
 
 export const meetingsMapper = (cellsArray: TableCell[]) => ({
   id: Sheets.getCellValueFromRawData(cellsArray[0]),
-  timestamp: Sheets.getCellValueFromRawData(cellsArray[1]),
+  timestamp: parseTimeStamp(Sheets.getCellValueFromRawData(cellsArray[1])),
   title: Sheets.getCellValueFromRawData(cellsArray[2]),
   type: Sheets.getCellValueFromRawData(cellsArray[3]),
   students: Sheets.getCellValueFromRawData(cellsArray[4])

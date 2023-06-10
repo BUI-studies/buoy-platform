@@ -5,25 +5,29 @@ import { MeetingsModel, meetingsMapper } from "@/model"
 import { SHEETS_TITLES } from "@/types"
 import { Sheets } from "@/utils/Sheets"
 
-const getAll = async (req: Request, res: Response) => {
+const getAllMeetings = async () => {
   await Sheets.doc?.loadInfo()
-  const allMeetings = Sheets.parseRows(
+  return Sheets.parseRows(
     Sheets.tables?.[SHEETS_TITLES.MEETINGS]._cells,
     meetingsMapper
-  )
-
-  res.send(allMeetings)
+  ).filter(({ students }) => !!students)
 }
 
-const getAllByStudent = async (req: Request, res: Response) => {
+const getAll = async (req: Request, res: Response) => {
   const { fullname } = req.query
+
+  if (!fullname) {
+    const respData = await getAllMeetings()
+    return res.send(respData)
+  }
+
   const [name, surname] = (fullname as string)?.split(" ")
   await Sheets.doc?.loadInfo()
 
   const allMeetings = Sheets.parseRows(
     Sheets.tables?.[SHEETS_TITLES.MEETINGS]._cells,
     meetingsMapper
-  ).filter(({ students }) => students.includes(`${name}_${surname}`))
+  ).filter(({ students }) => students?.includes(`${name}_${surname}`))
 
   res.send(allMeetings)
 }
@@ -41,8 +45,7 @@ const deleteMeeting = async (req: Request, res: Response) => {
 }
 
 export const MeetingsController = {
-  getAll,
-  getAllByStudent,
+  get: getAll,
   save: saveMeeting,
   update: updateMeeting,
   delete: deleteMeeting,
