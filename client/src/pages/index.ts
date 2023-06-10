@@ -1,3 +1,5 @@
 export * from "./Home"
 export * from "./Login/Login"
 export { default as Feedback } from "./Feedback"
+export { default as Resources } from "./Resources"
+export { default as Meetings } from "./Meetings/Meetings"

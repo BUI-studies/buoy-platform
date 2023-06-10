@@ -1,8 +1,8 @@
 import React from "react"
-import { RouteObject } from "react-router-dom"
+import { Navigate, RouteObject } from "react-router-dom"
 
 import { Layout } from "@/template"
-import { Home, Login } from "@/pages"
+import { Home, Login, Meetings, Resources } from "@/pages"
 import { ProtectedRoute, _URL, Logout } from "@/routes"
 import { Feedback } from "@/pages"
 
@@ -14,7 +14,7 @@ const routesList: RouteObject[] = [
         path: _URL.HOME,
         element: (
           <ProtectedRoute>
-            <Home />
+            <Navigate to="/meetings" />
           </ProtectedRoute>
         ),
       },
@@ -27,10 +27,26 @@ const routesList: RouteObject[] = [
         element: <Logout />,
       },
       {
+        path: _URL.MEETINGS,
+        element: (
+          <ProtectedRoute>
+            <Meetings />
+          </ProtectedRoute>
+        ),
+      },
+      {
         path: _URL.FEEDBACK,
         element: (
           <ProtectedRoute>
             <Feedback />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: _URL.RESOURCES,
+        element: (
+          <ProtectedRoute>
+            <Resources />
           </ProtectedRoute>
         ),
       },

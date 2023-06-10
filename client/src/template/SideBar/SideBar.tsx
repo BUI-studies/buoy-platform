@@ -13,10 +13,11 @@ type SodeBarProps = {
 
 // відгук по зустрічі
 // написати senkan
-// здати домашку
+// домашки (кнопка "здати домашку" -> iframe форми)
+// оплати (кнопка "оплатити" -> посилання на банку)
+// discord
 // youtube
 // git
-// discord
 // mozilla.org
 
 const SideBar: FC<SodeBarProps> = ({ className }) => {
@@ -32,11 +33,36 @@ const SideBar: FC<SodeBarProps> = ({ className }) => {
       </Link>
 
       <nav className={classes.nav}>
+        <NavLink to={_URL.MEETINGS} className={handleActiveClass}>
+          зустрічі
+        </NavLink>
         <NavLink to={_URL.FORM_FEEDBACK} className={handleActiveClass}>
           відгук по зустрічі
         </NavLink>
         <NavLink to={_URL.FORM_SENKAN} className={handleActiveClass}>
           сєнкан
+        </NavLink>
+        <NavLink to={_URL.HOMEWORKS} className={handleActiveClass}>
+          домашки
+        </NavLink>
+        <NavLink to={_URL.PAYMENTS} className={handleActiveClass}>
+          оплати
+        </NavLink>
+        <NavLink
+          to={_URL.DISCORD}
+          target="_blank"
+          className={handleActiveClass}
+        >
+          діскорд
+        </NavLink>
+        <NavLink to={_URL.YOUTUBE} className={handleActiveClass}>
+          ютюб
+        </NavLink>
+        <NavLink to={_URL.GIT} target="_blank" className={handleActiveClass}>
+          git
+        </NavLink>
+        <NavLink to={_URL.MOZILA} target="_blank" className={handleActiveClass}>
+          твоя біблія
         </NavLink>
       </nav>
     </aside>
