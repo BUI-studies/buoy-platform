@@ -9,3 +9,8 @@ export enum REQUEST_STATUS {
 
 export type PrevStateCallback<T> = (prevState: T) => T
 export type SetStateFunction<T> = Dispatch<SetStateAction<T>>
+
+export type ActiveClassCallbackProps = {
+  isActive: boolean
+  isPending: boolean
+}

@@ -1,9 +1,11 @@
 import React, { FC } from "react"
-import { Link } from "react-router-dom"
+import { NavLink, Link, NavLinkProps } from "react-router-dom"
 
 import logoPath from "@/assets/logo__bright.png"
 
 import classes from "./SideBar.module.scss"
+import { ActiveClassCallbackProps } from "@/types"
+import { _URL } from "@/routes"
 
 type SodeBarProps = {
   className: string
@@ -18,21 +20,24 @@ type SodeBarProps = {
 // mozilla.org
 
 const SideBar: FC<SodeBarProps> = ({ className }) => {
+  const handleActiveClass = ({ isActive }: ActiveClassCallbackProps) =>
+    isActive ? "bg-blue-900" : ""
+
   return (
     <aside className={[className, classes.pannel].join(" ")}>
-      <Link to="/" className={classes.companyWrapper}>
+      <Link to={_URL.HOME} className={classes.companyWrapper}>
         <picture className={classes.company}>
           <img src={logoPath} alt="БУЙ platform" />
         </picture>
       </Link>
 
       <nav className={classes.nav}>
-        <Link to={{ pathname: "/feedback", search: "?type=lesson" }}>
+        <NavLink to={_URL.FORM_FEEDBACK} className={handleActiveClass}>
           відгук по зустрічі
-        </Link>
-        <Link to={{ pathname: "/feedback", search: "?type=senkan" }}>
+        </NavLink>
+        <NavLink to={_URL.FORM_SENKAN} className={handleActiveClass}>
           сєнкан
-        </Link>
+        </NavLink>
       </nav>
     </aside>
   )
