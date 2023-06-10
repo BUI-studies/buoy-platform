@@ -1,3 +1,5 @@
+export const TOKEN_KEY = "user"
+
 export const Storage = {
   get: (key: string) => {
     const value = localStorage.getItem(key)
@@ -8,5 +10,8 @@ export const Storage = {
   },
   remove: (key: string) => {
     localStorage.removeItem(key)
+  },
+  getToken: () => {
+    return localStorage.getItem(TOKEN_KEY)
   },
 }

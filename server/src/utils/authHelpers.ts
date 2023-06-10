@@ -16,7 +16,12 @@ export const getToken = (userFromDB: UserDTO) => {
 
 export const decode = (auth: string) => {
   if (!process.env.SECRET_KEY) return null
-  return jwt.verify(auth, process.env.SECRET_KEY)
+  try {
+    return jwt.verify(auth, process.env.SECRET_KEY)
+  } catch (error) {
+    console.error(error)
+    return null
+  }
 }
 
 const authHelpers = {

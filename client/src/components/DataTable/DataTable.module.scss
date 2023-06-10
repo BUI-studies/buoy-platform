@@ -1,0 +1,17 @@
+.table {
+  @apply flex flex-col;
+
+  &Header,
+  &Row {
+    @apply py-4 grid grid-flow-col;
+    grid-auto-columns: minmax(10ch, 1fr);
+  }
+
+  &Title {
+    @apply px-2;
+  }
+
+  &Cell {
+    @apply px-2;
+  }
+}

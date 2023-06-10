@@ -8,11 +8,11 @@ const Schema = mongoose.Schema
 export interface Meeting extends mongoose.Document {
   date: Date
   id: string
-  timestamp: string
+  timestamp: number
   title: string
   type: string
   students: string[]
-  mentor: string[]
+  mentor: string
   comment: string
   report: string
 }

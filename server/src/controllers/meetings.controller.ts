@@ -15,13 +15,13 @@ const getAllMeetings = async () => {
 
 const getAll = async (req: Request, res: Response) => {
   const { fullname } = req.query
-
   if (!fullname) {
     const respData = await getAllMeetings()
     return res.send(respData)
   }
 
   const [name, surname] = (fullname as string)?.split(" ")
+
   await Sheets.doc?.loadInfo()
 
   const allMeetings = Sheets.parseRows(

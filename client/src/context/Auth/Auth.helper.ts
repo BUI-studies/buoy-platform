@@ -3,10 +3,10 @@ import { Dispatch, SetStateAction } from "react"
 import { REQUEST_STATUS } from "@/types"
 import { API } from "@/api"
 import { UserState } from "@/context"
-import { Storage } from "@/utils"
+import { Storage, TOKEN_KEY } from "@/utils"
 
 export const getInitialUserState = (): UserState => {
-  const token = Storage.get("user")
+  const token = Storage.get(TOKEN_KEY)
 
   return {
     data: { token: token, data: null },
@@ -22,7 +22,7 @@ export const verifyToken = async (
 
   if (error) {
     console.error(error)
-    Storage.set("token", null)
+    Storage.set(TOKEN_KEY, null)
 
     setUserState({
       data: { token: null, data: null },

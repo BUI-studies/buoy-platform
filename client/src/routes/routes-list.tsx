@@ -2,9 +2,10 @@ import React from "react"
 import { Navigate, RouteObject } from "react-router-dom"
 
 import { Layout } from "@/template"
-import { Home, Login, Meetings, Resources } from "@/pages"
+import { Login, Meetings, Resources } from "@/pages"
 import { ProtectedRoute, _URL, Logout } from "@/routes"
 import { Feedback } from "@/pages"
+import { MeetingsProvider } from "@/context"
 
 const routesList: RouteObject[] = [
   {
@@ -30,7 +31,9 @@ const routesList: RouteObject[] = [
         path: _URL.MEETINGS,
         element: (
           <ProtectedRoute>
-            <Meetings />
+            <MeetingsProvider>
+              <Meetings />
+            </MeetingsProvider>
           </ProtectedRoute>
         ),
       },

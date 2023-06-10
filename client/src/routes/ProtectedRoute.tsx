@@ -10,7 +10,6 @@ type ProtectedRouteProps = PropsWithChildren<{
 
 const ProtectedRoute: FC<ProtectedRouteProps> = ({ children }) => {
   const { user }: AuthContextType = useAuth()
-  const navigate = useNavigate()
 
   switch (user.status) {
     case REQUEST_STATUS.LOADING:

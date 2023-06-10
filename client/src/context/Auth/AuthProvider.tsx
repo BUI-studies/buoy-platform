@@ -1,6 +1,6 @@
 import React, { useState, useEffect, FC, PropsWithChildren } from "react"
 
-import { Storage } from "@/utils"
+import { Storage, TOKEN_KEY } from "@/utils"
 
 import {
   verifyToken,
@@ -25,7 +25,7 @@ const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const setUser = (newUser: UserState): void => {
     setUserState(newUser)
-    Storage.set("user", newUser.data.token)
+    Storage.set(TOKEN_KEY, newUser.data.token)
   }
 
   return (

@@ -29,7 +29,6 @@ export default class Sheets {
     rows: GoogleSpreadsheetRow[],
     rowToObjectMapper: (row: TableCell[], ind: number) => Populated
   ) {
-    rows.shift()
     return rows
       .map((r, index) =>
         rowToObjectMapper(

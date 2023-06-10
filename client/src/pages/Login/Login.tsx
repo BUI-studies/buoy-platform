@@ -10,7 +10,7 @@ import { API } from "@/api"
 import { LoginInputs, useLoginForm } from "./Login.helper"
 import classes from "./Login.module.scss"
 
-export const Login = () => {
+const Login = () => {
   const { setUser }: AuthContextType = useAuth()
   const navigate = useNavigate()
   const {
@@ -44,3 +44,5 @@ export const Login = () => {
     </form>
   )
 }
+
+export default Login

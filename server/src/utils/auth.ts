@@ -16,22 +16,29 @@ export default async (req: Request, res: Response, next: Function) => {
     }
 
     const token: string = req.headers["authorization"]
-    const decoded = await decode(token)
+    try {
+      const decoded = await decode(token)
 
-    if (!decoded) {
-      res.status(550)
-      res.send({ message: "no such user" })
+      if (!decoded) {
+        res.status(550)
+        res.send({ message: "no such user" })
+        return
+      }
+
+      const { email } = decoded as User
+      const userFromDB = await UsersModel.findOne({
+        email,
+      })
+
+      if (!userFromDB) {
+        res.status(403)
+        res.send({ message: "permission denied" })
+      }
+    } catch (error) {
+      console.error(error)
+      res.status(400)
+      res.send({ message: "invalid data" })
       return
-    }
-
-    const { email } = decoded as User
-    const userFromDB = await UsersModel.findOne({
-      email,
-    })
-
-    if (!userFromDB) {
-      res.status(403)
-      res.send({ message: "permission denied" })
     }
 
     next()
