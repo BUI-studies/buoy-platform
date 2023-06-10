@@ -1,5 +1,5 @@
 import React from "react"
 
 export const Footer = () => {
-  return <p className="text-center">©БУЙ studies - 2023</p>
+  return <p className="text-center py-4">©БУЙ studies - 2023</p>
 }

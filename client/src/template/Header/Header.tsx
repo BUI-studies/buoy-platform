@@ -1,12 +1,12 @@
 import React from "react"
+import { Link } from "react-router-dom"
 
 import logoPath from "@/assets/logo__bright.png"
 
 import { useAuth } from "@/context"
+import { _URL } from "@/routes"
 
 import classes from "./Header.module.scss"
-import { _URL } from "@/routes"
-import { Link } from "react-router-dom"
 
 export const Header = () => {
   const { user } = useAuth()
@@ -24,13 +24,7 @@ export const Header = () => {
 
   return (
     <header className={classes.topPannel}>
-      <a href="/">
-        <picture className={classes.company}>
-          <img src={logoPath} alt="БУЙ platform" />
-        </picture>
-      </a>
-
-      <div className="flex items-center gap-4">
+      <div className={classes.controls}>
         {userInfo && <p className="text-blue-600">{userInfo.fullName}</p>}
         <Link to={buttonData.link}>{buttonData.text}</Link>
       </div>

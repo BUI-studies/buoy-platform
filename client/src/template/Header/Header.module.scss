@@ -1,13 +1,8 @@
 .topPannel {
-  @apply container py-2 px-4 flex justify-between items-center;
+  @apply container py-4 px-6 flex justify-end items-center;
   margin-inline: auto;
 }
 
-.company {
-  @apply flex items-center w-12 h-12;
-
-  & img {
-    @apply w-full h-full;
-    object-fit: contain;
-  }
+.controls {
+  @apply flex items-center gap-4;
 }

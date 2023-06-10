@@ -1,0 +1,20 @@
+.pageWrapper {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 30ch 1fr;
+}
+
+.sideBar {
+  @apply bg-blue-950 py-4;
+}
+
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.pageContent {
+  flex-grow: 1;
+  @apply py-8 px-4;
+}
