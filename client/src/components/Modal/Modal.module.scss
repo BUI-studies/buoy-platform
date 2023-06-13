@@ -1,0 +1,10 @@
+.modal {
+  @apply fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-gray-800/50;
+  cursor: pointer;
+  z-index: 1000;
+
+  &Content {
+    @apply p-6 w-8/12 bg-white rounded-lg overflow-hidden text-black;
+    cursor: initial;
+  }
+}

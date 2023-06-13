@@ -1,5 +1,5 @@
 import { AppRoutes } from "@/routes"
-import { AuthProvider } from "@/context"
+import { AuthProvider, ModalProvider } from "@/context"
 
 import "./App.css"
 
@@ -7,7 +7,9 @@ function App() {
   return (
     <>
       <AuthProvider>
-        <AppRoutes />
+        <ModalProvider>
+          <AppRoutes />
+        </ModalProvider>
       </AuthProvider>
     </>
   )

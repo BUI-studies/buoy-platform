@@ -1,0 +1,8 @@
+.reportLink {
+  text-decoration: underline;
+  transition: color 0.3s;
+
+  &:hover {
+    @apply text-blue-500;
+  }
+}

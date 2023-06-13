@@ -1,16 +1,18 @@
 import React, { ReactNode, useEffect } from "react"
+import { Link } from "react-router-dom"
 
-import { useAuth, useMeetings, Meeting } from "@/context"
 import { API } from "@/api"
 import { REQUEST_STATUS } from "@/types"
-import { DataTable, DataTableRowProps } from "@/components"
 import { dateParser } from "@/utils"
-import { Link } from "react-router-dom"
+import { useAuth, useMeetings, useModal } from "@/context"
+import { DataTable, DataTableRowProps, MeetingsItem } from "@/components"
+
+import classes from "./Meetings.module.scss"
 
 type MeetingTableItem = {
   id: string
   date: string
-  title: string
+  title: string | ReactNode
   type: string
   mentor: string
   report: ReactNode
@@ -19,6 +21,7 @@ type MeetingTableItem = {
 const Meetings = () => {
   const { meetings, setMeetings } = useMeetings()
   const { user } = useAuth()
+  const { setModal } = useModal()
   const meetingsData = meetings.data || []
   const userInfo = user?.data?.data
 
@@ -26,20 +29,33 @@ const Meetings = () => {
     .map((meeting) => ({
       id: meeting.id,
       date: dateParser(meeting.timestamp),
-      title: meeting.title,
+      title: (
+        <span onClick={() => setModal(<MeetingsItem data={meeting} />)}>
+          {meeting.title}
+        </span>
+      ),
+      // title: meeting.title,
       type: meeting.type,
       mentor: meeting.mentor,
       report: (
-        <Link to={meeting.report} target="_blank">
+        <Link
+          to={meeting.report}
+          target="_blank"
+          className={classes.reportLink}
+        >
           report
         </Link>
       ),
     }))
     .reverse()
 
-  const headers: string[] = tableData.length
-    ? Object.keys(tableData[0]).filter((k) => k.toLowerCase() !== "id")
-    : []
+  const headers = [
+    { title: "date", grow: 2 },
+    { title: "title", grow: 6 },
+    { title: "type", grow: 1 },
+    { title: "mentor", grow: 2 },
+    { title: "report", grow: 1 },
+  ]
 
   useEffect(() => {
     setMeetings({ ...meetings, status: REQUEST_STATUS.LOADING })
@@ -57,7 +73,7 @@ const Meetings = () => {
       )}
       {meetings.status === REQUEST_STATUS.FAILED && <p>Error</p>}
 
-      <DataTable header={headers} data={tableData} />
+      {tableData.length && <DataTable header={headers} data={tableData} />}
     </section>
   )
 }

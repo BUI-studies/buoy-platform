@@ -1,4 +1,4 @@
-export type DataTableHeader = string[]
+export type DataTableHeader = Array<{ title: string; grow: number }>
 
 export type DataTableItem = {
   title: string
