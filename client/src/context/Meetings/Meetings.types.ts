@@ -1,11 +1,17 @@
 import { REQUEST_STATUS } from "@/types"
 
+export enum MeetingTypes {
+  INDIVIDUAL = "individual",
+  PLANING = "planing",
+  SYNC = "sync",
+}
+
 export type Meeting = {
   id: string
   timestamp: number
   date: Date
   title: string
-  type: string
+  type: MeetingTypes
   students: string[]
   mentor: string
   comment: string

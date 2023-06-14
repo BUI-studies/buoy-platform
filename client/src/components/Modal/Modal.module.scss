@@ -4,7 +4,32 @@
   z-index: 1000;
 
   &Content {
-    @apply p-6 w-8/12 bg-white rounded-lg overflow-hidden text-black;
+    @apply relative p-6 w-8/12 bg-white rounded-lg overflow-hidden text-black;
     cursor: initial;
+  }
+}
+
+.closeBtn {
+  cursor: pointer;
+  width: 3em;
+  height: 3em;
+
+  @apply absolute top-0 right-0 m-4 flex items-center justify-center bg-white rounded-full;
+
+  &::before,
+  &::after {
+    content: "";
+    width: 2em;
+    height: 2px;
+
+    @apply bg-black rounded-full;
+  }
+
+  &::before {
+    transform: translateX(50%) rotate(45deg);
+  }
+
+  &::after {
+    transform: translateX(-50%) rotate(-45deg);
   }
 }

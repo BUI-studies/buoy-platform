@@ -30,7 +30,10 @@ const Meetings = () => {
       id: meeting.id,
       date: dateParser(meeting.timestamp),
       title: (
-        <span onClick={() => setModal(<MeetingsItem data={meeting} />)}>
+        <span
+          className={classes.rowTitle}
+          onClick={() => setModal(<MeetingsItem data={meeting} />)}
+        >
           {meeting.title}
         </span>
       ),
@@ -73,7 +76,7 @@ const Meetings = () => {
       )}
       {meetings.status === REQUEST_STATUS.FAILED && <p>Error</p>}
 
-      {tableData.length && <DataTable header={headers} data={tableData} />}
+      {tableData.length > 0 && <DataTable header={headers} data={tableData} />}
     </section>
   )
 }

@@ -22,3 +22,11 @@ export type Populated = {
    */
   [k: string]: any
 }
+
+export type SVGProps = {
+  className?: string
+  onClick?: () => void
+  size?: number | string
+  width?: number | string
+  height?: number | string
+}

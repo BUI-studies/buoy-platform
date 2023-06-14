@@ -1,4 +1,5 @@
 export * from "./Form/"
 export * from "./DataTable/"
+export * from "./Images"
 export { default as Modal } from "./Modal/Modal"
-export { default as MeetingsItem } from "./MeetingsItem"
+export { default as MeetingsItem } from "./MeetingsItem/MeetingsItem"

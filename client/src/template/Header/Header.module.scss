@@ -1,5 +1,5 @@
 .topPannel {
-  @apply container py-4 px-6 flex justify-end items-center;
+  @apply sticky top-0 container py-4 px-6 flex justify-end items-center bg-gray-900;
   margin-inline: auto;
 }
 
