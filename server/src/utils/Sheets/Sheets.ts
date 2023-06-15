@@ -1,5 +1,6 @@
 import { GoogleSpreadsheet, GoogleSpreadsheetRow } from "google-spreadsheet"
-import { TableCell, Tables } from "@/utils/Sheets"
+
+import { TableCell, Tables } from "@/utils"
 import { Populated } from "@/types"
 
 export default class Sheets {

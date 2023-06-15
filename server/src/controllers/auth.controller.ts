@@ -1,9 +1,9 @@
 import bcrypt from "bcrypt"
+import { verify } from "jsonwebtoken"
 import { Request, Response } from "express"
 
 import { User, UserJWTPayload, UsersModel } from "../model"
-import { getToken } from "../utils/authHelpers"
-import { decode, verify } from "jsonwebtoken"
+import { getToken } from "../utils"
 
 const login = async (req: Request, res: Response) => {
   if (!req.body || !req.body.email || !req.body.password) {

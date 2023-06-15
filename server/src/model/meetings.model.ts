@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
 
-import { parseTimeStamp } from "@/helprs"
-import { Sheets, TableCell } from "@/utils/Sheets"
+import { parseTimeStamp } from "@/helpers"
+import { Sheets, TableCell } from "@/utils"
 
 const Schema = mongoose.Schema
 

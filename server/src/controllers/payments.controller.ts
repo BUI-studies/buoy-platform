@@ -1,35 +1,36 @@
 import { Request, Response } from "express"
 
-import { MeetingsModel, meetingsMapper } from "@/model"
+import { payemntsMapper } from "@/model"
 
 import { SHEETS_TITLES } from "@/types"
 import { Sheets } from "@/utils"
 
-const getAllMeetings = async () => {
+const getAllPayments = async () => {
   await Sheets.doc?.loadInfo()
+
   return Sheets.parseRows(
-    Sheets.tables?.[SHEETS_TITLES.MEETINGS]._cells,
-    meetingsMapper
-  ).filter(({ students }) => !!students)
+    Sheets.tables?.[SHEETS_TITLES.PAYMENTS]._cells,
+    payemntsMapper
+  )
 }
 
 const getAll = async (req: Request, res: Response) => {
   const { fullname } = req.query
-  const allMeetings = await getAllMeetings()
+  const allPayments = await getAllPayments()
 
   if (!fullname) {
-    return res.send(allMeetings)
+    return res.send(allPayments)
   }
 
   const [name, surname] = (fullname as string)?.split(" ")
 
   await Sheets.doc?.loadInfo()
 
-  const allMeetingsNamed = allMeetings.filter(({ students }) =>
-    students?.includes(`${name}_${surname}`)
+  const allPaymentsNamed = allPayments.filter(
+    ({ sender }) => sender === `${name}_${surname}`
   )
 
-  res.send(allMeetingsNamed)
+  res.send(allPaymentsNamed)
 }
 
 const saveMeeting = async (req: Request, res: Response) => {
@@ -44,7 +45,7 @@ const deleteMeeting = async (req: Request, res: Response) => {
   res.send({})
 }
 
-export const MeetingsController = {
+export const PaymentsController = {
   get: getAll,
   save: saveMeeting,
   update: updateMeeting,

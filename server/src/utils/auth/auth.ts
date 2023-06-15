@@ -1,12 +1,12 @@
 import jwt from "jsonwebtoken"
 import { Request, Response } from "express"
 
-import { User, UsersModel } from "../model/"
+import { User, UsersModel } from "../../model"
 import { decode } from "./authHelpers"
 
 const freeOfAuth: string[] = ["/api/users/login", "/api/users", "/public"]
 
-export default async (req: Request, res: Response, next: Function) => {
+export const auth = async (req: Request, res: Response, next: Function) => {
   if (!freeOfAuth.some((url) => url === req.baseUrl)) {
     console.log(new Date().toTimeString(), "RERQUEST", req.method, req.baseUrl)
     if (!req.headers["authorization"]) {

@@ -3,10 +3,14 @@ import * as dotenv from "dotenv"
 import mongoose, { ConnectOptions } from "mongoose"
 import express, { json, urlencoded } from "express"
 
-import Sheets from "@/utils/Sheets/Sheets"
+import { Sheets, auth } from "@/utils"
 
-import { meetingsRoutes, usersRoutes, authRoutes } from "./routes/"
-import auth from "./utils/auth"
+import {
+  meetingsRoutes,
+  usersRoutes,
+  authRoutes,
+  paymentsRoutes,
+} from "./routes/"
 
 const app = express()
 
@@ -17,6 +21,7 @@ app.use(express.static(path.resolve(path.dirname("")) + "/public/"))
 
 app.use("/api/auth", authRoutes)
 app.use("/api/meetings", auth, meetingsRoutes)
+app.use("/api/payments", auth, paymentsRoutes)
 app.use("/api/users", auth, usersRoutes)
 
 mongoose
