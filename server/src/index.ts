@@ -10,6 +10,7 @@ import {
   usersRoutes,
   authRoutes,
   paymentsRoutes,
+  homeworksRoutes,
 } from "./routes/"
 
 const app = express()
@@ -22,6 +23,7 @@ app.use(express.static(path.resolve(path.dirname("")) + "/public/"))
 app.use("/api/auth", authRoutes)
 app.use("/api/meetings", auth, meetingsRoutes)
 app.use("/api/payments", auth, paymentsRoutes)
+app.use("/api/homeworks", auth, homeworksRoutes)
 app.use("/api/users", auth, usersRoutes)
 
 mongoose

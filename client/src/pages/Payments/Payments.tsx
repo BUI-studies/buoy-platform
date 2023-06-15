@@ -63,16 +63,16 @@ const Payments = () => {
       })
   }, [userToken, userInfo?.fullName])
 
-  return (
+  return !payments.data?.length &&
+    payments.status === REQUEST_STATUS.LOADING ? (
+    <p>Loading</p>
+  ) : (
     <div>
-      {!payments.data?.length && payments.status === REQUEST_STATUS.LOADING && (
-        <p>Loading</p>
-      )}
       {payments.status === REQUEST_STATUS.FAILED && <p>Error</p>}
 
       <div className={classes.pannel}>
         <div className={classes.highlights}>
-          <h2 className={classes.totalHeader}>Total spend: {totalMoney}</h2>
+          <h2 className={classes.totalHeader}>Total spent: {totalMoney}</h2>
           <h2 className={classes.totalHeader}>This month: {thisMonthSpend}</h2>
         </div>
         <button className={classes.addPayment} onClick={handleAddPayment}>
