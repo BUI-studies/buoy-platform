@@ -1,5 +1,5 @@
 import React, { FC } from "react"
-import { NavLink, Link, NavLinkProps } from "react-router-dom"
+import { NavLink, Link } from "react-router-dom"
 
 import logoPath from "@/assets/logo__bright.png"
 
@@ -10,15 +10,6 @@ import { _URL } from "@/routes"
 type SodeBarProps = {
   className: string
 }
-
-// відгук по зустрічі
-// написати senkan
-// домашки (кнопка "здати домашку" -> iframe форми)
-// оплати (кнопка "оплатити" -> посилання на банку)
-// discord
-// youtube
-// git
-// mozilla.org
 
 const SideBar: FC<SodeBarProps> = ({ className }) => {
   const handleActiveClass = ({ isActive }: ActiveClassCallbackProps) =>

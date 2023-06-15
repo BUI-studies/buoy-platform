@@ -21,7 +21,7 @@ export default async (req: Request, res: Response, next: Function) => {
 
       if (!decoded) {
         res.status(550)
-        res.send({ message: "no such user" })
+        res.send({ message: "couldn't decode token" })
         return
       }
 

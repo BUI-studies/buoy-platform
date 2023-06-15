@@ -8,7 +8,7 @@ import { _URL } from "@/routes"
 
 import classes from "./Header.module.scss"
 
-export const Header = () => {
+const Header = () => {
   const { user } = useAuth()
   const userInfo = user?.data?.data
 
@@ -31,3 +31,5 @@ export const Header = () => {
     </header>
   )
 }
+
+export default Header

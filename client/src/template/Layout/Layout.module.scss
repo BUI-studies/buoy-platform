@@ -16,6 +16,11 @@
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+
+  &NoSideBar {
+    grid-column: 1 / -1;
+    @extend .contentWrapper;
+  }
 }
 
 .pageContent {

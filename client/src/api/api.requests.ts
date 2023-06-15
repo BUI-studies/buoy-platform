@@ -1,10 +1,10 @@
-import { headers, _URL, request } from "@/api/"
+import { getHeaders, _URL, request } from "@/api/"
 import { LoginInputs } from "@/pages/Login/Login.helper"
 
 const login = async (formData: LoginInputs) => {
   return request(_URL.login, {
     method: "POST",
-    headers,
+    headers: getHeaders(),
     body: JSON.stringify(formData),
   })
 }

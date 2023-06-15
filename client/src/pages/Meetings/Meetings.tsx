@@ -24,33 +24,39 @@ const Meetings = () => {
   const { setModal } = useModal()
   const meetingsData = meetings.data || []
   const userInfo = user?.data?.data
+  const userToken = user?.data?.token
+  console.log(meetingsData)
 
-  const tableData: DataTableRowProps<MeetingTableItem>[] = meetingsData
-    .map((meeting) => ({
-      id: meeting.id,
-      date: dateParser(meeting.timestamp),
-      title: (
-        <span
-          className={classes.rowTitle}
-          onClick={() => setModal(<MeetingsItem data={meeting} />)}
-        >
-          {meeting.title}
-        </span>
-      ),
-      // title: meeting.title,
-      type: meeting.type,
-      mentor: meeting.mentor,
-      report: (
-        <Link
-          to={meeting.report}
-          target="_blank"
-          className={classes.reportLink}
-        >
-          report
-        </Link>
-      ),
-    }))
-    .reverse()
+  const tableData: DataTableRowProps<MeetingTableItem>[] = Array.isArray(
+    meetingsData
+  )
+    ? meetingsData
+        .map((meeting) => ({
+          id: meeting.id,
+          date: dateParser(meeting.timestamp),
+          title: (
+            <span
+              className={classes.rowTitle}
+              onClick={() => setModal(<MeetingsItem data={meeting} />)}
+            >
+              {meeting.title}
+            </span>
+          ),
+          // title: meeting.title,
+          type: meeting.type,
+          mentor: meeting.mentor,
+          report: (
+            <Link
+              to={meeting.report}
+              target="_blank"
+              className={classes.reportLink}
+            >
+              report
+            </Link>
+          ),
+        }))
+        .reverse()
+    : []
 
   const headers = [
     { title: "date", grow: 2 },
@@ -64,6 +70,7 @@ const Meetings = () => {
     setMeetings({ ...meetings, status: REQUEST_STATUS.LOADING })
 
     userInfo?.fullName &&
+      userToken &&
       API.getMeetings(userInfo.fullName.toString()).then((meetings) => {
         setMeetings({ data: meetings, status: REQUEST_STATUS.SUCCESS })
       })

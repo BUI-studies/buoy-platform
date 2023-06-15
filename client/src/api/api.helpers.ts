@@ -1,12 +1,11 @@
-import { TOKEN_KEY } from "@/utils"
-import { Storage } from "@/utils"
+import { Storage, TOKEN_KEY } from "@/utils"
 
 const getToken = () => Storage.get(TOKEN_KEY)
 
-export const headers = {
+export const getHeaders = () => ({
   "Content-Type": "application/json",
   Authorization: getToken(),
-}
+})
 
 export const _URL = {
   login: "/api/auth/login",
@@ -14,14 +13,14 @@ export const _URL = {
   meetings: "/api/meetings",
 }
 
-const requestOptions = {
+const getRequestOptions = () => ({
   method: "GET",
-  headers,
-}
+  headers: getHeaders(),
+})
 
 export const request = async (
   url: string,
-  options: RequestInit = requestOptions
+  options: RequestInit = getRequestOptions()
 ) => {
   const resp = await fetch(url, options)
   const data = await resp.json()
