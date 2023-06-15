@@ -7,6 +7,7 @@ import { DataTable } from "@/components"
 import { dateParser } from "@/utils"
 
 import classes from "./Payments.module.scss"
+import FormPayment from "./FormPayment"
 
 const Payments = () => {
   const { user } = useAuth()
@@ -22,6 +23,7 @@ const Payments = () => {
     { title: "comment", grow: 3 },
   ]
 
+  //TODO: make all calculations in a single loop and inside some sort of ustility function
   const totalMoney = payments?.data?.reduce(
     (acc, curr) => (acc += curr.amount),
     0
@@ -48,17 +50,7 @@ const Payments = () => {
     : []
 
   const handleAddPayment = () => {
-    setModal(
-      <div className={classes.formFrame}>
-        <iframe
-          src="https://docs.google.com/forms/d/e/1FAIpQLSd-roigLkj_dzWF0cOLOKyNrPxlU9j30jXSH7KHC5vGiCwFbg/viewform?embedded=true"
-          width="100%"
-          height="100%"
-        >
-          Loading…
-        </iframe>
-      </div>
-    )
+    setModal(<FormPayment />)
   }
 
   useEffect(() => {
