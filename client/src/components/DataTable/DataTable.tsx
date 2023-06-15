@@ -39,7 +39,7 @@ const DataTable = <T extends Populated>({
                   " "
                 )}
               >
-                {row[item.title.toLowerCase() as keyof T]}
+                {row[item.title as keyof T]}
               </span>
             ))}
           </li>

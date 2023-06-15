@@ -1,13 +1,19 @@
 import React, { useEffect } from "react"
 
+import { DataTable, DataTableRowProps, IFrame } from "@/components"
 import { useAuth, useModal, usePayments } from "@/context"
 import { REQUEST_STATUS } from "@/types"
 import { API } from "@/api"
-import { DataTable } from "@/components"
 import { dateParser } from "@/utils"
 
 import classes from "./Payments.module.scss"
-import FormPayment from "./FormPayment"
+
+type PaymentsTableItem = {
+  date: string
+  amount: number
+  sender: string
+  comment: string
+}
 
 const Payments = () => {
   const { user } = useAuth()
@@ -41,7 +47,9 @@ const Payments = () => {
     }
   }, 0)
 
-  const tableData = Array.isArray(payments?.data)
+  const tableData: DataTableRowProps<PaymentsTableItem>[] = Array.isArray(
+    payments?.data
+  )
     ? payments.data?.map((payment) => ({
         ...payment,
         date: dateParser(payment.timestamp),
@@ -50,7 +58,9 @@ const Payments = () => {
     : []
 
   const handleAddPayment = () => {
-    setModal(<FormPayment />)
+    setModal(
+      <IFrame link="https://docs.google.com/forms/d/e/1FAIpQLSd-roigLkj_dzWF0cOLOKyNrPxlU9j30jXSH7KHC5vGiCwFbg/viewform?embedded=true" />
+    )
   }
 
   useEffect(() => {

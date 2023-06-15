@@ -1,10 +1,15 @@
 import { REQUEST_STATUS } from "@/types"
 
 export type Homework = {
+  date: string
   timestamp: number
   sender: string
-  amount: number
-  comment: string
+  homeworkName: number
+  github: string
+  isReviewed: string
+  mentorsComment: string
+  reviewLink: string
+  studentsComment: string
 }
 
 export type HomeworksState = {

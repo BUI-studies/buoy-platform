@@ -47,7 +47,8 @@ export default class Sheets {
   static getCellValueFromRawData(cell: TableCell) {
     return (
       cell._rawData?.effectiveValue?.stringValue ||
-      cell._rawData?.effectiveValue?.numberValue
+      cell._rawData?.effectiveValue?.numberValue ||
+      cell._rawData?.effectiveValue?.boolValue
     )
   }
 }

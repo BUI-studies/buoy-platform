@@ -75,11 +75,11 @@ const Meetings = () => {
       })
   }, [userToken, userInfo?.fullName])
 
-  return (
+  return !meetings.data?.length &&
+    meetings.status === REQUEST_STATUS.LOADING ? (
+    <p>Loading</p>
+  ) : (
     <section>
-      {!meetings.data?.length && meetings.status === REQUEST_STATUS.LOADING && (
-        <p>Loading</p>
-      )}
       {meetings.status === REQUEST_STATUS.FAILED && <p>Error</p>}
 
       {tableData.length > 0 && <DataTable header={headers} data={tableData} />}

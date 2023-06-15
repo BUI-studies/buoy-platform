@@ -1,0 +1,16 @@
+.wrapper {
+  @apply flex flex-col gap-4;
+}
+
+.title {
+  @apply text-xl font-bold;
+}
+
+.link {
+  @apply text-blue-500 underline;
+  align-self: flex-start;
+}
+
+.commentText {
+  @apply italic p-2 bg-gray-300 text-base;
+}

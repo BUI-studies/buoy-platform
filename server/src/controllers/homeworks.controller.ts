@@ -28,7 +28,9 @@ const getAll = async (req: Request, res: Response) => {
 
   await Sheets.doc?.loadInfo()
 
-  const allHomeworksNamed = allHomeworks
+  const allHomeworksNamed = allHomeworks.filter(
+    ({ sender }) => sender === `${name}_${surname}`
+  )
 
   res.send(allHomeworksNamed)
 }

@@ -2,9 +2,20 @@ import React from "react"
 import { Navigate, RouteObject } from "react-router-dom"
 
 import { Layout } from "@/template"
-import { Login, Meetings, Resources, Feedback, Payments } from "@/pages"
+import {
+  Login,
+  Meetings,
+  Resources,
+  Feedback,
+  Payments,
+  Homeworks,
+} from "@/pages"
 import { ProtectedRoute, _URL, Logout } from "@/routes"
-import { MeetingsProvider, PaymentsProvider } from "@/context"
+import {
+  MeetingsProvider,
+  PaymentsProvider,
+  HomeworksProvider,
+} from "@/context"
 
 const routesList: RouteObject[] = [
   {
@@ -43,6 +54,16 @@ const routesList: RouteObject[] = [
             <PaymentsProvider>
               <Payments />
             </PaymentsProvider>
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: _URL.HOMEWORKS,
+        element: (
+          <ProtectedRoute>
+            <HomeworksProvider>
+              <Homeworks />
+            </HomeworksProvider>
           </ProtectedRoute>
         ),
       },

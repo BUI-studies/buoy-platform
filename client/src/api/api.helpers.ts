@@ -12,6 +12,7 @@ export const _URL = {
   verify: (token: string) => `/api/auth?token=${token.trim()}`,
   meetings: "/api/meetings",
   payments: "/api/payments",
+  homeworks: "/api/homeworks",
 }
 
 const getRequestOptions = () => ({

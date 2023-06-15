@@ -19,9 +19,13 @@ const getMeetings = async (fullName: string) =>
 const getPayments = async (fullName: string) =>
   request(`${_URL.payments}?fullname=${fullName}`)
 
+const getHomeworks = async (fullName: string) =>
+  request(`${_URL.homeworks}?fullname=${fullName}`)
+
 export const API = {
   login,
   verify,
   getMeetings,
   getPayments,
+  getHomeworks,
 }

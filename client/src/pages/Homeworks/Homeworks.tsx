@@ -1,0 +1,103 @@
+import React, { ReactNode, useEffect } from "react"
+
+import { API } from "@/api"
+import { REQUEST_STATUS } from "@/types"
+import { dateParser } from "@/utils"
+import { Homework, useAuth, useHomeworks, useModal } from "@/context"
+import {
+  DataTable,
+  DataTableRowProps,
+  HomewoksItem,
+  IFrame,
+} from "@/components"
+
+import classes from "./Homeworks.module.scss"
+import { Link } from "react-router-dom"
+
+type HomeworkTabeItem = {
+  isReviewed: string | ReactNode
+  date: string
+  sender: string
+  homeworkName: ReactNode
+  github: string | ReactNode
+  mentorsComment: string
+  studentsComment: string
+}
+
+const Homeworks = () => {
+  const { homeworks, setHomeworks } = useHomeworks()
+  const { user } = useAuth()
+  const { setModal } = useModal()
+  const homeworksData = homeworks.data || []
+  const userInfo = user?.data?.data
+  const userToken = user?.data?.token
+
+  const headers = [
+    { title: "isReviewed", grow: 1 },
+    { title: "date", grow: 2 },
+    { title: "homeworkName", grow: 8 },
+    { title: "reviewLink", grow: 1 },
+  ]
+
+  const handleAddHomework = () => {
+    setModal(
+      <IFrame link="https://docs.google.com/forms/d/e/1FAIpQLSdr0Qm7h8PqQ-vUSr7HQlo3JTv3_PFj30pd7-CMTmbHqhXBWg/viewform?embedded=true" />
+    )
+  }
+
+  const tableData: DataTableRowProps<HomeworkTabeItem>[] = Array.isArray(
+    homeworksData
+  )
+    ? homeworksData
+        .map((homework) => ({
+          ...homework,
+          isReviewed: homework.isReviewed ? "🟢" : "⚪️",
+          date: dateParser(homework.timestamp),
+          reviewLink: homework.reviewLink ? (
+            <Link to={homework.reviewLink} target="_blank">
+              review
+            </Link>
+          ) : (
+            ""
+          ),
+          homeworkName: (
+            <span
+              className={classes.title}
+              onClick={() => setModal(<HomewoksItem data={homework} />)}
+            >
+              {homework.homeworkName}
+            </span>
+          ),
+        }))
+        .reverse()
+    : []
+
+  useEffect(() => {
+    setHomeworks({ ...homeworks, status: REQUEST_STATUS.LOADING })
+
+    userInfo?.fullName &&
+      userToken &&
+      API.getHomeworks(userInfo.fullName.toString()).then((Homeworks) => {
+        setHomeworks({ data: Homeworks, status: REQUEST_STATUS.SUCCESS })
+      })
+  }, [userToken, userInfo?.fullName])
+
+  return !homeworks.data?.length &&
+    homeworks.status === REQUEST_STATUS.LOADING ? (
+    <p>Loading</p>
+  ) : (
+    <section>
+      {homeworks.status === REQUEST_STATUS.FAILED && <p>Error</p>}
+
+      <div className={classes.highlights}>
+        <button className={classes.addBtn} onClick={handleAddHomework}>
+          assign homework
+        </button>
+      </div>
+
+      {tableData.length > 0 && <DataTable header={headers} data={tableData} />}
+    </section>
+  )
+}
+
+export default Homeworks
