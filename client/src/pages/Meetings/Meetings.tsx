@@ -25,7 +25,6 @@ const Meetings = () => {
   const meetingsData = meetings.data || []
   const userInfo = user?.data?.data
   const userToken = user?.data?.token
-  console.log(meetingsData)
 
   const tableData: DataTableRowProps<MeetingTableItem>[] = Array.isArray(
     meetingsData
