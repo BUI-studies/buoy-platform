@@ -73,7 +73,7 @@ const Meetings = () => {
       API.getMeetings(userInfo.fullName.toString()).then((meetings) => {
         setMeetings({ data: meetings, status: REQUEST_STATUS.SUCCESS })
       })
-  }, [])
+  }, [userToken, userInfo?.fullName])
 
   return (
     <section>

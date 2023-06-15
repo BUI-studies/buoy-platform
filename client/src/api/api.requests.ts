@@ -16,8 +16,12 @@ const verify = async (token: string) => {
 const getMeetings = async (fullName: string) =>
   request(`${_URL.meetings}?fullname=${fullName}`)
 
+const getPayments = async (fullName: string) =>
+  request(`${_URL.payments}?fullname=${fullName}`)
+
 export const API = {
   login,
   verify,
   getMeetings,
+  getPayments,
 }
