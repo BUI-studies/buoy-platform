@@ -3,9 +3,11 @@ import { NavLink, Link } from "react-router-dom"
 
 import logoPath from "@/assets/logo__bright.png"
 
-import classes from "./SideBar.module.scss"
-import { ActiveClassCallbackProps } from "@/types"
 import { _URL } from "@/routes"
+import { Discord, GitHub, MDN, Youtube } from "@/components"
+import { ActiveClassCallbackProps } from "@/types"
+
+import classes from "./SideBar.module.scss"
 
 type SodeBarProps = {
   className: string
@@ -39,22 +41,29 @@ const SideBar: FC<SodeBarProps> = ({ className }) => {
         <NavLink to={_URL.PAYMENTS} className={handleActiveClass}>
           оплати
         </NavLink>
-        <NavLink
-          to={_URL.DISCORD}
-          target="_blank"
-          className={handleActiveClass}
-        >
-          діскорд
-        </NavLink>
-        <NavLink to={_URL.YOUTUBE} className={handleActiveClass}>
-          ютюб
-        </NavLink>
-        <NavLink to={_URL.GIT} target="_blank" className={handleActiveClass}>
-          git
-        </NavLink>
-        <NavLink to={_URL.MOZILA} target="_blank" className={handleActiveClass}>
-          твоя біблія
-        </NavLink>
+
+        <div className={classes.usefullLinks}>
+          <NavLink
+            to={_URL.DISCORD}
+            target="_blank"
+            className={handleActiveClass}
+          >
+            <Discord />
+          </NavLink>
+          <NavLink to={_URL.YOUTUBE} className={handleActiveClass}>
+            <Youtube />
+          </NavLink>
+          <NavLink to={_URL.GIT} target="_blank" className={handleActiveClass}>
+            <GitHub />
+          </NavLink>
+          <NavLink
+            to={_URL.MOZILA}
+            target="_blank"
+            className={handleActiveClass}
+          >
+            <MDN width="100%" height="100%" />
+          </NavLink>
+        </div>
       </nav>
     </aside>
   )

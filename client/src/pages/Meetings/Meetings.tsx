@@ -75,14 +75,28 @@ const Meetings = () => {
       })
   }, [userToken, userInfo?.fullName])
 
-  return !meetings.data?.length &&
-    meetings.status === REQUEST_STATUS.LOADING ? (
+  return !meetings.data && meetings.status === REQUEST_STATUS.LOADING ? (
     <p>Loading</p>
   ) : (
     <section>
       {meetings.status === REQUEST_STATUS.FAILED && <p>Error</p>}
 
-      {tableData.length > 0 && <DataTable header={headers} data={tableData} />}
+      <DataTable
+        header={headers}
+        data={tableData}
+        noDataMessage={
+          <>
+            <span className="text-3xl">⚠️</span>
+            <br />
+            No meetings with you yet.
+            <br />
+            Info will be updated, after each call you have.
+            <br />
+            <br />
+            So now, just wait a bit 😊
+          </>
+        }
+      />
     </section>
   )
 }

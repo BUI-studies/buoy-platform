@@ -11,5 +11,6 @@
 }
 
 .addPayment {
-  @apply px-4 py-2 bg-blue-800 rounded text-2xl;
+  @apply px-4 py-2 bg-blue-800 rounded text-2xl hover:bg-blue-600;
+  transition: background-color 0.2s;
 }

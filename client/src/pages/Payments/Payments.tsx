@@ -73,8 +73,7 @@ const Payments = () => {
       })
   }, [userToken, userInfo?.fullName])
 
-  return !payments.data?.length &&
-    payments.status === REQUEST_STATUS.LOADING ? (
+  return !payments.data && payments.status === REQUEST_STATUS.LOADING ? (
     <p>Loading</p>
   ) : (
     <div>
@@ -90,7 +89,17 @@ const Payments = () => {
         </button>
       </div>
 
-      {tableData?.length > 0 && <DataTable header={headers} data={tableData} />}
+      <DataTable
+        header={headers}
+        data={tableData}
+        noDataMessage={
+          <>
+            <span className="text-3xl">🤷🏼‍♂️</span>
+            <br />
+            You simply did not assigned any payment so far
+          </>
+        }
+      />
     </div>
   )
 }

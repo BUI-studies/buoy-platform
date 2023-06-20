@@ -8,6 +8,7 @@ import classes from "./DataTable.module.scss"
 const DataTable = <T extends Populated>({
   header = [],
   data = [],
+  noDataMessage = "No data found",
 }: DataTableProps<T>) => {
   const growSum = header.reduce((acc, item) => acc + item.grow, 0)
 
@@ -15,7 +16,7 @@ const DataTable = <T extends Populated>({
     throw new Error("DataTable header grow values must add up to 12")
   }
 
-  return (
+  return data.length ? (
     <section className={classes.table}>
       <ul className={classes.tableHeader}>
         {header?.map((item, index) => (
@@ -46,6 +47,8 @@ const DataTable = <T extends Populated>({
         ))}
       </ul>
     </section>
+  ) : (
+    <p>{noDataMessage}</p>
   )
 }
 

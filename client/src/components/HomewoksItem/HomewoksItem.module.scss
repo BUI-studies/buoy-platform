@@ -3,7 +3,9 @@
 }
 
 .title {
-  @apply text-xl font-bold;
+  @apply text-xl font-bold hover:text-blue-500;
+  align-self: flex-start;
+  transition: color 0.2s;
 }
 
 .link {

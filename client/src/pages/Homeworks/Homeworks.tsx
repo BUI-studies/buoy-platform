@@ -82,8 +82,7 @@ const Homeworks = () => {
       })
   }, [userToken, userInfo?.fullName])
 
-  return !homeworks.data?.length &&
-    homeworks.status === REQUEST_STATUS.LOADING ? (
+  return !homeworks.data && homeworks.status === REQUEST_STATUS.LOADING ? (
     <p>Loading</p>
   ) : (
     <section>
@@ -95,7 +94,20 @@ const Homeworks = () => {
         </button>
       </div>
 
-      {tableData.length > 0 && <DataTable header={headers} data={tableData} />}
+      <DataTable
+        header={headers}
+        data={tableData}
+        noDataMessage={
+          <>
+            <span className="text-3xl">🙄</span>
+            <br />
+            You haven't assigned any homework at this moment...
+            <br />
+            Try to text to your mentor and ask if you need to to something with
+            your life...
+          </>
+        }
+      />
     </section>
   )
 }

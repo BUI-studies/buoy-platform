@@ -6,7 +6,8 @@
   @apply flex items-center w-12 h-12;
 
   &Wrapper {
-    @apply px-6;
+    @apply mx-6;
+    align-self: flex-start;
   }
 
   & img {
@@ -26,4 +27,8 @@
       @apply bg-blue-700;
     }
   }
+}
+
+.usefullLinks {
+  @apply px-6 flex flex-wrap justify-between gap-2 mt-8;
 }

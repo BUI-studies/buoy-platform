@@ -1,3 +1,5 @@
+import { ReactNode } from "react"
+
 export type DataTableHeader = Array<{ title: string; grow: number }>
 
 export type DataTableItem = {
@@ -12,4 +14,5 @@ export type DataTableRowProps<T> = {
 export interface DataTableProps<T> {
   header: DataTableHeader
   data: DataTableRowProps<T>[]
+  noDataMessage?: string | ReactNode
 }
