@@ -18,7 +18,14 @@ const app = express()
 dotenv.config()
 app.use(json())
 app.use(urlencoded({ extended: false }))
+
+// Serve static files
 app.use(express.static("/client/dist"))
+
+// Handle client-side routing
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/dist", "index.html"))
+})
 
 app.use("/api/auth", authRoutes)
 app.use("/api/meetings", auth, meetingsRoutes)
