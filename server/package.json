@@ -5,7 +5,7 @@
   "main": "@/index.ts",
   "scripts": {
     "start": "tsc && ts-node -r tsconfig-paths/register ./src/index.ts && node dist/src/index.js",
-    "build": "cd ../client && yarn install && yarn build && cd ../server && rm -rf public/* && cp -a ../client/dist/. public/ && yarn install && yarn start",
+    "build": "cd ../client && yarn install && yarn build && cd ../server && rm -rf public/* && cp -a ../client/dist/. public/ && yarn install",
     "dev": "nodemon"
   },
   "keywords": [],
