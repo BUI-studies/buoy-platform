@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken"
 
-import { UserDTO } from "../model/user.model.js"
+import { UserDTO } from "@/model/user.model.js"
 
 export const getToken = (userFromDB: UserDTO) => {
   if (!process.env.SECRET_KEY) return null

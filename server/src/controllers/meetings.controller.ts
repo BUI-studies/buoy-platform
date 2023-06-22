@@ -1,4 +1,3 @@
-import { Resources } from "@/pages"
 import { Request, Response } from "express"
 
 import { MeetingsModel, meetingsMapper } from "@/model"
