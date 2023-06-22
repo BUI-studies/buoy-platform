@@ -7,7 +7,7 @@ import { _URL } from "@/routes"
 import { Discord, GitHub, MDN, Youtube } from "@/components"
 import { ActiveClassCallbackProps } from "@/types"
 
-import classes from "./SideBar.scss"
+import classes from "./SideBar.module.scss"
 
 type SodeBarProps = {
   className: string
