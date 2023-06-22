@@ -5,6 +5,7 @@
   "main": "@/index.ts",
   "scripts": {
     "start": "ts-node src/index.ts",
+    "deploy": "npm install --prefix ../client && npm run build --prefix ../client && rm -rf public/* && cp -a ../client/dist/. public/ && npm start",
     "dev": "nodemon"
   },
   "keywords": [],
