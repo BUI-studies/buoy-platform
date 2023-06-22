@@ -18,7 +18,7 @@ const app = express()
 dotenv.config()
 app.use(json())
 app.use(urlencoded({ extended: false }))
-app.use(express.static(path.resolve(path.dirname("")) + "/public/"))
+app.use(express.static("/client/dist"))
 
 app.use("/api/auth", authRoutes)
 app.use("/api/meetings", auth, meetingsRoutes)
