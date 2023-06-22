@@ -10,7 +10,7 @@ import {
   authRoutes,
   paymentsRoutes,
   homeworksRoutes,
-} from "./routes/"
+} from "./src/routes"
 
 const app = express()
 
