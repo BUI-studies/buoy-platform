@@ -4,8 +4,8 @@
   "description": "",
   "main": "@/index.ts",
   "scripts": {
-    "start": "tsc && node dist/index.js",
-    "deploy": "npm install --prefix ../client && npm run build --prefix ../client && rm -rf public/* && cp -a ../client/dist/. public/ && npm start",
+    "start": "node dist/index.js",
+    "deploy": "tsc && npm start",
     "dev": "nodemon"
   },
   "keywords": [],
