@@ -24,11 +24,7 @@ app.use(express.static("/client/dist"))
 
 // Handle client-side routing
 app.get("*", (req, res) => {
-  console.log(
-    "HTML FILE PATH ---> ",
-    path.join(path.dirname(""), "../client/dist", "index.html")
-  )
-  res.sendFile(path.join(path.dirname(""), "../client/dist", "index.html"))
+  res.sendFile("../client/dist/index.html")
 })
 
 app.use("/api/auth", authRoutes)
