@@ -4,8 +4,8 @@
   "description": "",
   "main": "@/index.ts",
   "scripts": {
-    "start": "node dist/src/index.js",
-    "build": "tsc && ts-node -r tsconfig-paths/register ./src/index.ts",
+    "start": "ts-node -r tsconfig-paths/register ./src/index.ts",
+    "build": "tsc",
     "dev": "nodemon"
   },
   "keywords": [],
