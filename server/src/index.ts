@@ -26,7 +26,7 @@ app.use("/api/auth", authRoutes)
 app.use("/api/meetings", auth, meetingsRoutes)
 app.use("/api/payments", auth, paymentsRoutes)
 app.use("/api/homeworks", auth, homeworksRoutes)
-app.use("/api/users", auth, usersRoutes)
+// app.use("/api/users", auth, usersRoutes)
 
 mongoose
   .connect(process.env.DB_URL || "", {
