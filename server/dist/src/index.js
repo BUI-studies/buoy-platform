@@ -37,10 +37,10 @@ dotenv.config();
 app.use((0, express_1.json)());
 app.use((0, express_1.urlencoded)({ extended: false }));
 // Serve static files
-app.use(express_1.default.static("client/dist"));
+app.use(express_1.default.static("./public"));
 // Handle client-side routing
 app.get("*", (req, res) => {
-    res.sendFile(path_1.default.join(__dirname, "../client/dist", "index.html"));
+    res.sendFile(path_1.default.join(__dirname, "../public", "index.html"));
 });
 app.use("/api/auth", routes_1.authRoutes);
 app.use("/api/meetings", utils_1.auth, routes_1.meetingsRoutes);
