@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FC, PropsWithChildren } from "react"
+import { useState, useEffect, FC, PropsWithChildren } from "react"
 
 import { Storage, TOKEN_KEY } from "@/utils"
 

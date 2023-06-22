@@ -1,4 +1,4 @@
-import React, { FC, PropsWithChildren, SyntheticEvent } from "react"
+import { FC, PropsWithChildren, SyntheticEvent } from "react"
 
 import classes from "./Modal.module.scss"
 

@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import { FC } from "react"
 import { NavLink, Link } from "react-router-dom"
 
 import logoPath from "@/assets/logo__bright.png"

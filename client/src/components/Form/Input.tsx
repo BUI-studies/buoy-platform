@@ -1,5 +1,5 @@
-import React, { FC } from "react"
-import { FieldError, UseFormRegister, FieldValues } from "react-hook-form"
+import { FC } from "react"
+import { FieldError } from "react-hook-form"
 
 import classes from "./Form.module.scss"
 

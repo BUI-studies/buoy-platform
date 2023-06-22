@@ -1,5 +1,5 @@
-import React, { FC, PropsWithChildren, ReactNode } from "react"
-import { Navigate, useNavigate } from "react-router-dom"
+import { FC, PropsWithChildren, ReactNode } from "react"
+import { Navigate } from "react-router-dom"
 
 import { REQUEST_STATUS } from "@/types"
 import { AuthContextType, useAuth } from "@/context/"

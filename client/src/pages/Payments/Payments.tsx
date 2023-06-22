@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import { useEffect } from "react"
 
 import { DataTable, DataTableRowProps, IFrame } from "@/components"
 import { useAuth, useModal, usePayments } from "@/context"

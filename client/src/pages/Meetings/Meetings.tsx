@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect } from "react"
+import { ReactNode, useEffect } from "react"
 import { Link } from "react-router-dom"
 
 import { API } from "@/api"

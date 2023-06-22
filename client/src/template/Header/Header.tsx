@@ -1,7 +1,4 @@
-import React from "react"
 import { Link } from "react-router-dom"
-
-import logoPath from "@/assets/logo__bright.png"
 
 import { useAuth } from "@/context"
 import { _URL } from "@/routes"

@@ -1,5 +1,3 @@
-import React, { FC } from "react"
-
 import { Populated } from "@/types"
 import { DataTableProps } from "@/components"
 

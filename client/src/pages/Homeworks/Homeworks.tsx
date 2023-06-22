@@ -1,9 +1,9 @@
-import React, { ReactNode, useEffect } from "react"
+import { ReactNode, useEffect } from "react"
 
 import { API } from "@/api"
 import { REQUEST_STATUS } from "@/types"
 import { dateParser } from "@/utils"
-import { Homework, useAuth, useHomeworks, useModal } from "@/context"
+import { useAuth, useHomeworks, useModal } from "@/context"
 import {
   DataTable,
   DataTableRowProps,

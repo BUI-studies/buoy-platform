@@ -1,4 +1,4 @@
-import React, { useState, FC, PropsWithChildren, ReactNode } from "react"
+import { useState, FC, PropsWithChildren, ReactNode } from "react"
 
 import { ModalContext } from "@/context"
 import { Modal } from "@/components"
