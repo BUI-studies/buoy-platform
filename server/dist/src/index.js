@@ -26,7 +26,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const path_1 = __importDefault(require("path"));
 const dotenv = __importStar(require("dotenv"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const express_1 = __importStar(require("express"));
@@ -38,10 +37,10 @@ app.use((0, express_1.json)());
 app.use((0, express_1.urlencoded)({ extended: false }));
 // Serve static files
 app.use(express_1.default.static("./public"));
-// Handle client-side routing
-app.get("*", (req, res) => {
-    res.sendFile(path_1.default.join(__dirname, "../public", "index.html"));
-});
+// // Handle client-side routing
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "../public", "index.html"))
+// })
 app.use("/api/auth", routes_1.authRoutes);
 app.use("/api/meetings", utils_1.auth, routes_1.meetingsRoutes);
 app.use("/api/payments", utils_1.auth, routes_1.paymentsRoutes);

@@ -4,8 +4,8 @@
   "description": "",
   "main": "@/index.ts",
   "scripts": {
-    "start": "node -r dist/index.js",
-    "build": "cd ../client && yarn install && yarn build && cd ../server && rm -rf public/* && cp -a ../client/dist/. public/ && yarn install && tsc && ts-node -r tsconfig-paths/register ./src/index.ts && yarn start",
+    "start": "tsc && ts-node -r tsconfig-paths/register ./src/index.ts && node dist/src/index.js",
+    "build": "cd ../client && yarn install && yarn build && cd ../server && rm -rf public/* && cp -a ../client/dist/. public/ && yarn install && yarn start",
     "dev": "nodemon"
   },
   "keywords": [],
