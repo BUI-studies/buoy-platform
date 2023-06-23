@@ -22,8 +22,5 @@
   },
   "homepage": "https://github.com/BUI-studies/buoy-platform#readme",
   "dependencies": {},
-  "devDependencies": {},
-  "pre-commit": [
-    "build:client"
-  ]
+  "devDependencies": {}
 }
