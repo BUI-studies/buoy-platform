@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "yarn start --prefix server",
-    "build": "yarn install --prefix server && yarn install --prefix client && yarn build --prefix client && yarn build --prefix server && rm -rf server/dist/* && cp -a client/dist/. server/public/",
+    "start": "yarn run start --prefix server",
+    "build": "yarn run install --prefix server && yarn run install --prefix client && yarn run build --prefix client && yarn run build --prefix server && rm -rf server/dist/* && cp -a client/dist/. server/public/",
     "dev:server": "cd ./server && yarn dev",
     "dev:client": "cd ./client && yarn dev"
   },
