@@ -15,5 +15,10 @@
       "@/*": ["src/*"]
     }
   },
+  "plugins": [
+    {
+      "transform": "tsc-paths"
+    }
+  ],
   "include": ["src/**/*", "index.ts"]
 }

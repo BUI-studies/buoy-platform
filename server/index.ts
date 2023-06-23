@@ -19,12 +19,17 @@ app.use(json())
 app.use(urlencoded({ extended: false }))
 
 // Serve static files
-app.use(express.static(path.resolve(path.dirname("")) + "/public/"))
+app.use(express.static("./dist/public"))
 
 app.use("/api/auth", authRoutes)
 app.use("/api/meetings", auth, meetingsRoutes)
 app.use("/api/payments", auth, paymentsRoutes)
 app.use("/api/homeworks", auth, homeworksRoutes)
+
+//handling client routes
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "./public/index.html"))
+})
 
 mongoose
   .connect(process.env.DB_URL || "", {
