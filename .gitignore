@@ -4,4 +4,4 @@
 *.xml
 *.iml
 
-server/dist/**
+*/dist/**
