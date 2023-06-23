@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "cd server && yarn start",
-    "build": "cd client && yarn install && yarn build && cd ../server && yarn install && rm -rf dist/* && yarn build && touch /public && cd ../ && cp -a client/dist/. server/dist/public/",
-    "build:client": "cd client && yarn build",
+    "build": "cd client && yarn install && yarn build && cd ../server && yarn install && rm -rf dist/* && yarn build && mkdir -p dist/public && cd ../ && cp -a client/dist/. server/dist/public/",
     "dev:server": "cd ./server && yarn dev",
     "dev:client": "cd ./client && yarn dev"
   },
