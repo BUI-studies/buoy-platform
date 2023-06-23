@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "ts-node -r tsconfig-paths/register ./index.ts",
+    "build": "npm install --prefix server && npm install --prefix client && npm run build --prefix client && rm -rf server/dist/* && cp -a client/dist/. server/public/",
     "dev:server": "cd ./server && yarn dev",
     "dev:client": "cd ./client && yarn dev"
   },
