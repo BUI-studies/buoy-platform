@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "cd server && yarn start",
-    "build": "cd server && yarn install && cd ../client && yarn install && yarn build && cd ../ && rm -rf server/dist/* && cp -a client/dist/. server/dist/public/ && cd server && yarn build ",
+    "build": "cd server && yarn install && cd ../ && rm -rf server/dist/* && cp -a client/dist/. server/dist/public/ && cd server && yarn build ",
     "dev:server": "cd ./server && yarn dev",
     "dev:client": "cd ./client && yarn dev"
   },
@@ -20,5 +20,10 @@
     "url": "https://github.com/BUI-studies/buoy-platform/issues"
   },
   "homepage": "https://github.com/BUI-studies/buoy-platform#readme",
-  "dependencies": {}
+  "dependencies": {
+    "pre-commit": "^1.2.2"
+  },
+  "pre-commit": [
+    "cd client && yarn build"
+  ]
 }
