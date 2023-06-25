@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Load environment variables from .env file
-source ./.env
+source .env
 
 # Start your application
-node ./dist/index.js
+node dist/index.js
