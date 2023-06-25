@@ -9,7 +9,7 @@
     "install:server": "cd server && yarn install",
     "install": "yarn install:client && yarn install:server",
     "build:client": "cd client && yarn build",
-    "build:server": "cd ../server && rm -rf dist/* && yarn build ",
+    "build:server": "cd server && rm -rf dist/* && yarn build ",
     "build:cts": "mkdir -p ./server/dist/public && cp -a client/dist/. server/dist/public/",
     "build": "yarn build:client && yarn build:server && yarn build:cts",
     "dev:server": "cd ./server && yarn dev",
