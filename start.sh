@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Change to the directory where the start.sh script is located
+cd "$(dirname "$0")"
+
 # Specify the path to the .env file
 ENV_FILE="./server/.env"
 
