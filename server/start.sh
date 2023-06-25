@@ -4,4 +4,4 @@
 source ./.env
 
 # Start your application
-node dist/index.js
+node ./dist/index.js
