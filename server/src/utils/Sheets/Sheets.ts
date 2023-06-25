@@ -13,12 +13,11 @@ export default class Sheets {
   }
 
   static async getDoc() {
-    const doc = new GoogleSpreadsheet(process.env.SPREASHEET_ID)
-
     console.log(
       process.env.SPREADSHEET_PRIVATE_KEY,
       process.env.SPREADSHEET_CLIENT_EMAIL
     )
+    const doc = new GoogleSpreadsheet(process.env.SPREASHEET_ID)
 
     await doc.useServiceAccountAuth({
       private_key: process.env.SPREADSHEET_PRIVATE_KEY || "",
