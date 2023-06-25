@@ -16,7 +16,10 @@ export default class Sheets {
     const doc = new GoogleSpreadsheet(process.env.SPREASHEET_ID)
 
     await doc.useServiceAccountAuth({
-      private_key: process.env.SPREADSHEET_PRIVATE_KEY || "",
+      private_key:
+        Buffer.from(process.env.SPREADSHEET_PRIVATE_KEY || "").toString(
+          "base64"
+        ) || "",
       client_email: process.env.SPREADSHEET_CLIENT_EMAIL || "",
     })
     await doc.loadInfo(true)
