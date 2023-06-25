@@ -13,18 +13,13 @@ export default class Sheets {
   }
 
   static async getDoc() {
-    console.log("before getting doc")
     const doc = new GoogleSpreadsheet(process.env.SPREASHEET_ID)
-    console.log("after getting doc")
 
-    console.log("before using service account auth")
     await doc.useServiceAccountAuth({
       private_key: process.env.SPREADSHEET_PRIVATE_KEY || "",
       client_email: process.env.SPREADSHEET_CLIENT_EMAIL || "",
     })
-    console.log("after using service account auth")
     await doc.loadInfo(true)
-    console.log("after loading info")
 
     Sheets.doc = doc || null
     Sheets.tablesTitles = Object.keys(doc?.sheetsByTitle) || null
