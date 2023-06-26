@@ -11,6 +11,7 @@ import {
   paymentsRoutes,
   homeworksRoutes,
 } from "./src/routes"
+import { usersRoutes } from "@/routes/users.route"
 
 const app = express()
 
@@ -25,6 +26,7 @@ app.use("/api/auth", authRoutes)
 app.use("/api/meetings", auth, meetingsRoutes)
 app.use("/api/payments", auth, paymentsRoutes)
 app.use("/api/homeworks", auth, homeworksRoutes)
+app.use("/api/users", auth, usersRoutes)
 
 //handling client routes
 app.get("*", (req, res) => {

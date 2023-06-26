@@ -20,5 +20,5 @@
       "transform": "tsc-paths"
     }
   ],
-  "include": ["src/**/*", "index.ts"]
+  "include": ["src/**/*", "./index.ts"]
 }
