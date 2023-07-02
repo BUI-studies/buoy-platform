@@ -15,6 +15,7 @@ const getAllMeetings = async () => {
 
 const getAll = async (req: Request, res: Response) => {
   const { fullname } = req.query
+  await Sheets.doc?.loadInfo()
   const allMeetings = await getAllMeetings()
 
   if (!fullname) {
@@ -22,8 +23,6 @@ const getAll = async (req: Request, res: Response) => {
   }
 
   const [name, surname] = (fullname as string)?.split(" ")
-
-  await Sheets.doc?.loadInfo()
 
   const allMeetingsNamed = allMeetings.filter(({ students }) =>
     students?.includes(`${name}_${surname}`)

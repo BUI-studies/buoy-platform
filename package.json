@@ -26,6 +26,8 @@
     "url": "https://github.com/BUI-studies/buoy-platform/issues"
   },
   "homepage": "https://github.com/BUI-studies/buoy-platform#readme",
-  "dependencies": {},
+  "dependencies": {
+    "pm2": "^5.3.0"
+  },
   "devDependencies": {}
 }
