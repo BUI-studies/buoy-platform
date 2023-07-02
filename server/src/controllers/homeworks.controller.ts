@@ -6,7 +6,8 @@ import { SHEETS_TITLES } from "@/types"
 import { Sheets } from "@/utils"
 
 const getAllHomeworks = async () => {
-  await Sheets.doc?.loadInfo()
+  await Sheets.getDoc()
+  Sheets.tables?.[SHEETS_TITLES.HOMEWORKS].loadCells()
 
   return Sheets.parseRows(
     Sheets.tables?.[SHEETS_TITLES.HOMEWORKS]._cells?.filter((r: any) => {
@@ -25,8 +26,6 @@ const getAll = async (req: Request, res: Response) => {
   }
 
   const [name, surname] = (fullname as string)?.split(" ")
-
-  await Sheets.doc?.loadInfo()
 
   const allHomeworksNamed = allHomeworks.filter(
     ({ sender }) => sender === `${name}_${surname}`

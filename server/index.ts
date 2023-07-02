@@ -42,6 +42,6 @@ mongoose
   .catch((err) => console.error(err))
 
 app.listen(process.env.SERVER_PORT, () => {
-  Sheets.init()
+  Sheets.getDoc()
   console.log(`Server is running on port: ${process.env.SERVER_PORT}`)
 })

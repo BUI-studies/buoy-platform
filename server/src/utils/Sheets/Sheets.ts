@@ -8,10 +8,6 @@ export default class Sheets {
   static tables: Tables | null = null
   static tablesTitles: string[] | null = null
 
-  static init() {
-    Sheets.getDoc()
-  }
-
   static async getDoc() {
     const doc = new GoogleSpreadsheet(process.env.SPREASHEET_ID)
 

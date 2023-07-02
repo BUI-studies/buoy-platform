@@ -6,7 +6,9 @@ import { SHEETS_TITLES } from "@/types"
 import { Sheets } from "@/utils"
 
 const getAllMeetings = async () => {
-  await Sheets.doc?.loadInfo()
+  await Sheets.getDoc()
+  Sheets.tables?.[SHEETS_TITLES.MEETINGS].loadCells()
+
   return Sheets.parseRows(
     Sheets.tables?.[SHEETS_TITLES.MEETINGS]._cells,
     meetingsMapper
@@ -15,7 +17,6 @@ const getAllMeetings = async () => {
 
 const getAll = async (req: Request, res: Response) => {
   const { fullname } = req.query
-  await Sheets.doc?.loadInfo()
   const allMeetings = await getAllMeetings()
 
   if (!fullname) {

@@ -8,7 +8,8 @@ import { Sheets, getToken } from "@/utils"
 
 const getAll = async (req: Request, res: Response) => {
   const { fullname } = req.query
-  await Sheets.doc?.loadInfo()
+  await Sheets.getDoc()
+  Sheets.tables?.[SHEETS_TITLES.USERS].loadCells()
 
   const allPayments = Sheets.parseRows(
     Sheets.tables?.[SHEETS_TITLES.USERS]._cells,
@@ -20,8 +21,6 @@ const getAll = async (req: Request, res: Response) => {
   }
 
   const [name, surname] = (fullname as string)?.split(" ")
-
-  await Sheets.doc?.loadInfo()
 
   const allPaymentsNamed = allPayments.filter(
     ({ sender }) => sender === `${name}_${surname}`

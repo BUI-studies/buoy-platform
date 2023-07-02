@@ -6,7 +6,8 @@ import { SHEETS_TITLES } from "@/types"
 import { Sheets } from "@/utils"
 
 const getAllPayments = async () => {
-  await Sheets.doc?.loadInfo()
+  await Sheets.getDoc()
+  Sheets.tables?.[SHEETS_TITLES.PAYMENTS].loadCells()
 
   return Sheets.parseRows(
     Sheets.tables?.[SHEETS_TITLES.PAYMENTS]._cells,
@@ -23,8 +24,6 @@ const getAll = async (req: Request, res: Response) => {
   }
 
   const [name, surname] = (fullname as string)?.split(" ")
-
-  await Sheets.doc?.loadInfo()
 
   const allPaymentsNamed = allPayments.filter(
     ({ sender }) => sender === `${name}_${surname}`
