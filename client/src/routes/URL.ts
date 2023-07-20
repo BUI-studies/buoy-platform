@@ -16,4 +16,5 @@ export enum _URL {
   YOUTUBE = "/resources/youtube",
   GIT = "https://github.com/BUI-studies?tab=repositories",
   MOZILA = "https://developer.mozilla.org/en-US/docs/Learn",
+  MONO = 'https://send.monobank.ua/jar/943fTcWwRT'
 }
