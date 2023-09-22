@@ -1,10 +1,12 @@
 import { REQUEST_STATUS } from "@/types"
 
 export type User = {
-  _id: string
-  fullName: string
-  email: string
-  tel: string
+	_id: string
+	fullName: string
+	email: string
+	tel: string
+	role: string
+	status: string
 }
 
 export type UserState = {

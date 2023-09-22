@@ -16,29 +16,39 @@ export interface UserJWTPayload {
 }
 
 export interface User extends mongoose.Document {
-  fullName: string
-  tel: string
-  email: string
-  password: string
+	fullName: string
+	tel: string
+	email: string
+	password: string
+	role: string
+	status: string
 }
 
 export const UsersSchema = new Schema<User>({
-  fullName: {
-    type: String,
-    required: true,
-  },
-  tel: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
+	fullName: {
+		type: String,
+		required: true,
+	},
+	tel: {
+		type: String,
+		required: true,
+	},
+	email: {
+		type: String,
+		required: true,
+	},
+	password: {
+		type: String,
+		required: true,
+	},
+	role: {
+		type: String,
+		required: true,
+	},
+	status: {
+		type: String,
+		required: true,
+	},
 })
 
 export const usersMapper = (cellsArray: TableCell[]) => ({

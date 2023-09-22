@@ -5,7 +5,10 @@ import logoPath from '@/assets/logo__bright.png'
 
 import { _URL } from '@/routes'
 import { Discord, GitHub, MDN, Youtube } from '@/components'
-import { ActiveClassCallbackProps } from '@/types'
+import { ActiveClassCallbackProps, ROLES } from '@/types'
+
+import { AuthContextType, useAuth } from '@/context'
+import { navLinkList } from '@/template'
 
 import classes from './SideBar.module.scss'
 
@@ -17,6 +20,26 @@ const SideBar: FC<SodeBarProps> = ({ className }) => {
 	const handleActiveClass = ({ isActive }: ActiveClassCallbackProps) =>
 		isActive ? 'bg-blue-900' : ''
 
+	const disableLink = (e: any, params: boolean | undefined) => {
+		if (params) e.preventDefault()
+	}
+
+	const { user }: AuthContextType = useAuth()
+	const role: ROLES = user?.data?.data?.role as ROLES
+	const mappedNavLinks =
+		navLinkList[role]?.map(
+			({ url, name, statusDisabled }: { url: string; name: string; statusDisabled?: boolean }) => (
+				<NavLink
+					to={url}
+					className={handleActiveClass}
+					key={name}
+					onClick={e => disableLink(e, statusDisabled)}
+				>
+					{name}
+				</NavLink>
+			),
+		) || []
+
 	return (
 		<aside className={[className, classes.pannel].join(' ')}>
 			<Link to={_URL.HOME} className={classes.companyWrapper}>
@@ -26,26 +49,14 @@ const SideBar: FC<SodeBarProps> = ({ className }) => {
 			</Link>
 
 			<nav className={classes.nav}>
-				<NavLink to={_URL.MEETINGS} className={handleActiveClass}>
-					зустрічі
-				</NavLink>
-				<NavLink to={_URL.FORM_FEEDBACK} className={handleActiveClass}>
-					відгук по зустрічі
-				</NavLink>
-				<NavLink to={_URL.FORM_SENKAN} className={handleActiveClass}>
-					сєнкан
-				</NavLink>
-				<NavLink to={_URL.HOMEWORKS} className={handleActiveClass}>
-					домашки
-				</NavLink>
-				<NavLink to={_URL.PAYMENTS} className={handleActiveClass}>
-					оплати
-				</NavLink>
+				{mappedNavLinks}
 
 				<div className={classes.usefullLinks}>
-					<NavLink to={_URL.MONO} target="_blank" className="grow text-center border-rose-400">
-						💸 скинуть баблішко 💸
-					</NavLink>
+					{user.data?.data?.role === 'student' && (
+						<NavLink to={_URL.MONO} target="_blank" className="grow text-center border-rose-400">
+							💸 скинуть баблішко 💸
+						</NavLink>
+					)}
 					<NavLink to={_URL.DISCORD} target="_blank">
 						<Discord />
 					</NavLink>
