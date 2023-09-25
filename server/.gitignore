@@ -1,0 +1,12 @@
+**/.idea/**/*
+**/node_modules/**/*
+
+.DS_Store
+**/.DS_Store
+
+*.xml
+*.iml
+
+*/dist/**
+
+*/.env

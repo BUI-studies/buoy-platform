@@ -1,29 +1,29 @@
 .pageWrapper {
-  width: 100vw;
-  height: 100vh;
-  overflow-y: auto;
-  display: grid;
-  grid-template-columns: 30ch 1fr;
+	width: 100vw;
+	height: 100vh;
+	overflow-y: auto;
+	display: grid;
+	grid-template-columns: 30ch 1fr;
 }
 
 .sideBar {
-  height: 100vh;
-  @apply py-4;
+	height: 100vh;
+	@apply py-4;
 }
 
 .contentWrapper {
-  height: 100vh;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
+	height: 100vh;
+	overflow-y: auto;
+	display: flex;
+	flex-direction: column;
 
-  &NoSideBar {
-    grid-column: 1 / -1;
-    @extend .contentWrapper;
-  }
+	&NoSideBar {
+		grid-column: 1 / -1;
+		@extend .contentWrapper;
+	}
 }
 
 .pageContent {
-  flex-grow: 1;
-  @apply py-8 px-4;
+	flex-grow: 1;
+	@apply py-8 px-4;
 }

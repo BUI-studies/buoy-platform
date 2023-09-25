@@ -1,33 +1,33 @@
 .table {
-  @apply flex flex-col;
+	@apply flex flex-col;
 
-  &Header {
-    @apply bg-gray-700;
-  }
+	&Header {
+		@apply bg-gray-700;
+	}
 
-  &Header,
-  &Row {
-    @apply py-4 grid grid-flow-col grid-cols-12;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
+	&Header,
+	&Row {
+		@apply py-4 grid grid-flow-col grid-cols-12;
+		cursor: pointer;
+		transition: background-color 0.3s ease-in-out;
 
-    &:nth-child(even) {
-      @apply bg-gray-800;
-    }
+		&:nth-child(even) {
+			@apply bg-gray-800;
+		}
 
-    &:hover {
-      @apply bg-gray-700;
-    }
-  }
+		&:hover {
+			@apply bg-gray-700;
+		}
+	}
 
-  &Title,
-  &Cell {
-    @apply px-4;
-  }
+	&Title,
+	&Cell {
+		@apply px-4;
+	}
 
-  @for $i from 1 through 12 {
-    & .col#{$i} {
-      grid-column: span #{$i} / span #{$i};
-    }
-  }
+	@for $i from 1 through 12 {
+		& .col#{$i} {
+			grid-column: span #{$i} / span #{$i};
+		}
+	}
 }

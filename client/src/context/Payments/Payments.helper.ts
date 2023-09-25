@@ -1,11 +1,11 @@
-import { REQUEST_STATUS } from "@/types"
+import { REQUEST_STATUS } from '@/types'
 
 export const getInitialPaymentsState = () => ({
-  data: null,
-  status: REQUEST_STATUS.IDLE,
+	data: null,
+	status: REQUEST_STATUS.IDLE,
 })
 
 export const getInitialPaymentsContext = () => ({
-  payments: getInitialPaymentsState(),
-  setPayments: () => null,
+	payments: getInitialPaymentsState(),
+	setPayments: () => null,
 })

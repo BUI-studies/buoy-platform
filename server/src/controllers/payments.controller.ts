@@ -1,52 +1,47 @@
-import { Request, Response } from "express"
+import { Request, Response } from 'express'
 
-import { payemntsMapper } from "@/model"
+import { payemntsMapper } from '@/model'
 
-import { SHEETS_TITLES } from "@/types"
-import { Sheets } from "@/utils"
+import { SHEETS_TITLES } from '@/types'
+import { Sheets } from '@/utils'
 
 const getAllPayments = async () => {
-  await Sheets.getDoc()
-  Sheets.tables?.[SHEETS_TITLES.PAYMENTS].loadCells()
+	await Sheets.getDoc()
+	Sheets.tables?.[SHEETS_TITLES.PAYMENTS].loadCells()
 
-  return Sheets.parseRows(
-    Sheets.tables?.[SHEETS_TITLES.PAYMENTS]._cells,
-    payemntsMapper
-  )
+	return Sheets.parseRows(Sheets.tables?.[SHEETS_TITLES.PAYMENTS]._cells, payemntsMapper)
 }
 
 const getAll = async (req: Request, res: Response) => {
-  const { fullname } = req.query
-  const allPayments = await getAllPayments()
+	const { fullname } = req.query
+	const allPayments = await getAllPayments()
 
-  if (!fullname) {
-    return res.send(allPayments)
-  }
+	if (!fullname) {
+		return res.send(allPayments)
+	}
 
-  const [name, surname] = (fullname as string)?.split(" ")
+	const [name, surname] = (fullname as string)?.split(' ')
 
-  const allPaymentsNamed = allPayments.filter(
-    ({ sender }) => sender === `${name}_${surname}`
-  )
+	const allPaymentsNamed = allPayments.filter(({ sender }) => sender === `${name}_${surname}`)
 
-  res.send(allPaymentsNamed)
+	res.send(allPaymentsNamed)
 }
 
 const saveMeeting = async (req: Request, res: Response) => {
-  res.send({})
+	res.send({})
 }
 
 const updateMeeting = async (req: Request, res: Response) => {
-  res.send({})
+	res.send({})
 }
 
 const deleteMeeting = async (req: Request, res: Response) => {
-  res.send({})
+	res.send({})
 }
 
 export const PaymentsController = {
-  get: getAll,
-  save: saveMeeting,
-  update: updateMeeting,
-  delete: deleteMeeting,
+	get: getAll,
+	save: saveMeeting,
+	update: updateMeeting,
+	delete: deleteMeeting,
 }
