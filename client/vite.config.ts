@@ -11,7 +11,7 @@ export default defineConfig({
 	server: {
 		proxy: {
 			'/api': {
-				target: 'http://localhost:9004',
+				target: 'http://localhost:8004',
 			},
 		},
 	},
