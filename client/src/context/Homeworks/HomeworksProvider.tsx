@@ -1,6 +1,6 @@
-import { useState, FC, PropsWithChildren } from 'react'
+import { FC, PropsWithChildren, useState } from 'react'
 
-import { getInitialHomeworksState, HomeworksState, HomeworksContext } from '@/context'
+import { getInitialHomeworksState, HomeworksContext, HomeworksState } from '@/context'
 
 const HomeworksProvider: FC<PropsWithChildren> = ({ children }) => {
 	const initialState = getInitialHomeworksState()

@@ -1,4 +1,4 @@
-import { ReactNode, Dispatch, SetStateAction } from 'react'
+import { Dispatch, ReactNode, SetStateAction } from 'react'
 
 export type ModalContextProps = {
 	modal: null | ReactNode

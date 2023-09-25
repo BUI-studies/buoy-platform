@@ -22,7 +22,5 @@ const getRequestOptions = () => ({
 
 export const request = async (url: string, options: RequestInit = getRequestOptions()) => {
 	const resp = await fetch(url, options)
-	const data = await resp.json()
-
-	return data
+	return await resp.json()
 }

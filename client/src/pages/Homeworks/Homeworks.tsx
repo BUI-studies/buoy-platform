@@ -73,7 +73,7 @@ const Homeworks = () => {
 			API.getHomeworks(userInfo.fullName.toString()).then(Homeworks => {
 				setHomeworks({ data: Homeworks, status: REQUEST_STATUS.SUCCESS })
 			})
-	}, [userToken, userInfo?.fullName])
+	}, [userToken, userInfo?.fullName, homeworks, setHomeworks])
 
 	return !homeworks.data && homeworks.status === REQUEST_STATUS.LOADING ? (
 		<p>Loading</p>

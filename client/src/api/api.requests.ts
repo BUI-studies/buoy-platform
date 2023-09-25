@@ -1,4 +1,4 @@
-import { getHeaders, _URL, request } from '@/api/'
+import { _URL, getHeaders, request } from '@/api/'
 import { LoginInputs } from '@/pages/Login/Login.helper'
 
 const login = async (formData: LoginInputs) => {

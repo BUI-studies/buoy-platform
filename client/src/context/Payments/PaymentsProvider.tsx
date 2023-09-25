@@ -1,6 +1,6 @@
-import { useState, FC, PropsWithChildren } from 'react'
+import { FC, PropsWithChildren, useState } from 'react'
 
-import { getInitialPaymentsState, PaymentsState, PaymentsContext } from '@/context'
+import { getInitialPaymentsState, PaymentsContext, PaymentsState } from '@/context'
 
 const PaymentsProvider: FC<PropsWithChildren> = ({ children }) => {
 	const initialState = getInitialPaymentsState()

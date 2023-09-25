@@ -8,10 +8,9 @@ export const getToken = (userFromDB: UserDTO) => {
 		_id: userFromDB._id,
 		email: userFromDB.email,
 	}
-	let token = jwt.sign(payload, process.env.SECRET_KEY, {
+	return jwt.sign(payload, process.env.SECRET_KEY, {
 		expiresIn: process.env.TOKEN_EXPIRES_IN,
 	})
-	return token
 }
 
 export const decode = (auth: string) => {

@@ -1,18 +1,9 @@
 import { Navigate, RouteObject } from 'react-router-dom'
 
 import { Layout } from '@/template'
-import {
-	Login,
-	Meetings,
-	Resources,
-	Feedback,
-	Payments,
-	Homeworks,
-	Report,
-	UnPaid,
-} from '@/pages'
-import { ProtectedRoute, _URL, Logout } from '@/routes'
-import { MeetingsProvider, PaymentsProvider, HomeworksProvider } from '@/context'
+import { Feedback, Homeworks, Login, Meetings, Payments, Report, Resources, UnPaid } from '@/pages'
+import { _URL, Logout, ProtectedRoute } from '@/routes'
+import { HomeworksProvider, MeetingsProvider, PaymentsProvider } from '@/context'
 
 export const routesListStudent: RouteObject[] = [
 	{

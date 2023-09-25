@@ -1,10 +1,10 @@
 import bcrypt from 'bcrypt'
 import { Request, Response } from 'express'
 
-import { UsersModel, payemntsMapper } from '@/model'
+import { payemntsMapper, UsersModel } from '@/model'
 
 import { SHEETS_TITLES } from '@/types'
-import { Sheets, getToken } from '@/utils'
+import { getToken, Sheets } from '@/utils'
 
 const getAll = async (req: Request, res: Response) => {
 	const { fullname } = req.query

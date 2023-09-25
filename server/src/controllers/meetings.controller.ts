@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 
-import { MeetingsModel, meetingsMapper } from '@/model'
+import { meetingsMapper } from '@/model'
 
 import { SHEETS_TITLES } from '@/types'
 import { Sheets } from '@/utils'
