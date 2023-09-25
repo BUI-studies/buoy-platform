@@ -1,7 +1,7 @@
-export * from "./Form/"
-export * from "./DataTable/"
-export * from "./Images"
-export { default as Modal } from "./Modal/Modal"
-export { default as MeetingsItem } from "./MeetingsItem/MeetingsItem"
-export { default as HomewoksItem } from "./HomewoksItem/HomewoksItem"
-export { default as IFrame } from "./IFrame"
+export * from './Form/'
+export * from './DataTable/'
+export * from './Images'
+export { default as Modal } from './Modal/Modal'
+export { default as MeetingsItem } from './MeetingsItem/MeetingsItem'
+export { default as HomewoksItem } from './HomewoksItem/HomewoksItem'
+export { default as IFrame } from './IFrame'

@@ -1,5 +1,5 @@
 const DataTableRow = () => {
-  return <div>DataTableRow</div>
+	return <div>DataTableRow</div>
 }
 
 export default DataTableRow

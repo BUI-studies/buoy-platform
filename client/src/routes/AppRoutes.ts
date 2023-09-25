@@ -1,7 +1,7 @@
-import { useRoutes } from "react-router-dom"
+import { useRoutes } from 'react-router-dom'
 
-import { routesList } from "@/routes"
+import { routesList } from '@/routes'
 
 export const AppRoutes = () => {
-  return useRoutes(routesList)
+	return useRoutes(routesList)
 }

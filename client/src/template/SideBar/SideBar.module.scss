@@ -1,33 +1,33 @@
 .pannel {
-  @apply flex flex-col bg-blue-950;
+	@apply flex flex-col bg-blue-950;
 }
 
 .company {
-  @apply flex items-center w-12 h-12;
+	@apply flex items-center w-12 h-12;
 
-  &Wrapper {
-    @apply mx-6;
-    align-self: flex-start;
-  }
+	&Wrapper {
+		@apply mx-6;
+		align-self: flex-start;
+	}
 
-  & img {
-    @apply w-full h-full;
-    object-fit: contain;
-  }
+	& img {
+		@apply w-full h-full;
+		object-fit: contain;
+	}
 }
 
 .nav {
-  @apply flex flex-col mt-36;
+	@apply flex flex-col mt-36;
 
-  & a {
-    @apply py-2 px-6;
-    transition: background-color 0.3s ease-in-out;
-    &:hover {
-      @apply bg-blue-700;
-    }
-  }
+	& a {
+		@apply py-2 px-6;
+		transition: background-color 0.3s ease-in-out;
+		&:hover {
+			@apply bg-blue-700;
+		}
+	}
 }
 
 .usefullLinks {
-  @apply px-6 flex flex-wrap justify-between gap-2 mt-8;
+	@apply px-6 flex flex-wrap justify-between gap-2 mt-8;
 }

@@ -1,16 +1,16 @@
 .rowTitle {
-  transition: color 0.3s;
-  &:hover {
-    cursor: pointer;
-    @apply text-blue-500;
-  }
+	transition: color 0.3s;
+	&:hover {
+		cursor: pointer;
+		@apply text-blue-500;
+	}
 }
 
 .reportLink {
-  text-decoration: underline;
-  transition: color 0.3s;
+	text-decoration: underline;
+	transition: color 0.3s;
 
-  &:hover {
-    @apply text-blue-500;
-  }
+	&:hover {
+		@apply text-blue-500;
+	}
 }
