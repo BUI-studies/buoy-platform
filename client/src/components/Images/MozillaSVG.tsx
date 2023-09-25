@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 import { SVGProps } from '@/types'
 
-const MDN: FC<SVGProps> = ({ size, width = 24, height = 24 }) => {
+const MozillaSVG: FC<SVGProps> = ({ size, width = 24, height = 24 }) => {
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -26,4 +26,4 @@ const MDN: FC<SVGProps> = ({ size, width = 24, height = 24 }) => {
 	)
 }
 
-export default MDN
+export default MozillaSVG
