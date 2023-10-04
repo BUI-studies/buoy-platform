@@ -21,9 +21,10 @@ export const homeworksMapper = (cellsArray: TableCell[]) => ({
   homeworkName: Sheets.getCellValueFromRawData(cellsArray[2]),
   github: Sheets.getCellValueFromRawData(cellsArray[3]),
   isReviewed: Sheets.getCellValueFromRawData(cellsArray[4]),
-  reviewLink: Sheets.getCellValueFromRawData(cellsArray[5]) || null,
-  mentorsComment: Sheets.getCellValueFromRawData(cellsArray[6]) || null,
-  studentsComment: Sheets.getCellValueFromRawData(cellsArray[7]) || null,
+  mentor: Sheets.getCellValueFromRawData(cellsArray[5]),
+  reviewLink: Sheets.getCellValueFromRawData(cellsArray[6]) || null,
+  mentorsComment: Sheets.getCellValueFromRawData(cellsArray[7]) || null,
+  studentsComment: Sheets.getCellValueFromRawData(cellsArray[8]) || null,
 })
 
 export const HomerwoksSchema = new Schema<Homerwok>({})

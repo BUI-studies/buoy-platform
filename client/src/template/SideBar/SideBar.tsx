@@ -52,7 +52,7 @@ const SideBar: FC<SodeBarProps> = ({ className }) => {
 				{mappedNavLinks}
 
 				<div className={classes.usefullLinks}>
-					{user.data?.data?.role === 'student' && (
+					{role === 'student' && (
 						<NavLink to={_URL.MONO} target="_blank" className="grow text-center border-rose-400">
 							💸 скинуть баблішко 💸
 						</NavLink>

@@ -132,7 +132,6 @@ export const routesListMentor: RouteObject[] = [
 				path: _URL.REPORT,
 				element: (
 					<ProtectedRoute>
-						<h1>report dly iframe</h1>
 						<Report />
 					</ProtectedRoute>
 				),

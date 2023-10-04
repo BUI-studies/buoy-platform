@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const Report = () => {
 	const [showForm, setShowForm] = useState(false)
@@ -7,7 +7,6 @@ const Report = () => {
 	const handleIframeLoad = () => {
 		setShowForm(true)
 	}
-
 	return (
 		<>
 			{!showForm && <span className="">Loading...</span>}
@@ -19,7 +18,7 @@ const Report = () => {
 				onLoad={handleIframeLoad}
 				className={`${showForm ? 'block' : 'hidden'}`}
 			>
-				<span className="">Loading...blyad</span>
+				<span className="">Loading...</span>
 			</iframe>
 		</>
 	)
