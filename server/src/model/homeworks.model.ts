@@ -1,18 +1,18 @@
-import mongoose from "mongoose"
+import mongoose from 'mongoose'
 
-import { Sheets, TableCell } from "@/utils"
-import { parseTimeStamp } from "@/helpers"
+import { Sheets, TableCell } from '@/utils'
+import { parseTimeStamp } from '@/helpers'
 
 const Schema = mongoose.Schema
 
 export interface Homerwok extends mongoose.Document {
-  timestamp: number
-  sender: string
-  homeworkName: number
-  github: string
-  isReviewed: string
-  mentorsComment: string
-  studentsComment: string
+	timestamp: number
+	sender: string
+	homeworkName: number
+	github: string
+	isReviewed: string
+	mentorsComment: string
+	studentsComment: string
 }
 
 export const homeworksMapper = (cellsArray: TableCell[]) => ({
@@ -29,7 +29,4 @@ export const homeworksMapper = (cellsArray: TableCell[]) => ({
 
 export const HomerwoksSchema = new Schema<Homerwok>({})
 
-export const HomeworksModel = mongoose.model<Homerwok>(
-  "Homerwoks",
-  HomerwoksSchema
-)
+export const HomeworksModel = mongoose.model<Homerwok>('Homerwoks', HomerwoksSchema)

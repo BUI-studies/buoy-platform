@@ -19,6 +19,7 @@ export const verifyToken = async (
 	setUserState: Dispatch<SetStateAction<UserState>>,
 ) => {
 	const { data, error } = await API.verify(token)
+<<<<<<< HEAD
 	if (error) {
 		console.error(error)
 		Storage.set(TOKEN_KEY, null)
@@ -30,5 +31,19 @@ export const verifyToken = async (
 		return
 	}
 
+=======
+
+	if (error) {
+		console.error(error)
+		Storage.set(TOKEN_KEY, null)
+
+		setUserState({
+			data: { token: null, data: null },
+			status: REQUEST_STATUS.IDLE,
+		})
+		return
+	}
+
+>>>>>>> master
 	setUserState({ data: { data, token }, status: REQUEST_STATUS.SUCCESS })
 }

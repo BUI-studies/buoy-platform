@@ -1,37 +1,37 @@
 .pannel {
-  @apply flex justify-between gap-4 mb-12;
+	@apply flex justify-between gap-4 mb-12;
 }
 
 .highlights {
-  @apply flex flex-col grow justify-center text-center;
+	@apply flex flex-col grow justify-center text-center;
 }
 
 .totalHeader {
-  @apply text-2xl;
+	@apply text-2xl;
 }
 
 .addPayment {
-  @apply px-4 py-2 flex items-center bg-blue-800 rounded hover:bg-blue-600;
-  transition: background-color 0.2s;
+	@apply px-4 py-2 flex items-center bg-blue-800 rounded hover:bg-blue-600;
+	transition: background-color 0.2s;
 }
 
 .modalTitle {
-  @apply text-lg text-center mb-6;
+	@apply text-lg text-center mb-6;
 }
 
 .qr {
-  cursor: pointer;
-  @apply p-4 bg-white rounded-md;
+	cursor: pointer;
+	@apply p-4 bg-white rounded-md;
 
-  & img {
-    @apply block w-12 h-12;
-  }
+	& img {
+		@apply block w-12 h-12;
+	}
 
-  &Bigger {
-    @apply p-0 flex items-center justify-center;
+	&Bigger {
+		@apply p-0 flex items-center justify-center;
 
-    & img {
-      @apply block w-48 h-48;
-    }
-  }
+		& img {
+			@apply block w-48 h-48;
+		}
+	}
 }

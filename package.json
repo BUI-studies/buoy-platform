@@ -5,15 +5,16 @@
   "main": "index.js",
   "scripts": {
     "start": "cd server && yarn start",
-    "install:client": "cd client && yarn install",
-    "install:server": "cd server && yarn install",
-    "install": "yarn install:client && yarn install:server",
+    "install:client": "cd client && yarn",
+    "install:server": "cd server && yarn",
+    "install": "yarn && yarn install:client && yarn install:server",
     "build:client": "cd client && yarn build",
     "build:server": "cd server && rm -rf dist/* && yarn build ",
     "build:cts": "mkdir -p ./server/dist/public && cp -a client/dist/. server/dist/public/",
     "build": "yarn build:client && yarn build:server && yarn build:cts",
     "dev:server": "cd ./server && yarn dev",
-    "dev:client": "cd ./client && yarn dev"
+    "dev:client": "cd ./client && yarn dev",
+    "prettify": "yarn prettier --write --config ./.prettierrc 'client/src/**/*.{css,scss,js,jsx,ts,tsx}' 'server/src/**/*.{js,jsx,ts,tsx}'"
   },
   "repository": {
     "type": "git",
