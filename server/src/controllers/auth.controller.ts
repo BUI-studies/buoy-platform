@@ -35,11 +35,8 @@ const login = async (req: Request, res: Response) => {
 		email: userFromDB.email,
 		fullName: userFromDB.fullName,
 		tel: userFromDB.tel,
-<<<<<<< HEAD
 		role: userFromDB.role,
 		status: userFromDB.status,
-=======
->>>>>>> master
 	}
 
 	res.send({

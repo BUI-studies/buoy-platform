@@ -20,11 +20,8 @@ export interface User extends mongoose.Document {
 	tel: string
 	email: string
 	password: string
-<<<<<<< HEAD
 	role: string
 	status: string
-=======
->>>>>>> master
 }
 
 export const UsersSchema = new Schema<User>({

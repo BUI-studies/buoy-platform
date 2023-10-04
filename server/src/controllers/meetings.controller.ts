@@ -15,7 +15,6 @@ const getAllMeetings = async () => {
 }
 
 const getAll = async (req: Request, res: Response) => {
-<<<<<<< HEAD
 	const { fullname, role } = req.query
 	const allMeetings = await getAllMeetings()
 	if (!fullname) {
@@ -28,21 +27,6 @@ const getAll = async (req: Request, res: Response) => {
 		role === 'mentor' ? mentor === fullname : students?.includes(`${name}_${surname}`),
 	)
 
-=======
-	const { fullname } = req.query
-	const allMeetings = await getAllMeetings()
-
-	if (!fullname) {
-		return res.send(allMeetings)
-	}
-
-	const [name, surname] = (fullname as string)?.split(' ')
-
-	const allMeetingsNamed = allMeetings.filter(
-		({ students }) => students?.includes(`${name}_${surname}`),
-	)
-
->>>>>>> master
 	res.send(allMeetingsNamed)
 }
 
