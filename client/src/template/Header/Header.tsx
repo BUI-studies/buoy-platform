@@ -10,14 +10,8 @@ const Header = () => {
 	const userInfo = user?.data?.data
 
 	const buttonData = user?.data?.data
-		? {
-				text: 'Logout',
-				link: _URL.LOGOUT,
-		  }
-		: {
-				text: 'Login',
-				link: _URL.LOGIN,
-		  }
+		? { text: 'Logout', link: _URL.LOGOUT }
+		: { text: 'Login', link: _URL.LOGIN }
 
 	return (
 		<header className={classes.topPannel}>

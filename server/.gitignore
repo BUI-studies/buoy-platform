@@ -1,13 +1,7 @@
-.vscode/**
-.idea/**/*
-node_modules/**/*
-
-.DS_Store
-
-**/.vscode/**
 **/.idea/**/*
 **/node_modules/**/*
 
+.DS_Store
 **/.DS_Store
 
 *.xml

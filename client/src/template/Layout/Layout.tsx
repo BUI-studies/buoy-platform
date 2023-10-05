@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { Outlet } from 'react-router-dom'
 
-import { ErrorBoundary, Header, Footer } from '..'
+import { ErrorBoundary, Footer, Header } from '..'
 import { SideBar } from '@/template'
 import { useAuth } from '@/context'
 import { REQUEST_STATUS } from '@/types'

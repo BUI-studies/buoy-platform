@@ -2,10 +2,13 @@ export enum _URL {
 	HOME = '/',
 	LOGIN = '/login',
 	LOGOUT = '/logout',
-	PAYMENTS = '/payments',
 	MEETINGS = '/meetings',
 	HOMEWORKS = '/homeworks',
 	HOMEWORKS_SINGLE = '/homeworks/:id',
+	REPORT = '/report',
+
+	PAYMENTS = '/payments',
+	UNPAID = '/unpaid',
 
 	FEEDBACK = '/feedback/:type',
 	FORM_FEEDBACK = '/feedback/lesson',

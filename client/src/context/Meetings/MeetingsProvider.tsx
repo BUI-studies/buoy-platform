@@ -1,6 +1,6 @@
-import { useState, FC, PropsWithChildren } from 'react'
+import { FC, PropsWithChildren, useState } from 'react'
 
-import { getInitialMeetingsState, MeetingsState, MeetingsContext } from '@/context'
+import { getInitialMeetingsState, MeetingsContext, MeetingsState } from '@/context'
 
 const MeetingsProvider: FC<PropsWithChildren> = ({ children }) => {
 	const initialState = getInitialMeetingsState()

@@ -1,6 +1,6 @@
-import { parseTimeStamp } from '@/helpers'
 import { Sheets, TableCell } from '@/utils'
 import mongoose from 'mongoose'
+
 const Schema = mongoose.Schema
 
 export interface UserDTO {
@@ -20,6 +20,8 @@ export interface User extends mongoose.Document {
 	tel: string
 	email: string
 	password: string
+	role: string
+	status: string
 }
 
 export const UsersSchema = new Schema<User>({
@@ -36,6 +38,14 @@ export const UsersSchema = new Schema<User>({
 		required: true,
 	},
 	password: {
+		type: String,
+		required: true,
+	},
+	role: {
+		type: String,
+		required: true,
+	},
+	status: {
 		type: String,
 		required: true,
 	},

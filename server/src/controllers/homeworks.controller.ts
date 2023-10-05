@@ -18,16 +18,17 @@ const getAllHomeworks = async () => {
 }
 
 const getAll = async (req: Request, res: Response) => {
-	const { fullname } = req.query
+	const { fullname, role } = req.query
 	const allHomeworks = await getAllHomeworks()
 
 	if (!fullname) {
 		return res.send(allHomeworks)
 	}
-
 	const [name, surname] = (fullname as string)?.split(' ')
 
-	const allHomeworksNamed = allHomeworks.filter(({ sender }) => sender === `${name}_${surname}`)
+	const allHomeworksNamed = allHomeworks.filter(({ sender, mentor }) =>
+		role === 'mentor' ? mentor === fullname : sender === `${name}_${surname}`,
+	)
 
 	res.send(allHomeworksNamed)
 }

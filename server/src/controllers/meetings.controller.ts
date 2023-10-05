@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 
-import { MeetingsModel, meetingsMapper } from '@/model'
+import { meetingsMapper } from '@/model'
 
 import { SHEETS_TITLES } from '@/types'
 import { Sheets } from '@/utils'
@@ -15,17 +15,16 @@ const getAllMeetings = async () => {
 }
 
 const getAll = async (req: Request, res: Response) => {
-	const { fullname } = req.query
+	const { fullname, role } = req.query
 	const allMeetings = await getAllMeetings()
-
 	if (!fullname) {
 		return res.send(allMeetings)
 	}
 
 	const [name, surname] = (fullname as string)?.split(' ')
 
-	const allMeetingsNamed = allMeetings.filter(
-		({ students }) => students?.includes(`${name}_${surname}`),
+	const allMeetingsNamed = allMeetings.filter(({ students, mentor }) =>
+		role === 'mentor' ? mentor === fullname : students?.includes(`${name}_${surname}`),
 	)
 
 	res.send(allMeetingsNamed)

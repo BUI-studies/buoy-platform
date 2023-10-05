@@ -19,7 +19,6 @@ export const verifyToken = async (
 	setUserState: Dispatch<SetStateAction<UserState>>,
 ) => {
 	const { data, error } = await API.verify(token)
-
 	if (error) {
 		console.error(error)
 		Storage.set(TOKEN_KEY, null)

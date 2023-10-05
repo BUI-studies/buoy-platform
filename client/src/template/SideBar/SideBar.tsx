@@ -1,21 +1,38 @@
 import { FC } from 'react'
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink, Link, useNavigate } from 'react-router-dom'
 
 import logoPath from '@/assets/logo__bright.png'
 
 import { _URL } from '@/routes'
 import { Discord, GitHub, MDN, Youtube } from '@/components'
-import { ActiveClassCallbackProps } from '@/types'
+import { ROLES, USER_STATUSES } from '@/types'
+
+import { AuthContextType, useAuth } from '@/context'
+import { navLinkList } from '@/template'
+
+import { SideBarLink } from './sidebar-list'
+import { handleActiveClass, SideBarProps } from './SideBar.helper'
 
 import classes from './SideBar.module.scss'
 
-type SodeBarProps = {
-	className: string
-}
+const SideBar: FC<SideBarProps> = ({ className }) => {
+	const { user }: AuthContextType = useAuth()
+	const navigate = useNavigate()
 
-const SideBar: FC<SodeBarProps> = ({ className }) => {
-	const handleActiveClass = ({ isActive }: ActiveClassCallbackProps) =>
-		isActive ? 'bg-blue-900' : ''
+	const role: ROLES = user?.data?.data?.role as ROLES
+	const userStatus = user?.data?.data?.status as USER_STATUSES
+
+	const mappedNavLinks =
+		navLinkList[role]?.map(({ url, name }: SideBarLink) => (
+			<NavLink
+				to={url}
+				className={handleActiveClass(userStatus)}
+				key={name}
+				onClick={() => (userStatus === USER_STATUSES.INACTIVE ? navigate(_URL.UNPAID) : null)}
+			>
+				{name}
+			</NavLink>
+		)) || []
 
 	return (
 		<aside className={[className, classes.pannel].join(' ')}>
@@ -26,26 +43,14 @@ const SideBar: FC<SodeBarProps> = ({ className }) => {
 			</Link>
 
 			<nav className={classes.nav}>
-				<NavLink to={_URL.MEETINGS} className={handleActiveClass}>
-					зустрічі
-				</NavLink>
-				<NavLink to={_URL.FORM_FEEDBACK} className={handleActiveClass}>
-					відгук по зустрічі
-				</NavLink>
-				<NavLink to={_URL.FORM_SENKAN} className={handleActiveClass}>
-					сєнкан
-				</NavLink>
-				<NavLink to={_URL.HOMEWORKS} className={handleActiveClass}>
-					домашки
-				</NavLink>
-				<NavLink to={_URL.PAYMENTS} className={handleActiveClass}>
-					оплати
-				</NavLink>
+				{mappedNavLinks}
 
 				<div className={classes.usefullLinks}>
-					<NavLink to={_URL.MONO} target="_blank" className="grow text-center border-rose-400">
-						💸 скинуть баблішко 💸
-					</NavLink>
+					{role === 'student' && (
+						<NavLink to={_URL.MONO} target="_blank" className="grow text-center border-rose-400">
+							💸 скинуть баблішко 💸
+						</NavLink>
+					)}
 					<NavLink to={_URL.DISCORD} target="_blank">
 						<Discord />
 					</NavLink>

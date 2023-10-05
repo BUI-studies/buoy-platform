@@ -64,10 +64,10 @@ const Meetings = () => {
 
 		userInfo?.fullName &&
 			userToken &&
-			API.getMeetings(userInfo.fullName.toString()).then(meetings => {
+			API.getMeetings(userInfo.fullName.toString(), userInfo.role.toString()).then(meetings => {
 				setMeetings({ data: meetings, status: REQUEST_STATUS.SUCCESS })
 			})
-	}, [userToken, userInfo?.fullName])
+	}, [userToken, userInfo?.fullName, userInfo?.role])
 
 	return !meetings.data && meetings.status === REQUEST_STATUS.LOADING ? (
 		<p>Loading</p>

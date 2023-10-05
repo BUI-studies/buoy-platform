@@ -2,8 +2,8 @@ import bcrypt from 'bcrypt'
 import { verify } from 'jsonwebtoken'
 import { Request, Response } from 'express'
 
-import { User, UserJWTPayload, UsersModel } from '../model'
-import { getToken } from '../utils'
+import { User, UserJWTPayload, UsersModel } from '@/model'
+import { getToken } from '@/utils'
 
 const login = async (req: Request, res: Response) => {
 	if (!req.body || !req.body.email || !req.body.password) {
@@ -35,6 +35,8 @@ const login = async (req: Request, res: Response) => {
 		email: userFromDB.email,
 		fullName: userFromDB.fullName,
 		tel: userFromDB.tel,
+		role: userFromDB.role,
+		status: userFromDB.status,
 	}
 
 	res.send({
@@ -72,6 +74,8 @@ const verifyToken = async (req: Request, res: Response) => {
 				email: userFromDB.email,
 				fullName: userFromDB.fullName,
 				tel: userFromDB.tel,
+				role: userFromDB.role,
+				status: userFromDB.status,
 			},
 		})
 	} catch (error) {

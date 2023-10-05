@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react'
-import { MeetingsContextType, getInitialMeetingsContext } from '@/context'
+import { getInitialMeetingsContext, MeetingsContextType } from '@/context'
 
 export const MeetingsContext = createContext<MeetingsContextType>(getInitialMeetingsContext())
 export const useMeetings = () => useContext(MeetingsContext)

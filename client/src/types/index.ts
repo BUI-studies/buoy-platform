@@ -30,3 +30,14 @@ export type SVGProps = {
 	width?: number | string
 	height?: number | string
 }
+
+export enum ROLES {
+	DEFAULT = 'student',
+	STUDENT = 'student',
+	MENTOR = 'mentor',
+}
+
+export enum USER_STATUSES {
+	ACTIVE = 'active',
+	INACTIVE = 'inactive',
+}

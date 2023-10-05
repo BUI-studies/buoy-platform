@@ -1,8 +1,8 @@
-import { useState, useEffect, FC, PropsWithChildren } from 'react'
+import { FC, PropsWithChildren, useEffect, useState } from 'react'
 
 import { Storage, TOKEN_KEY } from '@/utils'
 
-import { verifyToken, AuthContext, UserState, getInitialUserState } from '@/context'
+import { AuthContext, getInitialUserState, UserState, verifyToken } from '@/context'
 
 const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
 	const initialState = getInitialUserState()
