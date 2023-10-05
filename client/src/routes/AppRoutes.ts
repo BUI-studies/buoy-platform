@@ -1,8 +1,8 @@
 import { RouteObject, useRoutes } from 'react-router-dom'
 
 import { AuthContextType, useAuth } from '@/context'
-import { routesListMentor, routesListStudent, routesListDefault } from '@/routes'
-import { ROLES } from '@/types'
+import { getRoutesListMentor, routesListStudent, routesListDefault } from '@/routes'
+import { ROLES, USER_STATUSES } from '@/types'
 
 export const AppRoutes = () => {
 	const { user }: AuthContextType = useAuth()
@@ -11,10 +11,11 @@ export const AppRoutes = () => {
 
 	switch (user?.data?.data?.role) {
 		case ROLES.STUDENT:
-			routesList = user?.data?.data?.status === 'active' ? routesListStudent : routesListDefault
+			routesList =
+				user?.data?.data?.status === USER_STATUSES.ACTIVE ? routesListStudent : routesListDefault
 			break
 		case ROLES.MENTOR:
-			routesList = routesListMentor
+			routesList = getRoutesListMentor(user?.data?.data?.status as USER_STATUSES)
 			break
 	}
 	return useRoutes(routesList)

@@ -1,12 +1,14 @@
 import { _URL } from '@/routes'
 import { ROLES } from '@/types'
 
-type NavLink = {
-	mentor: { url: string; name: string }[]
-	student: { url: string; name: string }[]
+export type SideBarLink = { url: string; name: string }
+
+type LinksMap = {
+	mentor: SideBarLink[]
+	student: SideBarLink[]
 }
 
-export const navLinkList: NavLink = {
+export const navLinkList: LinksMap = {
 	[ROLES.MENTOR]: [
 		{ url: _URL.REPORT, name: 'репорт' },
 		{ url: _URL.MEETINGS, name: 'зустрічі' },

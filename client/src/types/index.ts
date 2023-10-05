@@ -36,3 +36,8 @@ export enum ROLES {
 	STUDENT = 'student',
 	MENTOR = 'mentor',
 }
+
+export enum USER_STATUSES {
+	ACTIVE = 'active',
+	INACTIVE = 'inactive',
+}

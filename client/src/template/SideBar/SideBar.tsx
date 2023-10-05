@@ -1,44 +1,38 @@
 import { FC } from 'react'
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink, Link, useNavigate } from 'react-router-dom'
 
 import logoPath from '@/assets/logo__bright.png'
 
 import { _URL } from '@/routes'
 import { Discord, GitHub, MDN, Youtube } from '@/components'
-import { ActiveClassCallbackProps, ROLES } from '@/types'
+import { ROLES, USER_STATUSES } from '@/types'
 
 import { AuthContextType, useAuth } from '@/context'
 import { navLinkList } from '@/template'
 
+import { SideBarLink } from './sidebar-list'
+import { handleActiveClass, SideBarProps } from './SideBar.helper'
+
 import classes from './SideBar.module.scss'
 
-type SodeBarProps = {
-	className: string
-}
-
-const SideBar: FC<SodeBarProps> = ({ className }) => {
-	const handleActiveClass = ({ isActive }: ActiveClassCallbackProps) =>
-		isActive ? 'bg-blue-900' : ''
-
-	const disableLink = (e: any, params: boolean | undefined) => {
-		if (params) e.preventDefault()
-	}
-
+const SideBar: FC<SideBarProps> = ({ className }) => {
 	const { user }: AuthContextType = useAuth()
+	const navigate = useNavigate()
+
 	const role: ROLES = user?.data?.data?.role as ROLES
+	const userStatus = user?.data?.data?.status as USER_STATUSES
+
 	const mappedNavLinks =
-		navLinkList[role]?.map(
-			({ url, name, statusDisabled }: { url: string; name: string; statusDisabled?: boolean }) => (
-				<NavLink
-					to={url}
-					className={handleActiveClass}
-					key={name}
-					onClick={e => disableLink(e, statusDisabled)}
-				>
-					{name}
-				</NavLink>
-			),
-		) || []
+		navLinkList[role]?.map(({ url, name }: SideBarLink) => (
+			<NavLink
+				to={url}
+				className={handleActiveClass(userStatus)}
+				key={name}
+				onClick={() => (userStatus === USER_STATUSES.INACTIVE ? navigate(_URL.UNPAID) : null)}
+			>
+				{name}
+			</NavLink>
+		)) || []
 
 	return (
 		<aside className={[className, classes.pannel].join(' ')}>

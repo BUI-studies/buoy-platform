@@ -14,12 +14,12 @@ const verify = async (token: string) => {
 }
 
 const getMeetings = async (fullName: string, role: string) =>
-  request(`${_URL.meetings}?fullname=${fullName}&role=${role}`)
+	request(`${_URL.meetings}?fullname=${fullName}&role=${role}`)
 
 const getPayments = async (fullName: string) => request(`${_URL.payments}?fullname=${fullName}`)
 
 const getHomeworks = async (fullName: string, role: string) =>
-  request(`${_URL.homeworks}?fullname=${fullName}&role=${role}`)
+	request(`${_URL.homeworks}?fullname=${fullName}&role=${role}`)
 
 export const API = {
 	login,
