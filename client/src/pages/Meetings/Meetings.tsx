@@ -62,12 +62,12 @@ const Meetings = () => {
 	useEffect(() => {
 		setMeetings({ ...meetings, status: REQUEST_STATUS.LOADING })
 
-		userInfo?.fullName &&
-			userToken &&
-			API.getMeetings(userInfo.fullName.toString()).then(meetings => {
-				setMeetings({ data: meetings, status: REQUEST_STATUS.SUCCESS })
-			})
-	}, [userToken, userInfo?.fullName])
+    userInfo?.fullName &&
+      userToken &&
+      API.getMeetings(userInfo.fullName.toString(), userInfo.role.toString()).then((meetings) => {
+        setMeetings({ data: meetings, status: REQUEST_STATUS.SUCCESS })
+      })
+  }, [userToken, userInfo?.fullName, userInfo?.role])
 
 	return !meetings.data && meetings.status === REQUEST_STATUS.LOADING ? (
 		<p>Loading</p>

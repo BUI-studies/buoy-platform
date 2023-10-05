@@ -1,9 +1,18 @@
 import { Navigate, RouteObject } from 'react-router-dom'
 
 import { Layout } from '@/template'
-import { Feedback, Homeworks, Login, Meetings, Payments, Report, Resources, UnPaid } from '@/pages'
-import { _URL, Logout, ProtectedRoute } from '@/routes'
-import { HomeworksProvider, MeetingsProvider, PaymentsProvider } from '@/context'
+import {
+	Login,
+	Meetings,
+	Resources,
+	Feedback,
+	Payments,
+	Homeworks,
+	Report,
+	UnPaid,
+} from '@/pages'
+import { ProtectedRoute, _URL, Logout } from '@/routes'
+import { MeetingsProvider, PaymentsProvider, HomeworksProvider } from '@/context'
 
 export const routesListStudent: RouteObject[] = [
 	{
@@ -123,7 +132,6 @@ export const routesListMentor: RouteObject[] = [
 				path: _URL.REPORT,
 				element: (
 					<ProtectedRoute>
-						<h1>report dly iframe</h1>
 						<Report />
 					</ProtectedRoute>
 				),
