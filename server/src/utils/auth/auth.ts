@@ -6,13 +6,12 @@ import { decode } from '@/utils'
 const freeOfAuth: string[] = ['/api/users/login', '/api/users', '/public']
 
 export const auth = async (req: Request, res: Response, next: Function) => {
-  if (!freeOfAuth.some((url) => url === req.baseUrl)) {
-    // console.log(new Date().toTimeString(), "RERQUEST", req.method, req.baseUrl)
-    if (!req.headers["authorization"]) {
-      res.status(403)
-      res.send({ message: "permission denied" })
-      return
-    }
+	if (!freeOfAuth.some(url => url === req.baseUrl)) {
+		if (!req.headers['authorization']) {
+			res.status(403)
+			res.send({ message: 'permission denied' })
+			return
+		}
 
 		const token: string = req.headers['authorization']
 		try {

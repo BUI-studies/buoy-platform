@@ -8,10 +8,9 @@ type NavLink = {
 
 export const navLinkList: NavLink = {
 	[ROLES.MENTOR]: [
-		{ url: _URL.MEETINGS, name: 'зустрічі' },
-		{ url: _URL.FEEDBACK, name: 'відгуки' },
-		{ url: _URL.HOMEWORKS, name: 'домашки' },
 		{ url: _URL.REPORT, name: 'репорт' },
+		{ url: _URL.MEETINGS, name: 'зустрічі' },
+		{ url: _URL.HOMEWORKS, name: 'домашки' },
 	],
 	[ROLES.STUDENT]: [
 		{ url: _URL.MEETINGS, name: 'зустрічі' },
