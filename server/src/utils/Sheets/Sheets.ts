@@ -27,15 +27,19 @@ export default class Sheets {
 		rowToObjectMapper: (row: TableCell[], ind: number) => Populated,
 	) {
 		return rows
-			.map((r, index) =>
-				rowToObjectMapper(
+			.map((r, index) => {
+				if(index) {
+					
+				}
+					return rowToObjectMapper(
 					r.map(({ _row, _column, _rawData }: TableCell) => ({
 						row: _row,
 						col: _column,
 						_rawData,
 					})),
 					index,
-				),
+				)
+			},
 			)
 			.filter(v => Object.keys(JSON.parse(JSON.stringify(v))).length > 0)
 	}

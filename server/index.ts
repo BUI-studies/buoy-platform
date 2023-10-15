@@ -1,5 +1,4 @@
 import path from 'path'
-import bcrypt from 'bcrypt'
 import * as dotenv from 'dotenv'
 import mongoose, { ConnectOptions } from 'mongoose'
 import express, { json, urlencoded } from 'express'

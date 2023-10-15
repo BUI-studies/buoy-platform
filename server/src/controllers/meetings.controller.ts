@@ -8,7 +8,7 @@ import { Sheets } from '@/utils'
 const getAllMeetings = async () => {
 	await Sheets.getDoc()
 	Sheets.tables?.[SHEETS_TITLES.MEETINGS].loadCells()
-
+	
 	return Sheets.parseRows(Sheets.tables?.[SHEETS_TITLES.MEETINGS]._cells, meetingsMapper).filter(
 		({ students }) => !!students,
 	)
