@@ -1,11 +1,17 @@
 import { FC } from 'react'
 import { FieldError, useForm } from 'react-hook-form'
 
-import { FormBuilder, FormProps } from '@/utils'
+import { FormBuilder, FormBuilderTypes } from '@/utils'
 
 import '../FormBuilder.scss'
 
-const Form: FC<FormProps> = ({ formProps, fields = [], classes, onSubmit, watchers }) => {
+const Form: FC<FormBuilderTypes.FormProps> = ({
+	formProps,
+	fields = [],
+	classes,
+	onSubmit,
+	watchers,
+}) => {
 	const {
 		register,
 		handleSubmit,

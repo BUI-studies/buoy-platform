@@ -1,11 +1,11 @@
-import { useAuth } from '@/context'
-import { FIELD_TYPES, FormBuilder, SelectOption } from '@/utils'
 import { useEffect, useState } from 'react'
-import { set } from 'react-hook-form'
+
+import { useAuth } from '@/context'
+import { REPORT_TYPES } from '@/types'
+import { FormBuilderTypes, FormBuilder } from '@/utils'
 
 const Report = () => {
 	const auth = useAuth()
-	console.log(auth)
 	const [showForm, setShowForm] = useState(false)
 	const formURL =
 		'https://docs.google.com/forms/d/e/1FAIpQLSeBwCg7E1-awS8q04SyE2PCv4IfUD6HvqglhudG3qyna06o3Q/viewform?embedded=true'
@@ -13,13 +13,13 @@ const Report = () => {
 		setShowForm(true)
 	}
 
-	const [students, setStudents] = useState<SelectOption[] | never[]>([])
+	const [students, setStudents] = useState<FormBuilderTypes.SelectOption[]>([])
 
 	useEffect(() => {
 		fetch(`/api/users?mentor=${auth.user?.data?.data?._id}&role=student`)
 			.then(res => res.json())
 			.then(data => {
-				const studentsOptions: SelectOption[] = data.map(
+				const studentsOptions: FormBuilderTypes.SelectOption[] = data.map(
 					(student: { fullName: string; _id: string }) => ({
 						label: student.fullName,
 						value: student._id,
@@ -28,35 +28,40 @@ const Report = () => {
 
 				setStudents(studentsOptions)
 			})
-	}, [])
+	}, [auth])
 
 	const reportFormFields = [
-		{ type: FIELD_TYPES.URL, name: 'title', label: 'title of the meeting' },
+		{ type: FormBuilderTypes.FIELD_TYPES.URL, name: 'title', label: 'title of the meeting' },
 		{
-			type: FIELD_TYPES.SELECT,
+			type: FormBuilderTypes.FIELD_TYPES.SELECT,
 			name: 'type',
 			label: 'Meeting type',
 			options: [
-				{ label: 'individual', value: 'individual' },
-				{ label: 'planning', value: 'planing' },
-				{ label: 'sync', value: 'sync' },
+				{ label: 'Individual', value: REPORT_TYPES.INDIVIDUAL },
+				{ label: 'Planning', value: REPORT_TYPES.PLANNING },
+				{ label: 'Sync', value: REPORT_TYPES.SYNC },
 			],
 		},
 		{
-			type: FIELD_TYPES.MULTI_SELECT,
+			type: FormBuilderTypes.FIELD_TYPES.MULTI_SELECT,
 			name: 'students',
 			label: 'Who was there?',
-			options: students,
+			options: students as FormBuilderTypes.SelectOption[],
 		},
 		{
-			type: FIELD_TYPES.URL,
+			type: FormBuilderTypes.FIELD_TYPES.URL,
 			name: 'report',
 			label: 'Link to the report file?',
 		},
 		{
-			type: FIELD_TYPES.TEXTAREA,
+			type: FormBuilderTypes.FIELD_TYPES.TEXTAREA,
 			name: 'comment',
 			label: 'Comment',
+		},
+		{
+			type: FormBuilderTypes.FIELD_TYPES.SUBMIT,
+			name: 'reportSubmit',
+			value: 'Save Report',
 		},
 	]
 

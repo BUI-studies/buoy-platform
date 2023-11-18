@@ -41,3 +41,9 @@ export enum USER_STATUSES {
 	ACTIVE = 'active',
 	INACTIVE = 'inactive',
 }
+
+export enum REPORT_TYPES {
+	INDIVIDUAL = 'individual',
+	PLANNING = 'planning',
+	SYNC = 'sync',
+}

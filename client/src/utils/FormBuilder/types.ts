@@ -58,6 +58,7 @@ export type InputProps = {
 	classes?: FieldClasses
 	error?: FieldError | undefined
 	options?: SelectOption[] | undefined
+	value?: string
 }
 
 export type FormProps = {
