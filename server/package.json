@@ -21,6 +21,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^5.4.0",
     "mongose": "^0.0.2-security",
+    "prettier": "^3.0.3",
     "ts-node": "^10.9.1",
     "tsc-alias": "^1.8.6"
   },

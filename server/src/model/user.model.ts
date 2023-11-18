@@ -1,5 +1,5 @@
 import { Sheets, TableCell } from '@/utils'
-import mongoose from 'mongoose'
+import mongoose, { ObjectId } from 'mongoose'
 
 const Schema = mongoose.Schema
 
@@ -22,6 +22,7 @@ export interface User extends mongoose.Document {
 	password: string
 	role: string
 	status: string
+	mentor: [{ type: mongoose.Schema.Types.ObjectId; ref: 'User' }]
 }
 
 export const UsersSchema = new Schema<User>({
@@ -47,6 +48,10 @@ export const UsersSchema = new Schema<User>({
 	},
 	status: {
 		type: String,
+		required: true,
+	},
+	mentor: {
+		type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 		required: true,
 	},
 })

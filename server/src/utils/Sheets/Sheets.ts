@@ -28,10 +28,9 @@ export default class Sheets {
 	) {
 		return rows
 			.map((r, index) => {
-				if(index) {
-					
+				if (index) {
 				}
-					return rowToObjectMapper(
+				return rowToObjectMapper(
 					r.map(({ _row, _column, _rawData }: TableCell) => ({
 						row: _row,
 						col: _column,
@@ -39,8 +38,7 @@ export default class Sheets {
 					})),
 					index,
 				)
-			},
-			)
+			})
 			.filter(v => Object.keys(JSON.parse(JSON.stringify(v))).length > 0)
 	}
 

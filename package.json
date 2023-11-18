@@ -29,7 +29,7 @@
   "homepage": "https://github.com/BUI-studies/buoy-platform#readme",
   "dependencies": {
     "pm2": "^5.3.0",
-    "prettier": "^3.0.0"
+    "prettier": "^3.0.3"
   },
   "devDependencies": {}
 }

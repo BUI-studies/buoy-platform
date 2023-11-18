@@ -7,21 +7,31 @@ import { SHEETS_TITLES } from '@/types'
 import { getToken, Sheets } from '@/utils'
 
 const getAll = async (req: Request, res: Response) => {
-	const { fullname } = req.query
+	const { fullname, mentor, role } = req.query
 	await Sheets.getDoc()
 	Sheets.tables?.[SHEETS_TITLES.USERS].loadCells()
 
-	const allPayments = Sheets.parseRows(Sheets.tables?.[SHEETS_TITLES.USERS]._cells, payemntsMapper)
+	const query: any = {}
 
-	if (!fullname) {
-		return res.send(allPayments)
-	}
+	if (fullname) query.fullName = fullname
+	if (mentor) query.mentor = mentor
+	if (role) query.role = role
 
-	const [name, surname] = (fullname as string)?.split(' ')
+	const allUsersDB = await UsersModel.find(query)
 
-	const allPaymentsNamed = allPayments.filter(({ sender }) => sender === `${name}_${surname}`)
+	res.status(200).send(allUsersDB)
 
-	res.send(allPaymentsNamed)
+	// const allUsers = Sheets.parseRows(Sheets.tables?.[SHEETS_TITLES.USERS]._cells, payemntsMapper)
+
+	// if (!fullname) {
+	// 	return res.send(allUsers)
+	// }
+
+	// const [name, surname] = (fullname as string)?.split(' ')
+
+	// const allPaymentsNamed = allUsers.filter(({ sender }) => sender === `${name}_${surname}`)
+
+	// res.send(allPaymentsNamed)
 }
 
 const save = async (req: Request, res: Response) => {
