@@ -38,7 +38,7 @@ export type FieldClasses = {
 export type Field = {
 	type: FIELD_TYPES
 	name: string
-	label: string
+	label?: string
 	defaultValue?: string
 	placeholder?: string
 	required?: boolean

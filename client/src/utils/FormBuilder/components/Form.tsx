@@ -27,21 +27,24 @@ const Form: FC<FormBuilderTypes.FormProps> = ({
 			onSubmit={handleSubmit(onSubmit)}
 			className={classes?.form}
 		>
-			{fields.map(({ defaultValue, type, name: fieldName, label, options, ...restProps }) => (
-				<FormBuilder.Input
-					key={fieldName + type}
-					type={type}
-					label={label}
-					defaultValue={defaultValue}
-					options={options}
-					doRegister={() => register(fieldName, { ...restProps })}
-					classes={{
-						label: classes?.label,
-						input: classes?.input,
-					}}
-					error={errors?.[fieldName] as FieldError}
-				/>
-			))}
+			{fields.map(
+				({ defaultValue, type, name: fieldName, label, options, value, ...restProps }) => (
+					<FormBuilder.Input
+						key={fieldName + type}
+						type={type}
+						label={label}
+						defaultValue={defaultValue}
+						options={options}
+						value={value}
+						doRegister={() => register(fieldName, { ...restProps })}
+						classes={{
+							label: classes?.label,
+							input: classes?.input,
+						}}
+						error={errors?.[fieldName] as FieldError}
+					/>
+				),
+			)}
 		</form>
 	)
 }

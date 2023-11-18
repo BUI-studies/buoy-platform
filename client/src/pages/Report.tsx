@@ -16,6 +16,7 @@ const Report = () => {
 	const [students, setStudents] = useState<FormBuilderTypes.SelectOption[]>([])
 
 	useEffect(() => {
+		//TODO: make it pretty! move it somewhere else from useEffect
 		fetch(`/api/users?mentor=${auth.user?.data?.data?._id}&role=student`)
 			.then(res => res.json())
 			.then(data => {
@@ -30,6 +31,7 @@ const Report = () => {
 			})
 	}, [auth])
 
+	//TODO: probably a good idea would be to move it ourside from the component
 	const reportFormFields = [
 		{ type: FormBuilderTypes.FIELD_TYPES.URL, name: 'title', label: 'title of the meeting' },
 		{
@@ -67,13 +69,17 @@ const Report = () => {
 
 	return (
 		<>
-			<FormBuilder.Form
-				formProps={{ name: 'reportForm' }}
-				fields={reportFormFields}
-				onSubmit={console.log}
-			/>
+			{!students.length ? (
+				<span className="">Loading form...</span>
+			) : (
+				<FormBuilder.Form
+					formProps={{ name: 'reportForm' }}
+					fields={reportFormFields}
+					onSubmit={console.log}
+				/>
+			)}
 
-			{!showForm && <span className="">Loading...</span>}
+			{!showForm && <span className="">Loading iframe...</span>}
 
 			<iframe
 				src={formURL}
