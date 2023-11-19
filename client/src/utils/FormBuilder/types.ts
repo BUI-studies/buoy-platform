@@ -39,6 +39,7 @@ export type Field = {
 	type: FIELD_TYPES
 	name: string
 	label?: string
+	value?: string | number
 	defaultValue?: string
 	placeholder?: string
 	required?: boolean
@@ -58,7 +59,7 @@ export type InputProps = {
 	classes?: FieldClasses
 	error?: FieldError | undefined
 	options?: SelectOption[] | undefined
-	value?: string
+	value?: string | number
 }
 
 export type FormProps = {
