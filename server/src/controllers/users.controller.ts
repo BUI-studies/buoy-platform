@@ -7,7 +7,7 @@ import { SHEETS_TITLES } from '@/types'
 import { getToken, Sheets } from '@/utils'
 
 const getAll = async (req: Request, res: Response) => {
-	const { fullname, mentor, role } = req.query
+	const { fullname, mentor, role, status } = req.query
 	await Sheets.getDoc()
 	Sheets.tables?.[SHEETS_TITLES.USERS].loadCells()
 
@@ -16,6 +16,7 @@ const getAll = async (req: Request, res: Response) => {
 	if (fullname) query.fullName = fullname
 	if (mentor) query.mentor = mentor
 	if (role) query.role = role
+	if (status) query.status = status
 
 	const allUsersDB = await UsersModel.find(query)
 

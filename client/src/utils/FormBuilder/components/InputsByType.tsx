@@ -1,20 +1,22 @@
-import { forwardRef } from 'react'
+import { useState, forwardRef, useEffect } from 'react'
 
 import { Populated } from '@/types'
 import { FormBuilderTypes } from '@/utils'
 
 const InputsByType = Object.freeze({
 	[FormBuilderTypes.FIELD_TYPES.SELECT]: forwardRef<HTMLSelectElement, Populated>(
-		({ options, ...props }, ref) => (
+		({ options, classes, ...props }, ref) => (
 			<select
 				{...props}
 				ref={ref}
 				defaultValue={'null'}
+				className={classes?.select}
 			>
 				<option
 					key={'nullableValue' + props.name}
 					value="null"
 					disabled
+					className={classes?.option}
 				>
 					--none--
 				</option>
@@ -22,6 +24,7 @@ const InputsByType = Object.freeze({
 					<option
 						key={label + value}
 						value={value}
+						className={classes?.option}
 					>
 						{label}
 					</option>
@@ -29,187 +32,276 @@ const InputsByType = Object.freeze({
 			</select>
 		),
 	),
-	[FormBuilderTypes.FIELD_TYPES.MULTI_SELECT]: forwardRef<HTMLSelectElement, Populated>(
-		({ options, name, ...props }, ref) => (
-			<fieldset
-				{...props}
+	[FormBuilderTypes.FIELD_TYPES.MULTI_SELECT]: forwardRef<HTMLFieldSetElement, Populated>(
+		({ options, name, classes, onChange, ...props }, ref) => {
+			const [values, setValues] = useState<string[]>([])
+
+			return (
+				<fieldset
+					ref={ref}
+					defaultValue={'null'}
+					name={name}
+					onChange={(e: any) => {
+						const { value } = e.target
+
+						if (values.includes(value)) {
+							setValues(values.filter(val => val !== value))
+						} else {
+							setValues([...values, value])
+						}
+
+						console.log('pizdaliz', values)
+
+						onChange(e)
+					}}
+					{...props}
+				>
+					{(options as FormBuilderTypes.SelectOption[])?.map(({ label, value }) => (
+						<label
+							key={label + value}
+							className={classes.label}
+						>
+							<input
+								type="checkbox"
+								value={value}
+								className={classes.checkbox}
+							/>
+							{label}
+						</label>
+					))}
+				</fieldset>
+			)
+		},
+	),
+	[FormBuilderTypes.FIELD_TYPES.BUTTON]: forwardRef<HTMLInputElement, Populated>(
+		({ classes, ...props }, ref) => (
+			<input
 				ref={ref}
-				defaultValue={'null'}
-			>
-				{(options as FormBuilderTypes.SelectOption[])?.map(({ label, value }) => (
-					<label key={label + value}>
-						<input
-							type="checkbox"
-							name={name}
-							value={value}
-						/>
-						{label}
-					</label>
-				))}
-			</fieldset>
+				type={FormBuilderTypes.FIELD_TYPES.BUTTON}
+				className={classes.input}
+				{...props}
+			/>
 		),
 	),
-	[FormBuilderTypes.FIELD_TYPES.BUTTON]: forwardRef<HTMLInputElement, Populated>((props, ref) => (
-		<input
-			ref={ref}
-			type={FormBuilderTypes.FIELD_TYPES.BUTTON}
-			{...props}
-		/>
-	)),
-	[FormBuilderTypes.FIELD_TYPES.CHECKBOX]: forwardRef<HTMLInputElement, Populated>((props, ref) => (
-		<input
-			ref={ref}
-			type={FormBuilderTypes.FIELD_TYPES.CHECKBOX}
-			{...props}
-		/>
-	)),
-	[FormBuilderTypes.FIELD_TYPES.COLOR]: forwardRef<HTMLInputElement, Populated>((props, ref) => (
-		<input
-			ref={ref}
-			type={FormBuilderTypes.FIELD_TYPES.COLOR}
-			{...props}
-		/>
-	)),
-	[FormBuilderTypes.FIELD_TYPES.DATE]: forwardRef<HTMLInputElement, Populated>((props, ref) => (
-		<input
-			ref={ref}
-			type={FormBuilderTypes.FIELD_TYPES.DATE}
-			{...props}
-		/>
-	)),
-	[FormBuilderTypes.FIELD_TYPES.DATETIME]: forwardRef<HTMLInputElement, Populated>((props, ref) => (
-		<input
-			ref={ref}
-			type={FormBuilderTypes.FIELD_TYPES.DATETIME}
-			{...props}
-		/>
-	)),
-	[FormBuilderTypes.FIELD_TYPES.EMAIL]: forwardRef<HTMLInputElement, Populated>((props, ref) => (
-		<input
-			ref={ref}
-			type={FormBuilderTypes.FIELD_TYPES.EMAIL}
-			{...props}
-		/>
-	)),
-	[FormBuilderTypes.FIELD_TYPES.FILE]: forwardRef<HTMLInputElement, Populated>((props, ref) => (
-		<input
-			ref={ref}
-			type={FormBuilderTypes.FIELD_TYPES.FILE}
-			{...props}
-		/>
-	)),
-	[FormBuilderTypes.FIELD_TYPES.HIDDEN]: forwardRef<HTMLInputElement, Populated>((props, ref) => (
-		<input
-			ref={ref}
-			type={FormBuilderTypes.FIELD_TYPES.HIDDEN}
-			{...props}
-		/>
-	)),
-	[FormBuilderTypes.FIELD_TYPES.IMAGE]: forwardRef<HTMLInputElement, Populated>((props, ref) => (
-		<input
-			ref={ref}
-			type={FormBuilderTypes.FIELD_TYPES.IMAGE}
-			{...props}
-		/>
-	)),
-	[FormBuilderTypes.FIELD_TYPES.MONTH]: forwardRef<HTMLInputElement, Populated>((props, ref) => (
-		<input
-			ref={ref}
-			type={FormBuilderTypes.FIELD_TYPES.MONTH}
-			{...props}
-		/>
-	)),
-	[FormBuilderTypes.FIELD_TYPES.NUMBER]: forwardRef<HTMLInputElement, Populated>((props, ref) => (
-		<input
-			ref={ref}
-			type={FormBuilderTypes.FIELD_TYPES.NUMBER}
-			{...props}
-		/>
-	)),
-	[FormBuilderTypes.FIELD_TYPES.PASSWORD]: forwardRef<HTMLInputElement, Populated>((props, ref) => (
-		<input
-			ref={ref}
-			type={FormBuilderTypes.FIELD_TYPES.PASSWORD}
-			{...props}
-		/>
-	)),
-	[FormBuilderTypes.FIELD_TYPES.RADIO]: forwardRef<HTMLInputElement, Populated>((props, ref) => (
-		<input
-			ref={ref}
-			type={FormBuilderTypes.FIELD_TYPES.RADIO}
-			{...props}
-		/>
-	)),
-	[FormBuilderTypes.FIELD_TYPES.RANGE]: forwardRef<HTMLInputElement, Populated>((props, ref) => (
-		<input
-			ref={ref}
-			type={FormBuilderTypes.FIELD_TYPES.RANGE}
-			{...props}
-		/>
-	)),
-	[FormBuilderTypes.FIELD_TYPES.RESET]: forwardRef<HTMLInputElement, Populated>((props, ref) => (
-		<input
-			ref={ref}
-			type={FormBuilderTypes.FIELD_TYPES.RESET}
-			{...props}
-		/>
-	)),
-	[FormBuilderTypes.FIELD_TYPES.SEARCH]: forwardRef<HTMLInputElement, Populated>((props, ref) => (
-		<input
-			ref={ref}
-			type={FormBuilderTypes.FIELD_TYPES.SEARCH}
-			{...props}
-		/>
-	)),
-	[FormBuilderTypes.FIELD_TYPES.SUBMIT]: forwardRef<HTMLInputElement, Populated>((props, ref) => (
-		<input
-			ref={ref}
-			type={FormBuilderTypes.FIELD_TYPES.SUBMIT}
-			{...props}
-		/>
-	)),
-	[FormBuilderTypes.FIELD_TYPES.TEL]: forwardRef<HTMLInputElement, Populated>((props, ref) => (
-		<input
-			ref={ref}
-			type={FormBuilderTypes.FIELD_TYPES.TEL}
-			{...props}
-		/>
-	)),
-	[FormBuilderTypes.FIELD_TYPES.TEXT]: forwardRef<HTMLInputElement, Populated>((props, ref) => (
-		<input
-			ref={ref}
-			type={FormBuilderTypes.FIELD_TYPES.TEXT}
-			{...props}
-		/>
-	)),
-	[FormBuilderTypes.FIELD_TYPES.TEXTAREA]: forwardRef<HTMLInputElement, Populated>((props, ref) => (
-		<textarea
-			ref={ref}
-			type={FormBuilderTypes.FIELD_TYPES.TEXT}
-			{...props}
-		/>
-	)),
-	[FormBuilderTypes.FIELD_TYPES.TIME]: forwardRef<HTMLInputElement, Populated>((props, ref) => (
-		<input
-			ref={ref}
-			type={FormBuilderTypes.FIELD_TYPES.TIME}
-			{...props}
-		/>
-	)),
-	[FormBuilderTypes.FIELD_TYPES.URL]: forwardRef<HTMLInputElement, Populated>((props, ref) => (
-		<input
-			ref={ref}
-			type={FormBuilderTypes.FIELD_TYPES.URL}
-			{...props}
-		/>
-	)),
-	[FormBuilderTypes.FIELD_TYPES.WEEK]: forwardRef<HTMLInputElement, Populated>((props, ref) => (
-		<input
-			ref={ref}
-			type={FormBuilderTypes.FIELD_TYPES.WEEK}
-			{...props}
-		/>
-	)),
+	[FormBuilderTypes.FIELD_TYPES.CHECKBOX]: forwardRef<HTMLInputElement, Populated>(
+		({ classes, ...props }, ref) => (
+			<input
+				ref={ref}
+				type={FormBuilderTypes.FIELD_TYPES.CHECKBOX}
+				className={classes.input}
+				{...props}
+			/>
+		),
+	),
+	[FormBuilderTypes.FIELD_TYPES.COLOR]: forwardRef<HTMLInputElement, Populated>(
+		({ classes, ...props }, ref) => (
+			<input
+				ref={ref}
+				type={FormBuilderTypes.FIELD_TYPES.COLOR}
+				className={classes.input}
+				{...props}
+			/>
+		),
+	),
+	[FormBuilderTypes.FIELD_TYPES.DATE]: forwardRef<HTMLInputElement, Populated>(
+		({ classes, ...props }, ref) => (
+			<input
+				ref={ref}
+				type={FormBuilderTypes.FIELD_TYPES.DATE}
+				className={classes.input}
+				{...props}
+			/>
+		),
+	),
+	[FormBuilderTypes.FIELD_TYPES.DATETIME]: forwardRef<HTMLInputElement, Populated>(
+		({ classes, ...props }, ref) => (
+			<input
+				ref={ref}
+				type={FormBuilderTypes.FIELD_TYPES.DATETIME}
+				className={classes.input}
+				{...props}
+			/>
+		),
+	),
+	[FormBuilderTypes.FIELD_TYPES.EMAIL]: forwardRef<HTMLInputElement, Populated>(
+		({ classes, ...props }, ref) => (
+			<input
+				ref={ref}
+				type={FormBuilderTypes.FIELD_TYPES.EMAIL}
+				className={classes.input}
+				{...props}
+			/>
+		),
+	),
+	[FormBuilderTypes.FIELD_TYPES.FILE]: forwardRef<HTMLInputElement, Populated>(
+		({ classes, ...props }, ref) => (
+			<input
+				ref={ref}
+				type={FormBuilderTypes.FIELD_TYPES.FILE}
+				className={classes.input}
+				{...props}
+			/>
+		),
+	),
+	[FormBuilderTypes.FIELD_TYPES.HIDDEN]: forwardRef<HTMLInputElement, Populated>(
+		({ classes, ...props }, ref) => (
+			<input
+				ref={ref}
+				type={FormBuilderTypes.FIELD_TYPES.HIDDEN}
+				className={classes.input}
+				{...props}
+			/>
+		),
+	),
+	[FormBuilderTypes.FIELD_TYPES.IMAGE]: forwardRef<HTMLInputElement, Populated>(
+		({ classes, ...props }, ref) => (
+			<input
+				ref={ref}
+				type={FormBuilderTypes.FIELD_TYPES.IMAGE}
+				className={classes.input}
+				{...props}
+			/>
+		),
+	),
+	[FormBuilderTypes.FIELD_TYPES.MONTH]: forwardRef<HTMLInputElement, Populated>(
+		({ classes, ...props }, ref) => (
+			<input
+				ref={ref}
+				type={FormBuilderTypes.FIELD_TYPES.MONTH}
+				className={classes.input}
+				{...props}
+			/>
+		),
+	),
+	[FormBuilderTypes.FIELD_TYPES.NUMBER]: forwardRef<HTMLInputElement, Populated>(
+		({ classes, ...props }, ref) => (
+			<input
+				ref={ref}
+				type={FormBuilderTypes.FIELD_TYPES.NUMBER}
+				className={classes.input}
+				{...props}
+			/>
+		),
+	),
+	[FormBuilderTypes.FIELD_TYPES.PASSWORD]: forwardRef<HTMLInputElement, Populated>(
+		({ classes, ...props }, ref) => (
+			<input
+				ref={ref}
+				type={FormBuilderTypes.FIELD_TYPES.PASSWORD}
+				className={classes.input}
+				{...props}
+			/>
+		),
+	),
+	[FormBuilderTypes.FIELD_TYPES.RADIO]: forwardRef<HTMLInputElement, Populated>(
+		({ classes, ...props }, ref) => (
+			<input
+				ref={ref}
+				type={FormBuilderTypes.FIELD_TYPES.RADIO}
+				className={classes.input}
+				{...props}
+			/>
+		),
+	),
+	[FormBuilderTypes.FIELD_TYPES.RANGE]: forwardRef<HTMLInputElement, Populated>(
+		({ classes, ...props }, ref) => (
+			<input
+				ref={ref}
+				type={FormBuilderTypes.FIELD_TYPES.RANGE}
+				className={classes.input}
+				{...props}
+			/>
+		),
+	),
+	[FormBuilderTypes.FIELD_TYPES.RESET]: forwardRef<HTMLInputElement, Populated>(
+		({ classes, ...props }, ref) => (
+			<input
+				ref={ref}
+				type={FormBuilderTypes.FIELD_TYPES.RESET}
+				className={classes.input}
+				{...props}
+			/>
+		),
+	),
+	[FormBuilderTypes.FIELD_TYPES.SEARCH]: forwardRef<HTMLInputElement, Populated>(
+		({ classes, ...props }, ref) => (
+			<input
+				ref={ref}
+				type={FormBuilderTypes.FIELD_TYPES.SEARCH}
+				className={classes.input}
+				{...props}
+			/>
+		),
+	),
+	[FormBuilderTypes.FIELD_TYPES.SUBMIT]: forwardRef<HTMLInputElement, Populated>(
+		({ classes, ...props }, ref) => (
+			<input
+				ref={ref}
+				type={FormBuilderTypes.FIELD_TYPES.SUBMIT}
+				className={classes.input}
+				{...props}
+			/>
+		),
+	),
+	[FormBuilderTypes.FIELD_TYPES.TEL]: forwardRef<HTMLInputElement, Populated>(
+		({ classes, ...props }, ref) => (
+			<input
+				ref={ref}
+				type={FormBuilderTypes.FIELD_TYPES.TEL}
+				className={classes.input}
+				{...props}
+			/>
+		),
+	),
+	[FormBuilderTypes.FIELD_TYPES.TEXT]: forwardRef<HTMLInputElement, Populated>(
+		({ classes, ...props }, ref) => (
+			<input
+				ref={ref}
+				type={FormBuilderTypes.FIELD_TYPES.TEXT}
+				className={classes.input}
+				{...props}
+			/>
+		),
+	),
+	[FormBuilderTypes.FIELD_TYPES.TEXTAREA]: forwardRef<HTMLTextAreaElement, Populated>(
+		({ classes, ...props }, ref) => (
+			<textarea
+				ref={ref}
+				className={classes.input}
+				{...props}
+			/>
+		),
+	),
+	[FormBuilderTypes.FIELD_TYPES.TIME]: forwardRef<HTMLInputElement, Populated>(
+		({ classes, ...props }, ref) => (
+			<input
+				ref={ref}
+				type={FormBuilderTypes.FIELD_TYPES.TIME}
+				className={classes.input}
+				{...props}
+			/>
+		),
+	),
+	[FormBuilderTypes.FIELD_TYPES.URL]: forwardRef<HTMLInputElement, Populated>(
+		({ classes, ...props }, ref) => (
+			<input
+				ref={ref}
+				type={FormBuilderTypes.FIELD_TYPES.URL}
+				className={classes.input}
+				{...props}
+			/>
+		),
+	),
+	[FormBuilderTypes.FIELD_TYPES.WEEK]: forwardRef<HTMLInputElement, Populated>(
+		({ classes, ...props }, ref) => (
+			<input
+				ref={ref}
+				type={FormBuilderTypes.FIELD_TYPES.WEEK}
+				className={classes.input}
+				{...props}
+			/>
+		),
+	),
 })
 
 export default InputsByType

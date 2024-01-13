@@ -30,9 +30,15 @@ export const enum FIELD_TYPES {
 }
 
 export type FieldClasses = {
-	label?: string
+	label: string
+	error: string
+	checkbox?: string
+	radio?: string
 	input?: string
-	error?: string
+	select?: string
+	option?: string
+	textarea?: string
+	button?: string
 }
 
 export type Field = {
@@ -49,6 +55,7 @@ export type Field = {
 export type SelectOption = {
 	label: string
 	value: string
+	error: string
 }
 
 export type InputProps = {
@@ -56,9 +63,9 @@ export type InputProps = {
 	type: FIELD_TYPES
 	label?: string
 	doRegister: () => UseFormRegisterReturn
-	classes?: FieldClasses
-	error?: FieldError | undefined
-	options?: SelectOption[] | undefined
+	classes: FieldClasses | SelectOption
+	error?: FieldError
+	options?: SelectOption[]
 	value?: string | number
 }
 
@@ -66,6 +73,6 @@ export type FormProps = {
 	formProps: { name: string } & Populated
 	fields: Field[]
 	onSubmit: (data: { [key: string]: string }) => void
-	classes?: { form?: string } & FieldClasses
+	classes?: { form: string } & FieldClasses
 	watchers?: (watch: (name: string) => void) => void
 }

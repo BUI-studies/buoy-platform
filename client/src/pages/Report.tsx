@@ -17,7 +17,7 @@ const Report = () => {
 
 	useEffect(() => {
 		//TODO: make it pretty! move it somewhere else from useEffect
-		fetch(`/api/users?mentor=${auth.user?.data?.data?._id}&role=student`)
+		fetch(`/api/users?mentor=${auth.user?.data?.data?._id}&role=student&status=active`)
 			.then(res => res.json())
 			.then(data => {
 				const studentsOptions: FormBuilderTypes.SelectOption[] = data.map(
@@ -32,16 +32,16 @@ const Report = () => {
 	}, [auth])
 
 	//TODO: probably a good idea would be to move it ourside from the component
-	const reportFormFields = [
-		{ type: FormBuilderTypes.FIELD_TYPES.URL, name: 'title', label: 'title of the meeting' },
+	const reportFormFields: FormBuilderTypes.Field[] = [
+		{ type: FormBuilderTypes.FIELD_TYPES.TEXT, name: 'title', label: 'title of the meeting' },
 		{
 			type: FormBuilderTypes.FIELD_TYPES.SELECT,
 			name: 'type',
 			label: 'Meeting type',
 			options: [
-				{ label: 'Individual', value: REPORT_TYPES.INDIVIDUAL },
-				{ label: 'Planning', value: REPORT_TYPES.PLANNING },
-				{ label: 'Sync', value: REPORT_TYPES.SYNC },
+				{ label: 'Individual', value: REPORT_TYPES.INDIVIDUAL, error: 'Meeting type is missing' },
+				{ label: 'Planning', value: REPORT_TYPES.PLANNING, error: 'Meeting type is missing' },
+				{ label: 'Sync', value: REPORT_TYPES.SYNC, error: 'Meeting type is missing' },
 			],
 		},
 		{

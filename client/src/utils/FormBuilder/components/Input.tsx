@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { FormBuilderTypes } from '@/utils'
+import { FormBuilderTypes, FormBuilder } from '@/utils'
 
 import InputsByType from './InputsByType'
 
@@ -20,6 +20,7 @@ const Input: FC<FormBuilderTypes.InputProps> = ({
 			defaultValue={defaultValue}
 			options={options}
 			value={value}
+			classes={classes}
 			{...doRegister()}
 		/>
 	)
@@ -32,10 +33,10 @@ const Input: FC<FormBuilderTypes.InputProps> = ({
 		return inputRenderable
 
 	return (
-		<label className={classes?.label}>
+		<label className={classes.label}>
 			{label}
 			{inputRenderable}
-			{error && <span className={classes?.error}>{errorMessage}</span>}
+			{error && <span className={classes.error}>{errorMessage}</span>}
 		</label>
 	)
 }

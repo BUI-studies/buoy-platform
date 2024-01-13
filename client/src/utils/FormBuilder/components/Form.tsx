@@ -4,11 +4,12 @@ import { FieldError, useForm } from 'react-hook-form'
 import { FormBuilder, FormBuilderTypes } from '@/utils'
 
 import '../FormBuilder.scss'
+import { getInputClassesByType } from '../helper'
 
 const Form: FC<FormBuilderTypes.FormProps> = ({
 	formProps,
 	fields = [],
-	classes,
+	classes = FormBuilder.defaultClasses,
 	onSubmit,
 	watchers,
 }) => {
@@ -25,7 +26,7 @@ const Form: FC<FormBuilderTypes.FormProps> = ({
 		<form
 			{...formProps}
 			onSubmit={handleSubmit(onSubmit)}
-			className={classes?.form}
+			className={classes.form}
 		>
 			{fields.map(
 				({ defaultValue, type, name: fieldName, label, options, value, ...restProps }) => (
@@ -37,10 +38,7 @@ const Form: FC<FormBuilderTypes.FormProps> = ({
 						options={options}
 						value={value}
 						doRegister={() => register(fieldName, { ...restProps })}
-						classes={{
-							label: classes?.label,
-							input: classes?.input,
-						}}
+						classes={getInputClassesByType(type, classes)}
 						error={errors?.[fieldName] as FieldError}
 					/>
 				),
