@@ -1,4 +1,5 @@
-import { useState, forwardRef, useEffect } from 'react'
+import { useState, forwardRef } from 'react'
+import { Controller } from 'react-hook-form'
 
 import { Populated } from '@/types'
 import { FormBuilderTypes } from '@/utils'
@@ -33,43 +34,36 @@ const InputsByType = Object.freeze({
 		),
 	),
 	[FormBuilderTypes.FIELD_TYPES.MULTI_SELECT]: forwardRef<HTMLFieldSetElement, Populated>(
-		({ options, name, classes, onChange, ...props }, ref) => {
-			const [values, setValues] = useState<string[]>([])
-
+		({ options, name, classes, control, ...props }, ref) => {
 			return (
-				<fieldset
-					ref={ref}
-					defaultValue={'null'}
+				<Controller
 					name={name}
-					onChange={(e: any) => {
-						const { value } = e.target
-
-						if (values.includes(value)) {
-							setValues(values.filter(val => val !== value))
-						} else {
-							setValues([...values, value])
-						}
-
-						console.log('pizdaliz', values)
-
-						onChange(e)
-					}}
-					{...props}
-				>
-					{(options as FormBuilderTypes.SelectOption[])?.map(({ label, value }) => (
-						<label
-							key={label + value}
-							className={classes.label}
-						>
-							<input
-								type="checkbox"
-								value={value}
-								className={classes.checkbox}
-							/>
-							{label}
-						</label>
-					))}
-				</fieldset>
+					control={control}
+					render={({ field: { value = [], onChange } }) => (
+						<fieldset {...props}>
+							{options.map(({ label, value: optionValue }: FormBuilderTypes.SelectOption) => (
+								<label
+									key={label + optionValue}
+									className={classes.label}
+								>
+									<input
+										type="checkbox"
+										value={optionValue}
+										className={classes.checkbox}
+										checked={value?.includes(optionValue)}
+										onChange={e => {
+											const updatedValues = e.target.checked
+												? [...value, optionValue]
+												: (value as string[]).filter(val => val !== optionValue)
+											onChange(updatedValues)
+										}}
+									/>
+									{label}
+								</label>
+							))}
+						</fieldset>
+					)}
+				/>
 			)
 		},
 	),

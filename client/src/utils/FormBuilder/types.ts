@@ -1,5 +1,5 @@
 import { Populated } from '@/types'
-import { FieldError, UseFormRegisterReturn } from 'react-hook-form'
+import { Control, FieldError, UseFormRegisterReturn } from 'react-hook-form'
 
 export const enum FIELD_TYPES {
 	SELECT = 'select',
@@ -67,6 +67,7 @@ export type InputProps = {
 	error?: FieldError
 	options?: SelectOption[]
 	value?: string | number
+	control?: Control
 }
 
 export type FormProps = {

@@ -18,6 +18,7 @@ const Form: FC<FormBuilderTypes.FormProps> = ({
 		handleSubmit,
 		watch,
 		formState: { errors },
+		control,
 	} = useForm()
 
 	watchers && watchers(watch)
@@ -37,6 +38,7 @@ const Form: FC<FormBuilderTypes.FormProps> = ({
 						defaultValue={defaultValue}
 						options={options}
 						value={value}
+						control={control}
 						doRegister={() => register(fieldName, { ...restProps })}
 						classes={getInputClassesByType(type, classes)}
 						error={errors?.[fieldName] as FieldError}
