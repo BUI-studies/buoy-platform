@@ -1,3 +1,5 @@
+import { ObjectSchema, AnyObject } from 'yup'
+
 import { Populated } from '@/types'
 import { Control, FieldError, UseFormRegisterReturn } from 'react-hook-form'
 
@@ -55,7 +57,6 @@ export type Field = {
 export type SelectOption = {
 	label: string
 	value: string
-	error: string
 }
 
 export type InputProps = {
@@ -63,7 +64,7 @@ export type InputProps = {
 	type: FIELD_TYPES
 	label?: string
 	doRegister: () => UseFormRegisterReturn
-	classes: FieldClasses | SelectOption
+	classes: FieldClasses
 	error?: FieldError
 	options?: SelectOption[]
 	value?: string | number
@@ -73,6 +74,7 @@ export type InputProps = {
 export type FormProps = {
 	formProps: { name: string } & Populated
 	fields: Field[]
+	schema: ObjectSchema<AnyObject>
 	onSubmit: (data: { [key: string]: string }) => void
 	classes?: { form: string } & FieldClasses
 	watchers?: (watch: (name: string) => void) => void

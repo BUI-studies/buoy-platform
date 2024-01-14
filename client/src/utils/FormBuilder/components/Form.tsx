@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import { FieldError, useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
 
 import { FormBuilder, FormBuilderTypes } from '@/utils'
 
@@ -9,6 +10,7 @@ import { getInputClassesByType } from '../helper'
 const Form: FC<FormBuilderTypes.FormProps> = ({
 	formProps,
 	fields = [],
+	schema,
 	classes = FormBuilder.defaultClasses,
 	onSubmit,
 	watchers,
@@ -19,7 +21,10 @@ const Form: FC<FormBuilderTypes.FormProps> = ({
 		watch,
 		formState: { errors },
 		control,
-	} = useForm()
+	} = useForm({
+		mode: 'onBlur',
+		resolver: yupResolver(schema),
+	})
 
 	watchers && watchers(watch)
 

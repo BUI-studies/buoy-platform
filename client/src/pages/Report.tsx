@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import * as yup from 'yup'
 
 import { useAuth } from '@/context'
 import { REPORT_TYPES } from '@/types'
@@ -33,15 +34,15 @@ const Report = () => {
 
 	//TODO: probably a good idea would be to move it ourside from the component
 	const reportFormFields: FormBuilderTypes.Field[] = [
-		{ type: FormBuilderTypes.FIELD_TYPES.TEXT, name: 'title', label: 'title of the meeting' },
+		{ type: FormBuilderTypes.FIELD_TYPES.TEXT, name: 'title', label: 'Title of the meeting' },
 		{
 			type: FormBuilderTypes.FIELD_TYPES.SELECT,
 			name: 'type',
-			label: 'Meeting type',
+			label: 'Meeting type:',
 			options: [
-				{ label: 'Individual', value: REPORT_TYPES.INDIVIDUAL, error: 'Meeting type is missing' },
-				{ label: 'Planning', value: REPORT_TYPES.PLANNING, error: 'Meeting type is missing' },
-				{ label: 'Sync', value: REPORT_TYPES.SYNC, error: 'Meeting type is missing' },
+				{ label: 'Individual', value: REPORT_TYPES.INDIVIDUAL },
+				{ label: 'Planning', value: REPORT_TYPES.PLANNING },
+				{ label: 'Sync', value: REPORT_TYPES.SYNC },
 			],
 		},
 		{
@@ -58,7 +59,7 @@ const Report = () => {
 		{
 			type: FormBuilderTypes.FIELD_TYPES.TEXTAREA,
 			name: 'comment',
-			label: 'Comment',
+			label: 'Comment:',
 		},
 		{
 			type: FormBuilderTypes.FIELD_TYPES.SUBMIT,
@@ -66,6 +67,15 @@ const Report = () => {
 			value: 'Save Report',
 		},
 	]
+
+	const requiredFieldErrorMsg = 'Required field'
+	const reportSchema = yup.object().shape({
+		title: yup.string().min(3).required(requiredFieldErrorMsg),
+		type: yup.mixed().oneOf(Object.values(REPORT_TYPES)).required(requiredFieldErrorMsg),
+		students: yup.array().required(requiredFieldErrorMsg),
+		report: yup.string().url().required(requiredFieldErrorMsg),
+		comment: yup.string().required(requiredFieldErrorMsg),
+	})
 
 	return (
 		<>
@@ -75,6 +85,7 @@ const Report = () => {
 				<FormBuilder.Form
 					formProps={{ name: 'reportForm' }}
 					fields={reportFormFields}
+					schema={reportSchema}
 					onSubmit={console.log}
 				/>
 			)}

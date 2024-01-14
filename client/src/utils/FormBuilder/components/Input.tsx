@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { FormBuilderTypes, FormBuilder } from '@/utils'
+import { FormBuilderTypes } from '@/utils'
 
 import InputsByType from './InputsByType'
 
@@ -16,6 +16,7 @@ const Input: FC<FormBuilderTypes.InputProps> = ({
 }) => {
 	const errorMessage = error?.message
 	const InputComponent = InputsByType[type] || InputsByType.text
+	const registeredProps = type !== FormBuilderTypes.FIELD_TYPES.SUBMIT ? doRegister() : {}
 	const inputRenderable = (
 		<InputComponent
 			defaultValue={defaultValue}
@@ -23,9 +24,10 @@ const Input: FC<FormBuilderTypes.InputProps> = ({
 			value={value}
 			classes={classes}
 			control={control}
-			{...doRegister()}
+			{...registeredProps}
 		/>
 	)
+	const WrapperCompnent = type === FormBuilderTypes.FIELD_TYPES.MULTI_SELECT ? 'div' : 'label'
 
 	if (
 		!label ||
@@ -35,11 +37,11 @@ const Input: FC<FormBuilderTypes.InputProps> = ({
 		return inputRenderable
 
 	return (
-		<label className={classes.label}>
+		<WrapperCompnent className={classes.label}>
 			{label}
 			{inputRenderable}
 			{error && <span className={classes.error}>{errorMessage}</span>}
-		</label>
+		</WrapperCompnent>
 	)
 }
 

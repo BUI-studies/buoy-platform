@@ -6,7 +6,7 @@ import { FormBuilderTypes } from '@/utils'
 
 const InputsByType = Object.freeze({
 	[FormBuilderTypes.FIELD_TYPES.SELECT]: forwardRef<HTMLSelectElement, Populated>(
-		({ options, classes, ...props }, ref) => (
+		({ options, classes, control: _, ...props }, ref) => (
 			<select
 				{...props}
 				ref={ref}
@@ -34,13 +34,16 @@ const InputsByType = Object.freeze({
 		),
 	),
 	[FormBuilderTypes.FIELD_TYPES.MULTI_SELECT]: forwardRef<HTMLFieldSetElement, Populated>(
-		({ options, name, classes, control, ...props }, ref) => {
+		({ options, name, classes, control, onChange: _, ...props }, ref) => {
 			return (
 				<Controller
 					name={name}
 					control={control}
 					render={({ field: { value = [], onChange } }) => (
-						<fieldset {...props}>
+						<fieldset
+							className={classes.select}
+							{...props}
+						>
 							{options.map(({ label, value: optionValue }: FormBuilderTypes.SelectOption) => (
 								<label
 									key={label + optionValue}
@@ -49,7 +52,7 @@ const InputsByType = Object.freeze({
 									<input
 										type="checkbox"
 										value={optionValue}
-										className={classes.checkbox}
+										className={classes.option}
 										checked={value?.includes(optionValue)}
 										onChange={e => {
 											const updatedValues = e.target.checked
@@ -227,14 +230,15 @@ const InputsByType = Object.freeze({
 			/>
 		),
 	),
-	[FormBuilderTypes.FIELD_TYPES.SUBMIT]: forwardRef<HTMLInputElement, Populated>(
-		({ classes, ...props }, ref) => (
-			<input
+	[FormBuilderTypes.FIELD_TYPES.SUBMIT]: forwardRef<HTMLButtonElement, Populated>(
+		({ classes, value, control, type, name, ...props }, ref) => (
+			<button
 				ref={ref}
-				type={FormBuilderTypes.FIELD_TYPES.SUBMIT}
-				className={classes.input}
+				className={classes.button}
 				{...props}
-			/>
+			>
+				{value}
+			</button>
 		),
 	),
 	[FormBuilderTypes.FIELD_TYPES.TEL]: forwardRef<HTMLInputElement, Populated>(
