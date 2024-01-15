@@ -1,7 +1,7 @@
 import { ReactNode, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
-import { API } from '@/api'
+import * as API from '@/api'
 import { REQUEST_STATUS } from '@/types'
 import { dateParser } from '@/utils'
 import { useAuth, useMeetings, useModal } from '@/context'
@@ -43,7 +43,11 @@ const Meetings = () => {
 					type: meeting.type,
 					mentor: meeting.mentor,
 					report: (
-						<Link to={meeting.report} target="_blank" className={classes.reportLink}>
+						<Link
+							to={meeting.report}
+							target="_blank"
+							className={classes.reportLink}
+						>
 							report
 						</Link>
 					),

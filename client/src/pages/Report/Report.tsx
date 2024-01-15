@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 
 import { Meeting, useAuth } from '@/context'
 import { FormBuilderTypes, FormBuilder } from '@/utils'
+import { saveMeeting } from '@/api'
 
 import { reportFormFields, reportSchema } from './Report.helper'
 
@@ -16,12 +17,19 @@ const Report = () => {
 
 	const [students, setStudents] = useState<FormBuilderTypes.SelectOption[]>([])
 
-	const handleSaveMeeting = (data: Meeting) => {
-		console.log(data)
+	const handleSaveMeeting = async (data: Meeting) => {
+		if (!auth.user?.data?.data?._id) return
+
+		//TODO: handle error when the meeting already exists
+		await saveMeeting({
+			...data,
+			mentor: auth.user?.data?.data?._id,
+			date: new Date(),
+		})
 	}
 
 	useEffect(() => {
-		//TODO: make it pretty! move it somewhere else from useEffect
+		//TODO: make it pretty! move it to the api folder
 		fetch(`/api/users?mentor=${auth.user?.data?.data?._id}&role=student&status=active`)
 			.then(res => res.json())
 			.then(data => {

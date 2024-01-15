@@ -1,6 +1,6 @@
 import { ReactNode, useEffect } from 'react'
 
-import { API } from '@/api'
+import * as API from '@/api'
 import { REQUEST_STATUS } from '@/types'
 import { dateParser } from '@/utils'
 import { useAuth, useHomeworks, useModal } from '@/context'
@@ -47,7 +47,10 @@ const Homeworks = () => {
 					isReviewed: homework.isReviewed ? '🟢' : '⚪️',
 					date: dateParser(homework.timestamp),
 					reviewLink: homework.reviewLink ? (
-						<Link to={homework.reviewLink} target="_blank">
+						<Link
+							to={homework.reviewLink}
+							target="_blank"
+						>
 							review
 						</Link>
 					) : (
@@ -82,7 +85,10 @@ const Homeworks = () => {
 			{homeworks.status === REQUEST_STATUS.FAILED && <p>Error</p>}
 
 			<div className={classes.highlights}>
-				<button className={classes.addBtn} onClick={handleAddHomework}>
+				<button
+					className={classes.addBtn}
+					onClick={handleAddHomework}
+				>
 					assign homework
 				</button>
 			</div>

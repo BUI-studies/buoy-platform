@@ -1,7 +1,8 @@
 import { _URL, getHeaders, request } from '@/api/'
+import { Meeting } from '@/context'
 import { LoginInputs } from '@/pages/Login/Login.helper'
 
-const login = async (formData: LoginInputs) => {
+export const login = async (formData: LoginInputs) => {
 	return request(_URL.login, {
 		method: 'POST',
 		headers: getHeaders(),
@@ -9,22 +10,23 @@ const login = async (formData: LoginInputs) => {
 	})
 }
 
-const verify = async (token: string) => {
+export const verify = async (token: string) => {
 	return request(_URL.verify(token))
 }
 
-const getMeetings = async (fullName: string, role: string) =>
+export const getMeetings = async (fullName: string, role: string) =>
 	request(`${_URL.meetings}?fullname=${fullName}&role=${role}`)
 
-const getPayments = async (fullName: string) => request(`${_URL.payments}?fullname=${fullName}`)
+export const getPayments = async (fullName: string) =>
+	request(`${_URL.payments}?fullname=${fullName}`)
 
-const getHomeworks = async (fullName: string, role: string) =>
+export const getHomeworks = async (fullName: string, role: string) =>
 	request(`${_URL.homeworks}?fullname=${fullName}&role=${role}`)
 
-export const API = {
-	login,
-	verify,
-	getMeetings,
-	getPayments,
-	getHomeworks,
+export const saveMeeting = async (data: Meeting) => {
+	return request(_URL.meetings, {
+		method: 'POST',
+		headers: getHeaders(),
+		body: JSON.stringify(data),
+	})
 }
