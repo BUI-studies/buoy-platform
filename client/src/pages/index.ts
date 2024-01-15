@@ -1,6 +1,6 @@
 export * from './Home'
 export * from './Login'
-export { default as Report } from './Report'
+export { default as Report } from './Report/Report'
 export { default as Feedback } from './Feedback'
 export { default as Resources } from './Resources'
 export { default as Meetings } from './Meetings/Meetings'

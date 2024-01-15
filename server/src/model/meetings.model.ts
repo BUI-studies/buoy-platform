@@ -7,15 +7,14 @@ import { ObjectId } from 'mongodb'
 const Schema = mongoose.Schema
 
 export interface Meeting extends mongoose.Document {
-	date: Date
 	id: ObjectId
-	timestamp: number
+	date: Date
 	title: string
 	type: string
-	students: string[]
-	mentor: string
-	comment: string
+	students: ObjectId[]
+	mentor: ObjectId
 	report: string
+	comment: string
 }
 
 export const meetingsMapper = (cellsArray: TableCell[]) => ({
@@ -35,9 +34,6 @@ export const MeetingsSchema = new Schema<Meeting>({
 	id: {
 		type: ObjectId,
 	},
-	timestamp: {
-		type: Number,
-	},
 	date: {
 		type: Date,
 		required: true,
@@ -49,15 +45,15 @@ export const MeetingsSchema = new Schema<Meeting>({
 		type: String,
 	},
 	students: {
-		type: [String],
+		type: [ObjectId],
 	},
 	mentor: {
+		type: ObjectId,
+	},
+	report: {
 		type: String,
 	},
 	comment: {
-		type: String,
-	},
-	report: {
 		type: String,
 	},
 })

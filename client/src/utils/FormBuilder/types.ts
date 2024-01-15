@@ -71,11 +71,11 @@ export type InputProps = {
 	control?: Control
 }
 
-export type FormProps = {
+export type FormProps<T> = {
 	formProps: { name: string } & Populated
 	fields: Field[]
 	schema: ObjectSchema<AnyObject>
-	onSubmit: (data: { [key: string]: string }) => void
+	onSubmit: (data: T) => void
 	classes?: { form: string } & FieldClasses
 	watchers?: (watch: (name: string) => void) => void
 }

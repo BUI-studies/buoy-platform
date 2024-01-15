@@ -1,5 +1,4 @@
-import { FC } from 'react'
-import { FieldError, useForm } from 'react-hook-form'
+import { FieldError, FieldValues, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 import { FormBuilder, FormBuilderTypes } from '@/utils'
@@ -7,14 +6,15 @@ import { FormBuilder, FormBuilderTypes } from '@/utils'
 import '../FormBuilder.scss'
 import { getInputClassesByType } from '../helper'
 
-const Form: FC<FormBuilderTypes.FormProps> = ({
+const Form = <T extends FieldValues>({
 	formProps,
 	fields = [],
 	schema,
-	classes = FormBuilder.defaultClasses,
+	classes,
 	onSubmit,
 	watchers,
-}) => {
+}: FormBuilderTypes.FormProps<T>): JSX.Element => {
+	if (!classes) classes = FormBuilder.defaultClasses
 	const {
 		register,
 		handleSubmit,
@@ -31,7 +31,7 @@ const Form: FC<FormBuilderTypes.FormProps> = ({
 	return (
 		<form
 			{...formProps}
-			onSubmit={handleSubmit(onSubmit)}
+			onSubmit={handleSubmit(data => onSubmit(data as T))}
 			className={classes.form}
 		>
 			{fields.map(
@@ -45,7 +45,7 @@ const Form: FC<FormBuilderTypes.FormProps> = ({
 						value={value}
 						control={control}
 						doRegister={() => register(fieldName, { ...restProps })}
-						classes={getInputClassesByType(type, classes)}
+						classes={getInputClassesByType(type, classes as FormBuilderTypes.FieldClasses)}
 						error={errors?.[fieldName] as FieldError}
 					/>
 				),
