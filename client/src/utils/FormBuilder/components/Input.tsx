@@ -12,6 +12,7 @@ const Input: FC<FormBuilderTypes.InputProps> = ({
 	options,
 	value,
 	control,
+	disabled,
 	doRegister,
 }) => {
 	const errorMessage = error?.message
@@ -24,6 +25,7 @@ const Input: FC<FormBuilderTypes.InputProps> = ({
 			value={value}
 			classes={classes}
 			control={control}
+			disabled={disabled}
 			{...registeredProps}
 		/>
 	)

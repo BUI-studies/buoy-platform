@@ -9,7 +9,7 @@ const ERRORS = {
 	indStudentsLength: 'Individual meeting should have only one student',
 }
 
-export const reportFormFields = (
+export const getReportFormFields = (
 	students: FormBuilderTypes.SelectOption[],
 ): FormBuilderTypes.Field[] => [
 	{ type: FormBuilderTypes.FIELD_TYPES.TEXT, name: 'title', label: 'Title of the meeting' },

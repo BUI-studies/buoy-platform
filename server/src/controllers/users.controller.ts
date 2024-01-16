@@ -1,15 +1,12 @@
 import bcrypt from 'bcrypt'
 import { Request, Response } from 'express'
 
-import { payemntsMapper, UsersModel } from '@/model'
+import { UsersModel } from '@/model'
 
-import { SHEETS_TITLES } from '@/types'
 import { getToken, Sheets } from '@/utils'
 
 const getAll = async (req: Request, res: Response) => {
 	const { fullname, mentor, role, status } = req.query
-	await Sheets.getDoc()
-	Sheets.tables?.[SHEETS_TITLES.USERS].loadCells()
 
 	const query: any = {}
 
@@ -21,18 +18,6 @@ const getAll = async (req: Request, res: Response) => {
 	const allUsersDB = await UsersModel.find(query)
 
 	res.status(200).send(allUsersDB)
-
-	// const allUsers = Sheets.parseRows(Sheets.tables?.[SHEETS_TITLES.USERS]._cells, payemntsMapper)
-
-	// if (!fullname) {
-	// 	return res.send(allUsers)
-	// }
-
-	// const [name, surname] = (fullname as string)?.split(' ')
-
-	// const allPaymentsNamed = allUsers.filter(({ sender }) => sender === `${name}_${surname}`)
-
-	// res.send(allPaymentsNamed)
 }
 
 const save = async (req: Request, res: Response) => {

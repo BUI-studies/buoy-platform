@@ -1,5 +1,7 @@
 import { Dispatch, SetStateAction } from 'react'
 
+export * from './models'
+
 export enum REQUEST_STATUS {
 	IDLE = 'IDLE',
 	LOADING = 'LOADING',

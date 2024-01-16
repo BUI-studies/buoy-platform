@@ -44,11 +44,10 @@ export const MeetingsSchema = new Schema<Meeting>({
 	type: {
 		type: String,
 	},
-	students: {
-		type: [ObjectId],
-	},
+	students: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 	mentor: {
-		type: ObjectId,
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User',
 	},
 	report: {
 		type: String,

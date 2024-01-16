@@ -69,6 +69,7 @@ export type InputProps = {
 	options?: SelectOption[]
 	value?: string | number
 	control?: Control
+	disabled?: boolean
 }
 
 export type FormProps<T> = {

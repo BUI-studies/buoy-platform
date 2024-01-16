@@ -1,74 +1,41 @@
-import { useEffect, useState } from 'react'
-
-import { Meeting, useAuth } from '@/context'
+import { useActiveUsersByMentor, useMeetingMutation } from '@/api'
+import { useAuth } from '@/context'
+import { Meeting } from '@/types'
 import { FormBuilderTypes, FormBuilder } from '@/utils'
-import { saveMeeting } from '@/api'
 
-import { reportFormFields, reportSchema } from './Report.helper'
+import { getReportFormFields, reportSchema } from './Report.helper'
 
 const Report = () => {
 	const auth = useAuth()
-	const [showForm, setShowForm] = useState(false)
-	const formURL =
-		'https://docs.google.com/forms/d/e/1FAIpQLSeBwCg7E1-awS8q04SyE2PCv4IfUD6HvqglhudG3qyna06o3Q/viewform?embedded=true'
-	const handleIframeLoad = () => {
-		setShowForm(true)
-	}
+	const mutation = useMeetingMutation()
+	const students = useActiveUsersByMentor(auth.user?.data?.data?._id)
 
-	const [students, setStudents] = useState<FormBuilderTypes.SelectOption[]>([])
+	if (students.isLoading) return <span className="">Loading...</span>
+
+	const studentsOptions: FormBuilderTypes.SelectOption[] = students.data.map(
+		(student: { fullName: string; _id: string }) => ({
+			label: student.fullName,
+			value: student._id,
+		}),
+	)
 
 	const handleSaveMeeting = async (data: Meeting) => {
 		if (!auth.user?.data?.data?._id) return
 
-		//TODO: handle error when the meeting already exists
-		await saveMeeting({
+		mutation.mutate({
 			...data,
 			mentor: auth.user?.data?.data?._id,
 			date: new Date(),
 		})
 	}
 
-	useEffect(() => {
-		//TODO: make it pretty! move it to the api folder
-		fetch(`/api/users?mentor=${auth.user?.data?.data?._id}&role=student&status=active`)
-			.then(res => res.json())
-			.then(data => {
-				const studentsOptions: FormBuilderTypes.SelectOption[] = data.map(
-					(student: { fullName: string; _id: string }) => ({
-						label: student.fullName,
-						value: student._id,
-					}),
-				)
-
-				setStudents(studentsOptions)
-			})
-	}, [auth])
-
 	return (
-		<>
-			{!students.length ? (
-				<span className="">Loading form...</span>
-			) : (
-				<FormBuilder.Form<Meeting>
-					formProps={{ name: 'reportForm' }}
-					fields={reportFormFields(students as FormBuilderTypes.SelectOption[])}
-					schema={reportSchema}
-					onSubmit={handleSaveMeeting}
-				/>
-			)}
-
-			{!showForm && <span className="">Loading iframe...</span>}
-
-			<iframe
-				src={formURL}
-				width="100%"
-				height="100%"
-				onLoad={handleIframeLoad}
-				className={`${showForm ? 'block' : 'hidden'}`}
-			>
-				<span className="">Loading...</span>
-			</iframe>
-		</>
+		<FormBuilder.Form<Meeting>
+			formProps={{ name: 'reportForm' }}
+			fields={getReportFormFields(studentsOptions)}
+			schema={reportSchema}
+			onSubmit={handleSaveMeeting}
+		/>
 	)
 }
 

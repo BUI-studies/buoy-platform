@@ -3,7 +3,7 @@ import { Navigate, RouteObject } from 'react-router-dom'
 import { Layout } from '@/template'
 import { Login, Meetings, Resources, Feedback, Payments, Homeworks, Report, UnPaid } from '@/pages'
 import { ProtectedRoute, _URL, Logout } from '@/routes'
-import { MeetingsProvider, PaymentsProvider, HomeworksProvider } from '@/context'
+import { PaymentsProvider, HomeworksProvider } from '@/context'
 import { USER_STATUSES } from '@/types'
 
 export const routesListStudent: RouteObject[] = [
@@ -30,9 +30,7 @@ export const routesListStudent: RouteObject[] = [
 				path: _URL.MEETINGS,
 				element: (
 					<ProtectedRoute>
-						<MeetingsProvider>
-							<Meetings />
-						</MeetingsProvider>
+						<Meetings />
 					</ProtectedRoute>
 				),
 			},
@@ -105,9 +103,7 @@ export const getRoutesListMentor = (status: USER_STATUSES): RouteObject[] => {
 					path: _URL.MEETINGS,
 					element: (
 						<ProtectedRoute>
-							<MeetingsProvider>
-								<Meetings />
-							</MeetingsProvider>
+							<Meetings />
 						</ProtectedRoute>
 					),
 				},

@@ -1,9 +1,9 @@
-import { ObjectId } from 'mongoose'
+import { ObjectId, Types } from 'mongoose'
 import { Request, Response } from 'express'
 
 import { MeetingsModel, meetingsMapper } from '@/model'
 
-import { SHEETS_TITLES } from '@/types'
+import { SHEETS_TITLES, USER_ROLES } from '@/types'
 import { Sheets } from '@/utils'
 
 const getAllMeetings = async () => {
@@ -15,20 +15,38 @@ const getAllMeetings = async () => {
 	)
 }
 
+// const getAll = async (req: Request, res: Response) => {
+// 	const { fullname, role } = req.query
+// 	const allMeetings = await getAllMeetings()
+// 	if (!fullname) {
+// 		return res.send(allMeetings)
+// 	}
+
+// 	const [name, surname] = (fullname as string)?.split(' ')
+
+// 	const allMeetingsNamed = allMeetings.filter(({ students, mentor }) =>
+// 		role === 'mentor' ? mentor === fullname : students?.includes(`${name}_${surname}`),
+// 	)
+
+// 	res.send(allMeetingsNamed)
+// }
+
 const getAll = async (req: Request, res: Response) => {
-	const { fullname, role } = req.query
-	const allMeetings = await getAllMeetings()
-	if (!fullname) {
-		return res.send(allMeetings)
+	const { id, role } = req.query
+	const mentorPopulation = { path: 'mentor', select: '_id fullName' }
+	const studentsPopulation = { path: 'students', select: '_id fullName' }
+
+	if (role === USER_ROLES.MENTOR) {
+		return res.send(await MeetingsModel.find({ mentor: id }).populate(studentsPopulation))
+	} else if (role === USER_ROLES.STUDENT) {
+		const studentId = new Types.ObjectId(id as string)
+
+		return res.send(
+			await MeetingsModel.find({ students: { $in: [studentId] } }).populate(mentorPopulation),
+		)
+	} else {
+		return res.status(400).send({ message: 'Bad request: no role specified' })
 	}
-
-	const [name, surname] = (fullname as string)?.split(' ')
-
-	const allMeetingsNamed = allMeetings.filter(({ students, mentor }) =>
-		role === 'mentor' ? mentor === fullname : students?.includes(`${name}_${surname}`),
-	)
-
-	res.send(allMeetingsNamed)
 }
 
 const getMeetingByTitle = async (title: string, mentor: ObjectId) => {

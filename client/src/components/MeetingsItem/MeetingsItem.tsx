@@ -2,7 +2,7 @@ import { FC, PropsWithChildren } from 'react'
 import { Link } from 'react-router-dom'
 
 import { GitHub } from '@/components'
-import { Meeting, MeetingTypes } from '@/context'
+import { Meeting, MeetingTypes } from '@/types'
 import { dateParser } from '@/utils'
 
 import classes from './MeetingsItem.module.scss'
@@ -32,7 +32,11 @@ const MeetingsItem: FC<PropsWithChildren & MeetingsItemProps> = ({ data }) => {
 				<p className={classes.badgesItem}>{mentor}</p>
 			</div>
 
-			<Link to={report} target="_blank" className={classes.link}>
+			<Link
+				to={report}
+				target="_blank"
+				className={classes.link}
+			>
 				повний report на <GitHub size={24} />
 			</Link>
 

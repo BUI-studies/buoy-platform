@@ -45,5 +45,13 @@
 		&:hover {
 			@apply bg-blue-700;
 		}
+
+		&[disabled] {
+			@apply opacity-50 cursor-not-allowed;
+
+			&:hover {
+				@apply bg-slate-700;
+			}
+		}
 	}
 }

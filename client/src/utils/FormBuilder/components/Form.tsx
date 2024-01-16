@@ -19,19 +19,23 @@ const Form = <T extends FieldValues>({
 		register,
 		handleSubmit,
 		watch,
-		formState: { errors },
+		formState: { errors, isValid },
 		control,
+		reset,
 	} = useForm({
 		mode: 'onBlur',
 		resolver: yupResolver(schema),
 	})
 
 	watchers && watchers(watch)
-
+	console.log('FormBuilder.Form', isValid)
 	return (
 		<form
 			{...formProps}
-			onSubmit={handleSubmit(data => onSubmit(data as T))}
+			onSubmit={handleSubmit(data => {
+				onSubmit(data as T)
+				reset()
+			})}
 			className={classes.form}
 		>
 			{fields.map(
@@ -44,9 +48,14 @@ const Form = <T extends FieldValues>({
 						options={options}
 						value={value}
 						control={control}
-						doRegister={() => register(fieldName, { ...restProps })}
+						doRegister={() =>
+							register(fieldName, {
+								...restProps,
+							})
+						}
 						classes={getInputClassesByType(type, classes as FormBuilderTypes.FieldClasses)}
 						error={errors?.[fieldName] as FieldError}
+						disabled={type === FormBuilderTypes.FIELD_TYPES.SUBMIT && !isValid}
 					/>
 				),
 			)}
