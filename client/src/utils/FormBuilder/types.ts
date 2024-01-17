@@ -19,6 +19,7 @@ export const enum FIELD_TYPES {
 	NUMBER = 'number',
 	PASSWORD = 'password',
 	RADIO = 'radio',
+	MULTI_RADIO = 'multi-radio',
 	RANGE = 'range',
 	RESET = 'reset',
 	SEARCH = 'search',

@@ -41,6 +41,26 @@
 		@apply py-2 px-4 rounded-md border border-gray-300;
 	}
 
+	&__radio {
+		@apply py-2 px-4 rounded-md border border-gray-300;
+
+		&--multi {
+			@apply flex flex-col items-start;
+			&:focus {
+				@apply border-blue-700;
+			}
+		}
+	}
+
+	&__radio--multi &__label {
+		@apply cursor-pointer flex flex-row items-center gap-2;
+		transition: color 0.2s;
+
+		&:hover {
+			@apply text-blue-700;
+		}
+	}
+
 	&__button {
 		@apply py-4 px-8 flex-col items-center justify-center cursor-pointer bg-slate-700;
 		transition: background-color 0.3s ease-in-out;

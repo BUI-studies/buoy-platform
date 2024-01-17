@@ -5,7 +5,6 @@ import { FormBuilder, FormBuilderTypes } from '@/utils'
 
 import '../FormBuilder.scss'
 import { getInputClassesByType } from '../helper'
-import { useEffect } from 'react'
 
 const Form = <T extends FieldValues>({
 	formProps,

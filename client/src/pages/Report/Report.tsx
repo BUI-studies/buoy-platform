@@ -35,6 +35,9 @@ const Report = () => {
 			fields={getReportFormFields(studentsOptions)}
 			schema={reportSchema}
 			onSubmit={handleSaveMeeting}
+			watchers={watch => {
+				console.log(watch('test'))
+			}}
 		/>
 	)
 }

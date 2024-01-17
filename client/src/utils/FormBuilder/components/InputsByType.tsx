@@ -1,5 +1,5 @@
 import { forwardRef } from 'react'
-import { Controller, useFormContext } from 'react-hook-form'
+import { Controller } from 'react-hook-form'
 
 import { Populated } from '@/types'
 import { FormBuilderTypes } from '@/utils'
@@ -73,7 +73,7 @@ const InputsByType = Object.freeze({
 		},
 	),
 	[FormBuilderTypes.FIELD_TYPES.BUTTON]: forwardRef<HTMLInputElement, Populated>(
-		({ classes, ...props }, ref) => (
+		({ classes, control: _, ...props }, ref) => (
 			<input
 				ref={ref}
 				type={FormBuilderTypes.FIELD_TYPES.BUTTON}
@@ -83,7 +83,7 @@ const InputsByType = Object.freeze({
 		),
 	),
 	[FormBuilderTypes.FIELD_TYPES.CHECKBOX]: forwardRef<HTMLInputElement, Populated>(
-		({ classes, ...props }, ref) => (
+		({ classes, control: _, ...props }, ref) => (
 			<input
 				ref={ref}
 				type={FormBuilderTypes.FIELD_TYPES.CHECKBOX}
@@ -93,7 +93,7 @@ const InputsByType = Object.freeze({
 		),
 	),
 	[FormBuilderTypes.FIELD_TYPES.COLOR]: forwardRef<HTMLInputElement, Populated>(
-		({ classes, ...props }, ref) => (
+		({ classes, control: _, ...props }, ref) => (
 			<input
 				ref={ref}
 				type={FormBuilderTypes.FIELD_TYPES.COLOR}
@@ -103,7 +103,7 @@ const InputsByType = Object.freeze({
 		),
 	),
 	[FormBuilderTypes.FIELD_TYPES.DATE]: forwardRef<HTMLInputElement, Populated>(
-		({ classes, ...props }, ref) => (
+		({ classes, control: _, ...props }, ref) => (
 			<input
 				ref={ref}
 				type={FormBuilderTypes.FIELD_TYPES.DATE}
@@ -113,7 +113,7 @@ const InputsByType = Object.freeze({
 		),
 	),
 	[FormBuilderTypes.FIELD_TYPES.DATETIME]: forwardRef<HTMLInputElement, Populated>(
-		({ classes, ...props }, ref) => (
+		({ classes, control: _, ...props }, ref) => (
 			<input
 				ref={ref}
 				type={FormBuilderTypes.FIELD_TYPES.DATETIME}
@@ -123,7 +123,7 @@ const InputsByType = Object.freeze({
 		),
 	),
 	[FormBuilderTypes.FIELD_TYPES.EMAIL]: forwardRef<HTMLInputElement, Populated>(
-		({ classes, ...props }, ref) => (
+		({ classes, control: _, ...props }, ref) => (
 			<input
 				ref={ref}
 				type={FormBuilderTypes.FIELD_TYPES.EMAIL}
@@ -133,7 +133,7 @@ const InputsByType = Object.freeze({
 		),
 	),
 	[FormBuilderTypes.FIELD_TYPES.FILE]: forwardRef<HTMLInputElement, Populated>(
-		({ classes, ...props }, ref) => (
+		({ classes, control: _, ...props }, ref) => (
 			<input
 				ref={ref}
 				type={FormBuilderTypes.FIELD_TYPES.FILE}
@@ -143,7 +143,7 @@ const InputsByType = Object.freeze({
 		),
 	),
 	[FormBuilderTypes.FIELD_TYPES.HIDDEN]: forwardRef<HTMLInputElement, Populated>(
-		({ classes, ...props }, ref) => (
+		({ classes, control: _, ...props }, ref) => (
 			<input
 				ref={ref}
 				type={FormBuilderTypes.FIELD_TYPES.HIDDEN}
@@ -153,7 +153,7 @@ const InputsByType = Object.freeze({
 		),
 	),
 	[FormBuilderTypes.FIELD_TYPES.IMAGE]: forwardRef<HTMLInputElement, Populated>(
-		({ classes, ...props }, ref) => (
+		({ classes, control: _, ...props }, ref) => (
 			<input
 				ref={ref}
 				type={FormBuilderTypes.FIELD_TYPES.IMAGE}
@@ -163,7 +163,7 @@ const InputsByType = Object.freeze({
 		),
 	),
 	[FormBuilderTypes.FIELD_TYPES.MONTH]: forwardRef<HTMLInputElement, Populated>(
-		({ classes, ...props }, ref) => (
+		({ classes, control: _, ...props }, ref) => (
 			<input
 				ref={ref}
 				type={FormBuilderTypes.FIELD_TYPES.MONTH}
@@ -173,7 +173,7 @@ const InputsByType = Object.freeze({
 		),
 	),
 	[FormBuilderTypes.FIELD_TYPES.NUMBER]: forwardRef<HTMLInputElement, Populated>(
-		({ classes, ...props }, ref) => (
+		({ classes, control: _, ...props }, ref) => (
 			<input
 				ref={ref}
 				type={FormBuilderTypes.FIELD_TYPES.NUMBER}
@@ -183,7 +183,7 @@ const InputsByType = Object.freeze({
 		),
 	),
 	[FormBuilderTypes.FIELD_TYPES.PASSWORD]: forwardRef<HTMLInputElement, Populated>(
-		({ classes, ...props }, ref) => (
+		({ classes, control: _, ...props }, ref) => (
 			<input
 				ref={ref}
 				type={FormBuilderTypes.FIELD_TYPES.PASSWORD}
@@ -193,7 +193,7 @@ const InputsByType = Object.freeze({
 		),
 	),
 	[FormBuilderTypes.FIELD_TYPES.RADIO]: forwardRef<HTMLInputElement, Populated>(
-		({ classes, ...props }, ref) => (
+		({ classes, control: _, ...props }, ref) => (
 			<input
 				ref={ref}
 				type={FormBuilderTypes.FIELD_TYPES.RADIO}
@@ -202,8 +202,42 @@ const InputsByType = Object.freeze({
 			/>
 		),
 	),
+	[FormBuilderTypes.FIELD_TYPES.MULTI_RADIO]: forwardRef<HTMLInputElement, Populated>(
+		({ classes, name, options, onChange: _, control, ...props }, ref) => {
+			return (
+				<Controller
+					name={name}
+					control={control}
+					render={({ field: { value, onChange } }) => (
+						<fieldset
+							className={classes.radio}
+							{...props}
+						>
+							{options.map(({ label, value: labelValue }: FormBuilderTypes.SelectOption) => (
+								<label
+									key={label + value}
+									className={classes.label}
+								>
+									<input
+										name={name}
+										type="radio"
+										value={labelValue}
+										className={classes.option}
+										checked={value === labelValue}
+										onChange={() => onChange(labelValue)}
+										{...props}
+									/>
+									{label}
+								</label>
+							))}
+						</fieldset>
+					)}
+				/>
+			)
+		},
+	),
 	[FormBuilderTypes.FIELD_TYPES.RANGE]: forwardRef<HTMLInputElement, Populated>(
-		({ classes, ...props }, ref) => (
+		({ classes, control: _, ...props }, ref) => (
 			<input
 				ref={ref}
 				type={FormBuilderTypes.FIELD_TYPES.RANGE}
@@ -213,7 +247,7 @@ const InputsByType = Object.freeze({
 		),
 	),
 	[FormBuilderTypes.FIELD_TYPES.RESET]: forwardRef<HTMLInputElement, Populated>(
-		({ classes, ...props }, ref) => (
+		({ classes, control: _, ...props }, ref) => (
 			<input
 				ref={ref}
 				type={FormBuilderTypes.FIELD_TYPES.RESET}
@@ -223,7 +257,7 @@ const InputsByType = Object.freeze({
 		),
 	),
 	[FormBuilderTypes.FIELD_TYPES.SEARCH]: forwardRef<HTMLInputElement, Populated>(
-		({ classes, ...props }, ref) => (
+		({ classes, control: _, ...props }, ref) => (
 			<input
 				ref={ref}
 				type={FormBuilderTypes.FIELD_TYPES.SEARCH}
@@ -233,9 +267,10 @@ const InputsByType = Object.freeze({
 		),
 	),
 	[FormBuilderTypes.FIELD_TYPES.SUBMIT]: forwardRef<HTMLButtonElement, Populated>(
-		({ classes, value, control, type, name, ...props }, ref) => (
+		({ classes, value, control: _, type, name, ...props }, ref) => (
 			<button
 				ref={ref}
+				type={FormBuilderTypes.FIELD_TYPES.SUBMIT}
 				className={classes.button}
 				{...props}
 			>
@@ -244,7 +279,7 @@ const InputsByType = Object.freeze({
 		),
 	),
 	[FormBuilderTypes.FIELD_TYPES.TEL]: forwardRef<HTMLInputElement, Populated>(
-		({ classes, ...props }, ref) => (
+		({ classes, control: _, ...props }, ref) => (
 			<input
 				ref={ref}
 				type={FormBuilderTypes.FIELD_TYPES.TEL}
@@ -254,7 +289,7 @@ const InputsByType = Object.freeze({
 		),
 	),
 	[FormBuilderTypes.FIELD_TYPES.TEXT]: forwardRef<HTMLInputElement, Populated>(
-		({ classes, ...props }, ref) => (
+		({ classes, control: _, ...props }, ref) => (
 			<input
 				ref={ref}
 				type={FormBuilderTypes.FIELD_TYPES.TEXT}
@@ -264,7 +299,7 @@ const InputsByType = Object.freeze({
 		),
 	),
 	[FormBuilderTypes.FIELD_TYPES.TEXTAREA]: forwardRef<HTMLTextAreaElement, Populated>(
-		({ classes, ...props }, ref) => (
+		({ classes, control: _, ...props }, ref) => (
 			<textarea
 				ref={ref}
 				className={classes.input}
@@ -273,7 +308,7 @@ const InputsByType = Object.freeze({
 		),
 	),
 	[FormBuilderTypes.FIELD_TYPES.TIME]: forwardRef<HTMLInputElement, Populated>(
-		({ classes, ...props }, ref) => (
+		({ classes, control: _, ...props }, ref) => (
 			<input
 				ref={ref}
 				type={FormBuilderTypes.FIELD_TYPES.TIME}
@@ -283,7 +318,7 @@ const InputsByType = Object.freeze({
 		),
 	),
 	[FormBuilderTypes.FIELD_TYPES.URL]: forwardRef<HTMLInputElement, Populated>(
-		({ classes, ...props }, ref) => (
+		({ classes, control: _, ...props }, ref) => (
 			<input
 				ref={ref}
 				type={FormBuilderTypes.FIELD_TYPES.URL}
@@ -293,7 +328,7 @@ const InputsByType = Object.freeze({
 		),
 	),
 	[FormBuilderTypes.FIELD_TYPES.WEEK]: forwardRef<HTMLInputElement, Populated>(
-		({ classes, ...props }, ref) => (
+		({ classes, control: _, ...props }, ref) => (
 			<input
 				ref={ref}
 				type={FormBuilderTypes.FIELD_TYPES.WEEK}
