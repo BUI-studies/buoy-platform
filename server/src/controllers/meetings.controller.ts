@@ -55,7 +55,6 @@ const getMeetingByTitle = async (title: string, mentor: ObjectId) => {
 
 const saveMeeting = async (req: Request, res: Response) => {
 	const { date, title, type, students, mentor, report, comment } = req.body
-	console.log(req.body)
 
 	const meeting = await getMeetingByTitle(title, mentor)
 	if (meeting.length) {

@@ -14,6 +14,9 @@
 
 		&--multi {
 			@apply flex flex-col items-start;
+			&:focus {
+				@apply border-blue-700;
+			}
 		}
 	}
 

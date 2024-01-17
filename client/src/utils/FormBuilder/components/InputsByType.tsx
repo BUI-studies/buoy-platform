@@ -1,5 +1,5 @@
-import { useState, forwardRef } from 'react'
-import { Controller } from 'react-hook-form'
+import { forwardRef } from 'react'
+import { Controller, useFormContext } from 'react-hook-form'
 
 import { Populated } from '@/types'
 import { FormBuilderTypes } from '@/utils'
@@ -41,6 +41,7 @@ const InputsByType = Object.freeze({
 					control={control}
 					render={({ field: { value = [], onChange } }) => (
 						<fieldset
+							name={name}
 							className={classes.select}
 							{...props}
 						>
@@ -50,6 +51,7 @@ const InputsByType = Object.freeze({
 									className={classes.label}
 								>
 									<input
+										name={name}
 										type="checkbox"
 										value={optionValue}
 										className={classes.option}

@@ -5,6 +5,7 @@ import { FormBuilder, FormBuilderTypes } from '@/utils'
 
 import '../FormBuilder.scss'
 import { getInputClassesByType } from '../helper'
+import { useEffect } from 'react'
 
 const Form = <T extends FieldValues>({
 	formProps,
@@ -23,12 +24,12 @@ const Form = <T extends FieldValues>({
 		control,
 		reset,
 	} = useForm({
-		mode: 'onBlur',
+		mode: 'onTouched',
 		resolver: yupResolver(schema),
 	})
 
 	watchers && watchers(watch)
-	console.log('FormBuilder.Form', isValid)
+
 	return (
 		<form
 			{...formProps}

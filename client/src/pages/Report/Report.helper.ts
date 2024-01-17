@@ -51,12 +51,13 @@ export const reportSchema = yup.object().shape({
 	type: yup.mixed().oneOf(Object.values(REPORT_TYPES)).required(ERRORS.required),
 	students: yup
 		.array()
+		.of(yup.string())
 		.when('type', ([type], schema) => {
 			return type === REPORT_TYPES.INDIVIDUAL
 				? schema.length(1, ERRORS.indStudentsLength)
-				: schema.required(ERRORS.required)
+				: schema.min(1, ERRORS.required)
 		})
-		.min(1, ERRORS.required),
+		.required(ERRORS.required),
 	report: yup.string().url().required(ERRORS.required),
 	comment: yup.string().required(ERRORS.required),
 })
