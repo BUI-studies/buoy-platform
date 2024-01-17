@@ -1,0 +1,57 @@
+.form-builder {
+	@apply flex flex-col gap-4;
+
+	&__label {
+		@apply flex flex-col gap-2;
+	}
+
+	&__input {
+		@apply py-2 px-4 rounded-md border border-gray-300;
+	}
+
+	&__select {
+		@apply py-2 px-4 rounded-md border border-gray-300;
+
+		&--multi {
+			@apply flex flex-col items-start;
+		}
+	}
+
+	&__select--multi &__label {
+		@apply cursor-pointer flex flex-row items-center gap-2;
+		transition: color 0.2s;
+
+		&:hover {
+			@apply text-blue-700;
+		}
+	}
+
+	&__options {
+		@apply py-2 px-4 rounded-md border border-gray-300;
+	}
+
+	&__error {
+		@apply text-red-500;
+	}
+
+	&__checkbox {
+		@apply py-2 px-4 rounded-md border border-gray-300;
+	}
+
+	&__button {
+		@apply py-4 px-8 flex-col items-center justify-center cursor-pointer bg-slate-700;
+		transition: background-color 0.3s ease-in-out;
+
+		&:hover {
+			@apply bg-blue-700;
+		}
+
+		&[disabled] {
+			@apply opacity-50 cursor-not-allowed;
+
+			&:hover {
+				@apply bg-slate-700;
+			}
+		}
+	}
+}

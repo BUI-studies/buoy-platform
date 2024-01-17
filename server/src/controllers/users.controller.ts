@@ -1,27 +1,23 @@
 import bcrypt from 'bcrypt'
 import { Request, Response } from 'express'
 
-import { payemntsMapper, UsersModel } from '@/model'
+import { UsersModel } from '@/model'
 
-import { SHEETS_TITLES } from '@/types'
 import { getToken, Sheets } from '@/utils'
 
 const getAll = async (req: Request, res: Response) => {
-	const { fullname } = req.query
-	await Sheets.getDoc()
-	Sheets.tables?.[SHEETS_TITLES.USERS].loadCells()
+	const { fullname, mentor, role, status } = req.query
 
-	const allPayments = Sheets.parseRows(Sheets.tables?.[SHEETS_TITLES.USERS]._cells, payemntsMapper)
+	const query: any = {}
 
-	if (!fullname) {
-		return res.send(allPayments)
-	}
+	if (fullname) query.fullName = fullname
+	if (mentor) query.mentor = mentor
+	if (role) query.role = role
+	if (status) query.status = status
 
-	const [name, surname] = (fullname as string)?.split(' ')
+	const allUsersDB = await UsersModel.find(query)
 
-	const allPaymentsNamed = allPayments.filter(({ sender }) => sender === `${name}_${surname}`)
-
-	res.send(allPaymentsNamed)
+	res.status(200).send(allUsersDB)
 }
 
 const save = async (req: Request, res: Response) => {

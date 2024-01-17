@@ -4,3 +4,13 @@ export enum SHEETS_TITLES {
 	HOMEWORKS = 'students_HWs',
 	USERS = 'Students f',
 }
+
+export enum USER_ROLES {
+	MENTOR = 'mentor',
+	STUDENT = 'student',
+}
+
+export enum USER_STATUSES {
+	ACTIVE = 'active',
+	UNPAID = 'unpaid',
+}

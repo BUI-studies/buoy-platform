@@ -4,7 +4,7 @@ import { SubmitHandler } from 'react-hook-form'
 import { Input } from '@/components'
 import { AuthContextType, useAuth } from '@/context'
 import { REQUEST_STATUS } from '@/types'
-import { API } from '@/api'
+import * as API from '@/api'
 
 import { LoginInputs, useLoginForm } from './Login.helper'
 import classes from './Login.module.scss'
@@ -27,7 +27,10 @@ const Login = () => {
 	}
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
+		<form
+			onSubmit={handleSubmit(onSubmit)}
+			className={classes.form}
+		>
 			<Input
 				label="Email"
 				error={errors.email}

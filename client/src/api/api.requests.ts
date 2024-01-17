@@ -1,30 +1,20 @@
-import { _URL, getHeaders, request } from '@/api/'
+import { _URL, getHeaders, fetcher } from '@/api/'
 import { LoginInputs } from '@/pages/Login/Login.helper'
 
-const login = async (formData: LoginInputs) => {
-	return request(_URL.login, {
+export const login = async (formData: LoginInputs) => {
+	return fetcher(_URL.login, {
 		method: 'POST',
 		headers: getHeaders(),
 		body: JSON.stringify(formData),
 	})
 }
 
-const verify = async (token: string) => {
-	return request(_URL.verify(token))
+export const verify = async (token: string) => {
+	return fetcher(_URL.verify(token))
 }
 
-const getMeetings = async (fullName: string, role: string) =>
-	request(`${_URL.meetings}?fullname=${fullName}&role=${role}`)
+export const getPayments = async (fullName: string) =>
+	fetcher(`${_URL.payments}?fullname=${fullName}`)
 
-const getPayments = async (fullName: string) => request(`${_URL.payments}?fullname=${fullName}`)
-
-const getHomeworks = async (fullName: string, role: string) =>
-	request(`${_URL.homeworks}?fullname=${fullName}&role=${role}`)
-
-export const API = {
-	login,
-	verify,
-	getMeetings,
-	getPayments,
-	getHomeworks,
-}
+export const getHomeworks = async (fullName: string, role: string) =>
+	fetcher(`${_URL.homeworks}?fullname=${fullName}&role=${role}`)

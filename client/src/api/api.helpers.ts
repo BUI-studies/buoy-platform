@@ -13,14 +13,15 @@ export const _URL = {
 	meetings: '/api/meetings',
 	payments: '/api/payments',
 	homeworks: '/api/homeworks',
+	users: '/api/users',
 }
 
-const getRequestOptions = () => ({
+export const getRequestOptions = () => ({
 	method: 'GET',
 	headers: getHeaders(),
 })
 
-export const request = async (url: string, options: RequestInit = getRequestOptions()) => {
-	const resp = await fetch(url, options)
-	return await resp.json()
+export const fetcher = async (url: string, options: RequestInit = getRequestOptions()) => {
+	const response = await fetch(url, { headers: getHeaders(), ...options })
+	return response.json()
 }

@@ -1,5 +1,4 @@
 export * from './Auth'
-export * from './Meetings'
 export * from './Payments'
 export * from './Homeworks'
 export * from './Modal'

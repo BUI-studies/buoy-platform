@@ -1,5 +1,7 @@
 import { Dispatch, SetStateAction } from 'react'
 
+export * from './models'
+
 export enum REQUEST_STATUS {
 	IDLE = 'IDLE',
 	LOADING = 'LOADING',
@@ -40,4 +42,10 @@ export enum ROLES {
 export enum USER_STATUSES {
 	ACTIVE = 'active',
 	INACTIVE = 'inactive',
+}
+
+export enum REPORT_TYPES {
+	INDIVIDUAL = 'individual',
+	PLANNING = 'planning',
+	SYNC = 'sync',
 }

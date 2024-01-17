@@ -4,7 +4,7 @@ import { _URL } from '@/routes'
 import { DataTable, DataTableRowProps, Plus } from '@/components'
 import { useAuth, useModal, usePayments } from '@/context'
 import { REQUEST_STATUS } from '@/types'
-import { API } from '@/api'
+import * as API from '@/api'
 import { dateParser } from '@/utils'
 
 import monoQR from '@/assets/mono-QR-code.png'
@@ -60,7 +60,10 @@ const Payments = () => {
 			<>
 				<h2 className={classes.modalTitle}>Відскануй QR-код щоб заплатити з аппки банку</h2>
 				<picture className={classes.qrBigger}>
-					<img src={monoQR} alt="QO-code mono jar" />
+					<img
+						src={monoQR}
+						alt="QO-code mono jar"
+					/>
 				</picture>
 			</>,
 		)
@@ -83,15 +86,25 @@ const Payments = () => {
 			{payments.status === REQUEST_STATUS.FAILED && <p>Error</p>}
 
 			<div className={classes.pannel}>
-				<a href={_URL.MONO} target="_blank" className={classes.addPayment}>
+				<a
+					href={_URL.MONO}
+					target="_blank"
+					className={classes.addPayment}
+				>
 					<Plus />
 				</a>
 				<div className={classes.highlights}>
 					<h2 className={classes.totalHeader}>Total spent: {totalMoney}</h2>
 					<h2 className={classes.totalHeader}>This month: {thisMonthSpend}</h2>
 				</div>
-				<picture className={classes.qr} onClick={handleQR}>
-					<img src={monoQR} alt="QO-code mono jar" />
+				<picture
+					className={classes.qr}
+					onClick={handleQR}
+				>
+					<img
+						src={monoQR}
+						alt="QO-code mono jar"
+					/>
 				</picture>
 			</div>
 

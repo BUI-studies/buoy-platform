@@ -1,6 +1,6 @@
-export const dateParser = (milliseconds: number) => {
-	const date = new Date(milliseconds)
-	return date
+export const dateParser = (date: Date) => {
+	const dateObj = new Date(date)
+	return dateObj
 		.toLocaleDateString('en-GB', {
 			day: '2-digit',
 			month: '2-digit',

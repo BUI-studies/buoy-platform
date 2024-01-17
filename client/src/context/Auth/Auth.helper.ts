@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react'
 
 import { REQUEST_STATUS } from '@/types'
-import { API } from '@/api'
+import * as API from '@/api'
 import { UserState } from '@/context'
 import { Storage, TOKEN_KEY } from '@/utils'
 
