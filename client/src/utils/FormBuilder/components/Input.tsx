@@ -29,7 +29,11 @@ const Input: FC<FormBuilderTypes.InputProps> = ({
 			{...registeredProps}
 		/>
 	)
-	const WrapperCompnent = type === FormBuilderTypes.FIELD_TYPES.MULTI_SELECT ? 'div' : 'label'
+	const WrapperCompnent =
+		type === FormBuilderTypes.FIELD_TYPES.MULTI_SELECT ||
+		type === FormBuilderTypes.FIELD_TYPES.MULTI_RADIO
+			? 'div'
+			: 'label'
 
 	if (
 		!label ||

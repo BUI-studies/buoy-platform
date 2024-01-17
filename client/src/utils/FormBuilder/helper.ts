@@ -9,6 +9,8 @@ export enum CLASSES {
 	multiSelect = 'form-builder__select--multi',
 	option = 'form-builder__option',
 	checkbox = 'form-builder__checkbox',
+	radio = 'form-builder__radio',
+	multiRadio = 'form-builder__radio--multi',
 	button = 'form-builder__button',
 }
 
@@ -31,6 +33,12 @@ export function getInputClassesByType(
 			return { ...defaultClasses, checkbox: classes.checkbox }
 		case 'radio':
 			return { ...defaultClasses, radio: classes.radio }
+		case 'multi-radio':
+			return {
+				...defaultClasses,
+				radio: [classes.radio, classes.multiRadio].join(' '),
+				option: classes.option,
+			}
 		case 'submit':
 			return { ...defaultClasses, button: classes.button }
 		default:
