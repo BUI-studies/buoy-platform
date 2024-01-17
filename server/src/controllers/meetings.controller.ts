@@ -1,37 +1,11 @@
 import { ObjectId, Types } from 'mongoose'
 import { Request, Response } from 'express'
 
-import { MeetingsModel, meetingsMapper } from '@/model'
+import { MeetingsModel } from '@/model'
 
-import { SHEETS_TITLES, USER_ROLES } from '@/types'
-import { Sheets } from '@/utils'
+import { USER_ROLES } from '@/types'
 
-const getAllMeetings = async () => {
-	await Sheets.getDoc()
-	Sheets.tables?.[SHEETS_TITLES.MEETINGS].loadCells()
-
-	return Sheets.parseRows(Sheets.tables?.[SHEETS_TITLES.MEETINGS]._cells, meetingsMapper).filter(
-		({ students }) => !!students,
-	)
-}
-
-// const getAll = async (req: Request, res: Response) => {
-// 	const { fullname, role } = req.query
-// 	const allMeetings = await getAllMeetings()
-// 	if (!fullname) {
-// 		return res.send(allMeetings)
-// 	}
-
-// 	const [name, surname] = (fullname as string)?.split(' ')
-
-// 	const allMeetingsNamed = allMeetings.filter(({ students, mentor }) =>
-// 		role === 'mentor' ? mentor === fullname : students?.includes(`${name}_${surname}`),
-// 	)
-
-// 	res.send(allMeetingsNamed)
-// }
-
-const getAll = async (req: Request, res: Response) => {
+export const get = async (req: Request, res: Response) => {
 	const { id, role, limit } = req.query
 	const mentorPopulation = { path: 'mentor', select: '_id fullName' }
 	const studentsPopulation = { path: 'students', select: '_id fullName' }
@@ -52,14 +26,14 @@ const getAll = async (req: Request, res: Response) => {
 	}
 }
 
-const getMeetingByTitle = async (title: string, mentor: ObjectId) => {
+export const getByTitle = async (title: string, mentor: ObjectId) => {
 	return MeetingsModel.find({ title, mentor })
 }
 
-const saveMeeting = async (req: Request, res: Response) => {
+export const save = async (req: Request, res: Response) => {
 	const { date, title, type, students, mentor, report, comment } = req.body
 
-	const meeting = await getMeetingByTitle(title, mentor)
+	const meeting = await getByTitle(title, mentor)
 	if (meeting.length) {
 		return res.status(409).send({ message: 'Meeting already exists' })
 	}
@@ -81,7 +55,7 @@ const saveMeeting = async (req: Request, res: Response) => {
 	}
 }
 
-const updateMeeting = async (req: Request, res: Response) => {
+export const update = async (req: Request, res: Response) => {
 	const { id } = req.params
 	const { date, title, type, students, mentor, report, comment } = req.body
 
@@ -97,7 +71,7 @@ const updateMeeting = async (req: Request, res: Response) => {
 	}
 }
 
-const deleteMeeting = async (req: Request, res: Response) => {
+export const remove = async (req: Request, res: Response) => {
 	const { id } = req.params
 	try {
 		await MeetingsModel.findByIdAndDelete(id)
@@ -105,11 +79,4 @@ const deleteMeeting = async (req: Request, res: Response) => {
 	} catch (error) {
 		res.status(500).send({ message: 'Server error' })
 	}
-}
-
-export const MeetingsController = {
-	get: getAll,
-	save: saveMeeting,
-	update: updateMeeting,
-	delete: deleteMeeting,
 }

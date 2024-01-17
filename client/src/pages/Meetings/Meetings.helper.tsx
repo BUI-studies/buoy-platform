@@ -2,7 +2,8 @@ import { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 
 import { DataTableRowProps, MeetingsItem } from '@/components'
-import { Meeting, Mentor, ROLES, Student } from '@/types'
+import { Meeting, Mentor, Student } from '@/api'
+import { ROLES } from '@/types'
 import { dateParser } from '@/utils'
 
 import { MeetingTableItem } from './Meetings.types'

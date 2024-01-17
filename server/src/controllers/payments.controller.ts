@@ -12,7 +12,7 @@ const getAllPayments = async () => {
 	return Sheets.parseRows(Sheets.tables?.[SHEETS_TITLES.PAYMENTS]._cells, payemntsMapper)
 }
 
-const getAll = async (req: Request, res: Response) => {
+export const get = async (req: Request, res: Response) => {
 	const { fullname } = req.query
 	const allPayments = await getAllPayments()
 
@@ -27,21 +27,14 @@ const getAll = async (req: Request, res: Response) => {
 	res.send(allPaymentsNamed)
 }
 
-const saveMeeting = async (req: Request, res: Response) => {
+export const save = async (req: Request, res: Response) => {
 	res.send({})
 }
 
-const updateMeeting = async (req: Request, res: Response) => {
+export const update = async (req: Request, res: Response) => {
 	res.send({})
 }
 
-const deleteMeeting = async (req: Request, res: Response) => {
+export const remove = async (req: Request, res: Response) => {
 	res.send({})
-}
-
-export const PaymentsController = {
-	get: getAll,
-	save: saveMeeting,
-	update: updateMeeting,
-	delete: deleteMeeting,
 }

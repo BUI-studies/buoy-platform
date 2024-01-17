@@ -1,7 +1,7 @@
 export * from './Home'
 export * from './Login'
 export { default as Report } from './Report/Report'
-export { default as Feedback } from './Feedback/Feedback'
+export { default as Feedbacks } from './Feedbacks/Feedbacks'
 export { default as Resources } from './Resources'
 export { default as Meetings } from './Meetings/Meetings'
 export { default as Payments } from './Payments/Payments'

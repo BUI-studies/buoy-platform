@@ -48,7 +48,10 @@ const InputsByType = Object.freeze({
 							{options.map(({ label, value: optionValue }: FormBuilderTypes.SelectOption) => (
 								<label
 									key={label + optionValue}
-									className={classes.label}
+									className={[
+										classes.label,
+										value?.includes(optionValue) ? classes.labelSelected : '',
+									].join(' ')}
 								>
 									<input
 										name={name}
@@ -213,7 +216,10 @@ const InputsByType = Object.freeze({
 							{options.map(({ label, value: optionValue }: FormBuilderTypes.SelectOption) => (
 								<label
 									key={label + optionValue}
-									className={classes.label}
+									className={[
+										classes.label,
+										value === optionValue ? classes.labelSelected : '',
+									].join(' ')}
 								>
 									<input
 										name={name}

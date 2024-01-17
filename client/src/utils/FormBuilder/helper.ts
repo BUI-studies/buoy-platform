@@ -3,6 +3,7 @@ import * as FormBuilderTypes from './types'
 export enum CLASSES {
 	form = 'form-builder',
 	label = 'form-builder__label',
+	labelSelected = 'form-builder__label--selected',
 	input = 'form-builder__input',
 	text = 'form-builder__text',
 	error = 'form-builder__error',
@@ -27,6 +28,7 @@ export function getInputClassesByType(
 				...commonClasses,
 				select: [classes.select, classes.multiSelect].join(' '),
 				option: classes.option,
+				labelSelected: classes.labelSelected,
 			}
 		case 'select':
 			return { ...commonClasses, select: classes.select, option: classes.option }
@@ -39,6 +41,7 @@ export function getInputClassesByType(
 				...commonClasses,
 				radio: [classes.radio, classes.multiRadio].join(' '),
 				option: classes.option,
+				labelSelected: classes.labelSelected,
 			}
 		case 'submit':
 			return { ...commonClasses, button: classes.button }

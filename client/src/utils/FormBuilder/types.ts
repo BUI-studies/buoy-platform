@@ -35,6 +35,7 @@ export const enum FIELD_TYPES {
 export type FieldClasses = {
 	label: string
 	error: string
+	labelSelected?: string
 	text?: string
 	checkbox?: string
 	radio?: string

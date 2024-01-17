@@ -5,7 +5,13 @@ import express, { json, urlencoded } from 'express'
 
 import { Sheets, auth } from '@/utils'
 
-import { meetingsRoutes, authRoutes, paymentsRoutes, homeworksRoutes } from './src/routes'
+import {
+	meetingsRoutes,
+	authRoutes,
+	paymentsRoutes,
+	homeworksRoutes,
+	feedbackRoutes,
+} from './src/routes'
 import { usersRoutes } from '@/routes/users.route'
 
 const app = express()
@@ -22,6 +28,7 @@ app.use('/api/meetings', auth, meetingsRoutes)
 app.use('/api/payments', auth, paymentsRoutes)
 app.use('/api/homeworks', auth, homeworksRoutes)
 app.use('/api/users', auth, usersRoutes)
+app.use('/api/feedback', auth, feedbackRoutes)
 
 //handling client routes
 app.get('*', (req, res) => {

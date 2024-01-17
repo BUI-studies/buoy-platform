@@ -5,7 +5,7 @@ import { ERRORS } from '@/enums'
 
 export const getFeedbackSchema = (meetingOptions: string[]) =>
 	yup.object().shape({
-		meeting: yup.string().oneOf(meetingOptions).required(ERRORS.required),
+		meeting: yup.string().oneOf(meetingOptions, ERRORS.selectNoValue).required(ERRORS.required),
 		impression: yup.string().required(ERRORS.required),
 		understanding: yup.string().required(ERRORS.required),
 		mentoring: yup.string().required(ERRORS.required),
@@ -30,28 +30,28 @@ export const getFeedbackFormFields = (
 			"Як тобі взагалі? Чекаю твою суб'єктивну інтуїтивну емоційну відповідь. Це обов'язкове питання. Без суб'єктиву і оцінок в розвитку, нажаль, ніяк.",
 		options: [
 			{
-				label: '💩🤢🤮🤡',
-				value: '0',
-			},
-			{
-				label: '😒😕😐',
-				value: '1',
-			},
-			{
-				label: '😐😑😶',
-				value: '2',
-			},
-			{
-				label: '😊🙂😀',
-				value: '3',
+				label: '🤩🥳🔥🥰',
+				value: '5',
 			},
 			{
 				label: '😍🥰😘',
 				value: '4',
 			},
 			{
-				label: '🤩🥳🔥🥰',
-				value: '5',
+				label: '😊🙂😀',
+				value: '3',
+			},
+			{
+				label: '😐😑😶',
+				value: '2',
+			},
+			{
+				label: '😒😕😐',
+				value: '1',
+			},
+			{
+				label: '💩🤢🤮🤡',
+				value: '0',
 			},
 		],
 	},
@@ -61,24 +61,24 @@ export const getFeedbackFormFields = (
 		label: 'Оціни рівень зрозумілості теми.',
 		options: [
 			{
-				label: '😭 Зовсім не зрозуміло',
-				value: '0',
-			},
-			{
-				label: '🫤 Погано зрозуміло, треба повторити',
-				value: '1',
-			},
-			{
-				label: '🤔 Трохи заплутано, але розібрались',
-				value: '2',
+				label: '😎 Ізі катка, я можу вчити інших',
+				value: '4',
 			},
 			{
 				label: '🤗 Цілком зрозуміло',
 				value: '3',
 			},
 			{
-				label: '😎 Ізі катка, я можу вчити інших',
-				value: '4',
+				label: '🤔 Трохи заплутано, але розібрались',
+				value: '2',
+			},
+			{
+				label: '🫤 Погано зрозуміло, треба повторити',
+				value: '1',
+			},
+			{
+				label: '😭 Зовсім не зрозуміло',
+				value: '0',
 			},
 		],
 	},
@@ -103,16 +103,16 @@ export const getFeedbackFormFields = (
 		label: 'А ти там шо? Що по ініціативі? Задавав/ла запитання, брав/ла участь у дискусіях?',
 		options: [
 			{
-				label: '😵 я труп, мене нема',
-				value: '0',
+				label: "🤪 моє перше ім'я – гіпер, а друге – активність, а третє в паспорті",
+				value: '2',
 			},
 			{
 				label: '🙂 шось було',
 				value: '1',
 			},
 			{
-				label: "🤪 моє перше ім'я – гіпер, а друге – активність, а третє в паспорті",
-				value: '2',
+				label: '😵 я труп, мене нема',
+				value: '0',
 			},
 		],
 	},

@@ -25,11 +25,17 @@
 	}
 
 	&__select--multi &__label {
-		@apply cursor-pointer flex flex-row items-center gap-2;
-		transition: color 0.2s;
+		@apply px-3 py-2 cursor-pointer flex flex-row items-center gap-2 border border-transparent;
+		transition:
+			border 0.2s,
+			color 0.2s;
 
 		&:hover {
 			@apply text-blue-700;
+		}
+
+		&--selected {
+			@apply rounded border border-blue-700;
 		}
 	}
 
@@ -57,11 +63,17 @@
 	}
 
 	&__radio--multi &__label {
-		@apply cursor-pointer flex flex-row items-center gap-2;
-		transition: color 0.2s;
+		@apply px-3 py-2 cursor-pointer flex flex-row items-center gap-2 border border-transparent;
+		transition:
+			border 0.2s,
+			color 0.2s;
 
 		&:hover {
 			@apply text-blue-700;
+		}
+
+		&--selected {
+			@apply rounded border border-blue-700;
 		}
 	}
 
