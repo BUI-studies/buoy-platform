@@ -11,7 +11,6 @@ const Meetings = () => {
 	const auth = useAuth()
 	const meetings = useMeetings()
 	const { setModal } = useModal()
-	console.log(meetings)
 
 	if (meetings.isLoading) return <span className="">Loading...</span>
 
