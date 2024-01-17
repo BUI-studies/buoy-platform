@@ -32,7 +32,7 @@ const getAllMeetings = async () => {
 // }
 
 const getAll = async (req: Request, res: Response) => {
-	const { id, role } = req.query
+	const { id, role, limit } = req.query
 	const mentorPopulation = { path: 'mentor', select: '_id fullName' }
 	const studentsPopulation = { path: 'students', select: '_id fullName' }
 
@@ -42,7 +42,10 @@ const getAll = async (req: Request, res: Response) => {
 		const studentId = new Types.ObjectId(id as string)
 
 		return res.send(
-			await MeetingsModel.find({ students: { $in: [studentId] } }).populate(mentorPopulation),
+			await MeetingsModel.find({ students: { $in: [studentId] } })
+				.sort({ date: -1 })
+				.limit(Number(limit))
+				.populate(mentorPopulation),
 		)
 	} else {
 		return res.status(400).send({ message: 'Bad request: no role specified' })

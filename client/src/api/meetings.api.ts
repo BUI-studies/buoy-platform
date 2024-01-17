@@ -3,13 +3,15 @@ import { useAuth } from '@/context'
 import { Meeting } from '@/types'
 import { useMutation, useQuery } from '@tanstack/react-query'
 
-export const useMeetings = () => {
+export const useMeetings = (limit: number) => {
 	const auth = useAuth()
 
 	const params = new URLSearchParams([
 		['id', auth.user?.data?.data?._id || ''],
 		['role', auth.user?.data?.data?.role || ''],
 	])
+
+	if (limit) params.append('limit', limit.toString())
 
 	return useQuery({
 		queryKey: [_URL.meetings, params],

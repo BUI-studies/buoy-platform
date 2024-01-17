@@ -7,6 +7,7 @@ import '../FormBuilder.scss'
 import { getInputClassesByType } from '../helper'
 
 const Form = <T extends FieldValues>({
+	mode = 'onTouched',
 	formProps,
 	fields = [],
 	schema,
@@ -23,7 +24,7 @@ const Form = <T extends FieldValues>({
 		control,
 		reset,
 	} = useForm({
-		mode: 'onTouched',
+		mode,
 		resolver: yupResolver(schema),
 	})
 
@@ -39,11 +40,21 @@ const Form = <T extends FieldValues>({
 			className={classes.form}
 		>
 			{fields.map(
-				({ defaultValue, type, name: fieldName, label, options, value, ...restProps }) => (
+				({
+					defaultValue,
+					type,
+					name: fieldName,
+					label,
+					options,
+					value,
+					description,
+					...restProps
+				}) => (
 					<FormBuilder.Input
 						key={fieldName + type}
 						type={type}
 						label={label}
+						description={description}
 						defaultValue={defaultValue}
 						options={options}
 						value={value}
