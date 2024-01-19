@@ -48,7 +48,10 @@ const InputsByType = Object.freeze({
 							{options.map(({ label, value: optionValue }: FormBuilderTypes.SelectOption) => (
 								<label
 									key={label + optionValue}
-									className={classes.label}
+									className={[
+										classes.label,
+										value?.includes(optionValue) ? classes.labelSelected : '',
+									].join(' ')}
 								>
 									<input
 										name={name}
@@ -203,29 +206,28 @@ const InputsByType = Object.freeze({
 		),
 	),
 	[FormBuilderTypes.FIELD_TYPES.MULTI_RADIO]: forwardRef<HTMLInputElement, Populated>(
-		({ classes, name, options, onChange: _, control, ...props }, ref) => {
+		({ classes, name, options, control }, ref) => {
 			return (
 				<Controller
 					name={name}
 					control={control}
 					render={({ field: { value, onChange } }) => (
-						<fieldset
-							className={classes.radio}
-							{...props}
-						>
-							{options.map(({ label, value: labelValue }: FormBuilderTypes.SelectOption) => (
+						<fieldset className={classes.radio}>
+							{options.map(({ label, value: optionValue }: FormBuilderTypes.SelectOption) => (
 								<label
-									key={label + value}
-									className={classes.label}
+									key={label + optionValue}
+									className={[
+										classes.label,
+										value === optionValue ? classes.labelSelected : '',
+									].join(' ')}
 								>
 									<input
 										name={name}
 										type="radio"
-										value={labelValue}
+										value={optionValue}
 										className={classes.option}
-										checked={value === labelValue}
-										onChange={() => onChange(labelValue)}
-										{...props}
+										checked={value === optionValue}
+										onChange={() => onChange(optionValue)}
 									/>
 									{label}
 								</label>

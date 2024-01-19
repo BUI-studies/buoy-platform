@@ -1,6 +1,5 @@
-import { useActiveUsersByMentor, useMeetingMutation } from '@/api'
+import { useActiveUsersByMentor, useMeetingMutation, Meeting } from '@/api'
 import { useAuth } from '@/context'
-import { Meeting } from '@/types'
 import { FormBuilderTypes, FormBuilder } from '@/utils'
 
 import { getReportFormFields, reportSchema } from './Report.helper'
@@ -35,9 +34,6 @@ const Report = () => {
 			fields={getReportFormFields(studentsOptions)}
 			schema={reportSchema}
 			onSubmit={handleSaveMeeting}
-			watchers={watch => {
-				console.log(watch('test'))
-			}}
 		/>
 	)
 }

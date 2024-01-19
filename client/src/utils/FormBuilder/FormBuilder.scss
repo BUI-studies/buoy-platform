@@ -5,12 +5,16 @@
 		@apply flex flex-col gap-2;
 	}
 
+	&__text {
+		@apply text-sm text-gray-400;
+	}
+
 	&__input {
 		@apply py-2 px-4 rounded-md border border-gray-300;
 	}
 
 	&__select {
-		@apply py-2 px-4 rounded-md border border-gray-300;
+		@apply py-2 px-4 rounded-md border border-gray-300 gap-2;
 
 		&--multi {
 			@apply flex flex-col items-start;
@@ -21,11 +25,17 @@
 	}
 
 	&__select--multi &__label {
-		@apply cursor-pointer flex flex-row items-center gap-2;
-		transition: color 0.2s;
+		@apply px-3 py-2 cursor-pointer flex flex-row items-center gap-2 border border-transparent;
+		transition:
+			border 0.2s,
+			color 0.2s;
 
 		&:hover {
 			@apply text-blue-700;
+		}
+
+		&--selected {
+			@apply rounded border border-blue-700;
 		}
 	}
 
@@ -42,7 +52,7 @@
 	}
 
 	&__radio {
-		@apply py-2 px-4 rounded-md border border-gray-300;
+		@apply py-2 px-4 rounded-md border border-gray-300 gap-2;
 
 		&--multi {
 			@apply flex flex-col items-start;
@@ -53,16 +63,22 @@
 	}
 
 	&__radio--multi &__label {
-		@apply cursor-pointer flex flex-row items-center gap-2;
-		transition: color 0.2s;
+		@apply px-3 py-2 cursor-pointer flex flex-row items-center gap-2 border border-transparent;
+		transition:
+			border 0.2s,
+			color 0.2s;
 
 		&:hover {
 			@apply text-blue-700;
 		}
+
+		&--selected {
+			@apply rounded border border-blue-700;
+		}
 	}
 
 	&__button {
-		@apply py-4 px-8 flex-col items-center justify-center cursor-pointer bg-slate-700;
+		@apply py-4 px-8 flex flex-col items-center justify-center cursor-pointer rounded border border-2 border-blue-700;
 		transition: background-color 0.3s ease-in-out;
 
 		&:hover {

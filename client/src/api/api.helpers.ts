@@ -14,6 +14,7 @@ export const _URL = {
 	payments: '/api/payments',
 	homeworks: '/api/homeworks',
 	users: '/api/users',
+	feedback: '/api/feedback',
 }
 
 export const getRequestOptions = () => ({

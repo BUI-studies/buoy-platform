@@ -5,7 +5,7 @@ import { UsersModel } from '@/model'
 
 import { getToken, Sheets } from '@/utils'
 
-const getAll = async (req: Request, res: Response) => {
+export const get = async (req: Request, res: Response) => {
 	const { fullname, mentor, role, status } = req.query
 
 	const query: any = {}
@@ -20,7 +20,7 @@ const getAll = async (req: Request, res: Response) => {
 	res.status(200).send(allUsersDB)
 }
 
-const save = async (req: Request, res: Response) => {
+export const save = async (req: Request, res: Response) => {
 	if (!req.body) res.status(400).send({ message: 'Content can not be empty!' })
 
 	const { fullName, tel, email, password } = req.body
@@ -59,17 +59,10 @@ const save = async (req: Request, res: Response) => {
 	}
 }
 
-const update = async (req: Request, res: Response) => {
+export const update = async (req: Request, res: Response) => {
 	res.send({})
 }
 
-const remove = async (req: Request, res: Response) => {
+export const remove = async (req: Request, res: Response) => {
 	res.send({})
-}
-
-export const UsersController = {
-	get: getAll,
-	save,
-	update,
-	delete: remove,
 }

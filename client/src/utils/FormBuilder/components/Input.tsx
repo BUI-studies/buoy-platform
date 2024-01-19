@@ -6,6 +6,7 @@ import InputsByType from './InputsByType'
 const Input: FC<FormBuilderTypes.InputProps> = ({
 	defaultValue,
 	label,
+	description,
 	type,
 	classes,
 	error,
@@ -45,6 +46,7 @@ const Input: FC<FormBuilderTypes.InputProps> = ({
 	return (
 		<WrapperCompnent className={classes.label}>
 			{label}
+			{description && <span className={classes.text}>{description}</span>}
 			{inputRenderable}
 			{error && <span className={classes.error}>{errorMessage}</span>}
 		</WrapperCompnent>

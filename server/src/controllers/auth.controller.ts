@@ -5,7 +5,7 @@ import { Request, Response } from 'express'
 import { User, UserJWTPayload, UsersModel } from '@/model'
 import { getToken } from '@/utils'
 
-const login = async (req: Request, res: Response) => {
+export const login = async (req: Request, res: Response) => {
 	if (!req.body || !req.body.email || !req.body.password) {
 		res.status(403)
 		res.send({ message: 'invalid data' })
@@ -45,7 +45,7 @@ const login = async (req: Request, res: Response) => {
 	})
 }
 
-const verifyToken = async (req: Request, res: Response) => {
+export const verifyToken = async (req: Request, res: Response) => {
 	if (!req.query.token) {
 		res.status(403)
 		res.send({ message: 'no token' })
@@ -82,9 +82,4 @@ const verifyToken = async (req: Request, res: Response) => {
 		res.status(403)
 		res.send({ message: 'invalid token', error })
 	}
-}
-
-export const AuthController = {
-	login,
-	verifyToken,
 }
