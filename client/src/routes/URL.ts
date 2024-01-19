@@ -7,12 +7,10 @@ export enum _URL {
 	HOMEWORKS_SINGLE = '/homeworks/:id',
 	REPORT = '/report',
 
-	PAYMENTS = '/payments',
 	UNPAID = '/unpaid',
 
 	FEEDBACK = '/feedback/:type',
 	FORM_FEEDBACK = '/feedback/lesson',
-	FORM_SENKAN = '/feedback/senkan',
 
 	RESOURCES = '/resources/:type',
 	DISCORD = 'https://discord.gg/gcJJwn7MD8',

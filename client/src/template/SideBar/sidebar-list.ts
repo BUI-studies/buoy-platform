@@ -17,8 +17,6 @@ export const navLinkList: LinksMap = {
 	[ROLES.STUDENT]: [
 		{ url: _URL.MEETINGS, name: 'зустрічі' },
 		{ url: _URL.FORM_FEEDBACK, name: 'відгук по зустрічі' },
-		{ url: _URL.FORM_SENKAN, name: 'сєнкан' },
 		{ url: _URL.HOMEWORKS, name: 'домашки' },
-		{ url: _URL.PAYMENTS, name: 'оплати' },
 	],
 }
