@@ -3,7 +3,9 @@ import * as FormBuilderTypes from './types'
 export enum CLASSES {
 	form = 'form-builder',
 	label = 'form-builder__label',
+	labelSelected = 'form-builder__label--selected',
 	input = 'form-builder__input',
+	text = 'form-builder__text',
 	error = 'form-builder__error',
 	select = 'form-builder__select',
 	multiSelect = 'form-builder__select--multi',
@@ -18,30 +20,32 @@ export function getInputClassesByType(
 	type: string,
 	classes: { [key: string]: string },
 ): FormBuilderTypes.FieldClasses {
-	const defaultClasses = { label: classes.label, error: classes.error }
+	const commonClasses = { label: classes.label, error: classes.error, text: classes.text }
 
 	switch (type) {
 		case 'multi-select':
 			return {
-				...defaultClasses,
+				...commonClasses,
 				select: [classes.select, classes.multiSelect].join(' '),
 				option: classes.option,
+				labelSelected: classes.labelSelected,
 			}
 		case 'select':
-			return { ...defaultClasses, select: classes.select, option: classes.option }
+			return { ...commonClasses, select: classes.select, option: classes.option }
 		case 'checkbox':
-			return { ...defaultClasses, checkbox: classes.checkbox }
+			return { ...commonClasses, checkbox: classes.checkbox }
 		case 'radio':
-			return { ...defaultClasses, radio: classes.radio }
+			return { ...commonClasses, radio: classes.radio }
 		case 'multi-radio':
 			return {
-				...defaultClasses,
+				...commonClasses,
 				radio: [classes.radio, classes.multiRadio].join(' '),
 				option: classes.option,
+				labelSelected: classes.labelSelected,
 			}
 		case 'submit':
-			return { ...defaultClasses, button: classes.button }
+			return { ...commonClasses, button: classes.button }
 		default:
-			return { ...defaultClasses, input: classes.input }
+			return { ...commonClasses, input: classes.input }
 	}
 }

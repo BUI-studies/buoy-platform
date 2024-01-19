@@ -1,7 +1,7 @@
 import { Navigate, RouteObject } from 'react-router-dom'
 
 import { Layout } from '@/template'
-import { Login, Meetings, Resources, Feedback, Payments, Homeworks, Report, UnPaid } from '@/pages'
+import { Login, Meetings, Resources, Feedbacks, Payments, Homeworks, Report, UnPaid } from '@/pages'
 import { ProtectedRoute, _URL, Logout } from '@/routes'
 import { PaymentsProvider, HomeworksProvider } from '@/context'
 import { USER_STATUSES } from '@/types'
@@ -58,7 +58,7 @@ export const routesListStudent: RouteObject[] = [
 				path: _URL.FEEDBACK,
 				element: (
 					<ProtectedRoute>
-						<Feedback />
+						<Feedbacks />
 					</ProtectedRoute>
 				),
 			},

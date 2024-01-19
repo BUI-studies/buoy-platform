@@ -1,5 +1,5 @@
-import { Meeting, ROLES } from '@/types'
-import { useMeetings } from '@/api'
+import { ROLES } from '@/types'
+import { useMeetings, Meeting } from '@/api'
 import { useAuth, useModal } from '@/context'
 
 import { DataTable, DataTableRowProps } from '@/components'

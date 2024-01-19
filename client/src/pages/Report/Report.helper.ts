@@ -1,13 +1,8 @@
 import * as yup from 'yup'
 
+import { ERRORS } from '@/enums'
 import { REPORT_TYPES } from '@/types'
 import { FormBuilderTypes } from '@/utils'
-
-const ERRORS = {
-	required: 'Required field',
-	wrongType: 'Wrong type',
-	indStudentsLength: 'Individual meeting should have only one student',
-}
 
 export const getReportFormFields = (
 	students: FormBuilderTypes.SelectOption[],

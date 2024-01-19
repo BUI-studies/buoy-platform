@@ -17,7 +17,7 @@ const getAllHomeworks = async () => {
 	)
 }
 
-const getAll = async (req: Request, res: Response) => {
+export const get = async (req: Request, res: Response) => {
 	const { fullname, role } = req.query
 	const allHomeworks = await getAllHomeworks()
 
@@ -33,21 +33,14 @@ const getAll = async (req: Request, res: Response) => {
 	res.send(allHomeworksNamed)
 }
 
-const saveMeeting = async (req: Request, res: Response) => {
+export const save = async (req: Request, res: Response) => {
 	res.send({})
 }
 
-const updateMeeting = async (req: Request, res: Response) => {
+export const update = async (req: Request, res: Response) => {
 	res.send({})
 }
 
-const deleteMeeting = async (req: Request, res: Response) => {
+export const remove = async (req: Request, res: Response) => {
 	res.send({})
-}
-
-export const HomeworksController = {
-	get: getAll,
-	save: saveMeeting,
-	update: updateMeeting,
-	delete: deleteMeeting,
 }

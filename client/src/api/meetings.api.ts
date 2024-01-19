@@ -1,15 +1,35 @@
-import { _URL, fetcher, getHeaders } from '@/api'
-import { useAuth } from '@/context'
-import { Meeting } from '@/types'
 import { useMutation, useQuery } from '@tanstack/react-query'
 
-export const useMeetings = () => {
+import { _URL, fetcher, getHeaders, Mentor, Student } from '@/api'
+import { useAuth } from '@/context'
+
+export enum MeetingTypes {
+	INDIVIDUAL = 'individual',
+	PLANING = 'planing',
+	SYNC = 'sync',
+}
+
+export type Meeting = {
+	_id: string
+	timestamp: number
+	date: Date
+	title: string
+	type: MeetingTypes
+	students: string[] | Student[]
+	mentor: Mentor | string
+	comment: string
+	report: string
+}
+
+export const useMeetings = (limit?: number) => {
 	const auth = useAuth()
 
 	const params = new URLSearchParams([
 		['id', auth.user?.data?.data?._id || ''],
 		['role', auth.user?.data?.data?.role || ''],
 	])
+
+	if (limit) params.append('limit', limit.toString())
 
 	return useQuery({
 		queryKey: [_URL.meetings, params],
