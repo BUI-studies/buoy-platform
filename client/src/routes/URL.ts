@@ -9,8 +9,7 @@ export enum _URL {
 
 	UNPAID = '/unpaid',
 
-	FEEDBACK = '/feedback/:type',
-	FORM_FEEDBACK = '/feedback/lesson',
+	FEEDBACK = '/feedback/',
 
 	RESOURCES = '/resources/:type',
 	DISCORD = 'https://discord.gg/gcJJwn7MD8',
