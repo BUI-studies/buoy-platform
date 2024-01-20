@@ -2,6 +2,7 @@ import mongoose from 'mongoose'
 
 import { Sheets, TableCell } from '@/utils'
 import { parseTimeStamp } from '@/helpers'
+import { ObjectId } from 'mongodb'
 
 const Schema = mongoose.Schema
 
@@ -27,6 +28,19 @@ export const homeworksMapper = (cellsArray: TableCell[]) => ({
 	studentsComment: Sheets.getCellValueFromRawData(cellsArray[8]) || null,
 })
 
-export const HomerwoksSchema = new Schema<Homerwok>({})
+export const HomerwoksSchema = new Schema<Homerwok>({
+	id: {
+		type: ObjectId,
+	},
+	timestamp: {
+		type: Number,
+	},
+	sender: { type: String },
+	homeworkName: { type: Number, required: true },
+	github: { type: String, required: true },
+	isReviewed: { type: String },
+	mentorsComment: { type: String },
+	studentsComment: { type: String },
+})
 
 export const HomeworksModel = mongoose.model<Homerwok>('Homerwoks', HomerwoksSchema)
