@@ -1,7 +1,7 @@
 import { Navigate, RouteObject } from 'react-router-dom'
 
 import { Layout } from '@/template'
-import { Login, Meetings, Resources, Feedbacks, Payments, Homeworks, Report, UnPaid } from '@/pages'
+import { Login, Meetings, Resources, Feedbacks, Homeworks, Report, UnPaid } from '@/pages'
 import { ProtectedRoute, _URL, Logout } from '@/routes'
 import { PaymentsProvider, HomeworksProvider } from '@/context'
 import { USER_STATUSES } from '@/types'
@@ -31,16 +31,6 @@ export const routesListStudent: RouteObject[] = [
 				element: (
 					<ProtectedRoute>
 						<Meetings />
-					</ProtectedRoute>
-				),
-			},
-			{
-				path: _URL.PAYMENTS,
-				element: (
-					<ProtectedRoute>
-						<PaymentsProvider>
-							<Payments />
-						</PaymentsProvider>
 					</ProtectedRoute>
 				),
 			},
@@ -157,16 +147,6 @@ export const routesListDefault = [
 			{
 				path: _URL.LOGOUT,
 				element: <Logout />,
-			},
-			{
-				path: _URL.PAYMENTS,
-				element: (
-					<ProtectedRoute>
-						<PaymentsProvider>
-							<Payments />
-						</PaymentsProvider>
-					</ProtectedRoute>
-				),
 			},
 			{
 				path: _URL.UNPAID,

@@ -1,25 +1,32 @@
 import { Request, Response } from 'express'
+import { ObjectId, Types } from 'mongoose'
+import { HomeworksModel } from '@/model'
 
-import { homeworksMapper } from '@/model'
+import { USER_ROLES } from '@/types'
+// import { Sheets } from '@/utils'
 
-import { SHEETS_TITLES } from '@/types'
-import { Sheets } from '@/utils'
+export const getAllHomeworks = async (req: Request, res: Response) => {
+	const { id, role, limit } = req.query
+	const mentorPopulation = { path: 'mentor', select: '_id fullName' }
+	const studentsPopulation = { path: 'students', select: '_id fullName' }
 
-const getAllHomeworks = async () => {
-	await Sheets.getDoc()
-	Sheets.tables?.[SHEETS_TITLES.HOMEWORKS].loadCells()
+	if (role === USER_ROLES.MENTOR) {
+		return await HomeworksModel.find({ mentor: id }).populate(studentsPopulation)
+	} else if (role === USER_ROLES.STUDENT) {
+		const studentId = new Types.ObjectId(id as string)
 
-	return Sheets.parseRows(
-		Sheets.tables?.[SHEETS_TITLES.HOMEWORKS]._cells?.filter((r: any) => {
-			return r[0]._row > 0
-		}),
-		homeworksMapper,
-	)
+		return await HomeworksModel.find({ students: { $in: [studentId] } })
+			.sort({ date: -1 })
+			.limit(Number(limit))
+			.populate(mentorPopulation)
+	} else {
+		return res.status(400).send({ message: 'Bad request: no role specified' })
+	}
 }
 
 export const get = async (req: Request, res: Response) => {
 	const { fullname, role } = req.query
-	const allHomeworks = await getAllHomeworks()
+	const allHomeworks = await getAllHomeworks(req, res)
 
 	if (!fullname) {
 		return res.send(allHomeworks)
