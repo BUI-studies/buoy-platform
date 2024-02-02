@@ -11,7 +11,11 @@ export const get = async (req: Request, res: Response) => {
 	const studentsPopulation = { path: 'students', select: '_id fullName' }
 
 	if (role === USER_ROLES.MENTOR) {
-		return res.send(await MeetingsModel.find({ mentor: id }).populate(studentsPopulation))
+		return res.send(
+			await MeetingsModel.find({ mentor: id })
+				.sort({ date: -1 })
+				.populate([studentsPopulation, mentorPopulation]),
+		)
 	} else if (role === USER_ROLES.STUDENT) {
 		const studentId = new Types.ObjectId(id as string)
 
