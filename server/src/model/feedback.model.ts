@@ -4,7 +4,7 @@ import mongoose, { ObjectId } from 'mongoose'
 const Schema = mongoose.Schema
 
 export interface Feedback extends mongoose.Document {
-	meeting: string
+	meeting: ObjectId
 	impression: string
 	understanding: string
 	mentoring: string
@@ -15,7 +15,7 @@ export interface Feedback extends mongoose.Document {
 }
 
 export const FeedbackSchema = new Schema<Feedback>({
-	meeting: { type: String, required: true },
+	meeting: { type: Schema.Types.ObjectId, ref: 'Meetings', required: true },
 	impression: { type: String, required: true },
 	understanding: { type: String, required: true },
 	mentoring: { type: String, required: true },
