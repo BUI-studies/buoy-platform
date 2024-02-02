@@ -58,6 +58,7 @@ const Form = <T extends FieldValues>({
 						defaultValue={defaultValue}
 						options={options}
 						value={value}
+						text={restProps.text}
 						control={control}
 						doRegister={() =>
 							register(fieldName, {

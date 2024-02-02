@@ -140,6 +140,14 @@ export const getFeedbackFormFields = (
 		],
 	},
 	{
+		type: FormBuilderTypes.FIELD_TYPES.CHECKBOX,
+		name: 'isMentorVisible',
+		label: 'Показати ментору?',
+		description:
+			'Відміть, якщо хочеш, щоб ментор побачив твої відповіді. Ми покажемо йому все окрім твого імені, тому можеш бути спокійним за анонімність😉👌🏻',
+		text: 'Ай, чорт з ним, показуй!',
+	},
+	{
 		type: FormBuilderTypes.FIELD_TYPES.SUBMIT,
 		name: 'submit',
 		value: 'Save Feedback',

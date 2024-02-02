@@ -3,6 +3,13 @@ import { FormBuilderTypes } from '@/utils'
 
 import InputsByType from './InputsByType'
 
+const divWrapperdTypes = [
+	FormBuilderTypes.FIELD_TYPES.MULTI_SELECT,
+	FormBuilderTypes.FIELD_TYPES.MULTI_RADIO,
+	FormBuilderTypes.FIELD_TYPES.CHECKBOX,
+	FormBuilderTypes.FIELD_TYPES.RADIO,
+]
+
 const Input: FC<FormBuilderTypes.InputProps> = ({
 	defaultValue,
 	label,
@@ -12,6 +19,7 @@ const Input: FC<FormBuilderTypes.InputProps> = ({
 	error,
 	options,
 	value,
+	text,
 	control,
 	disabled,
 	doRegister,
@@ -27,14 +35,11 @@ const Input: FC<FormBuilderTypes.InputProps> = ({
 			classes={classes}
 			control={control}
 			disabled={disabled}
+			text={text}
 			{...registeredProps}
 		/>
 	)
-	const WrapperCompnent =
-		type === FormBuilderTypes.FIELD_TYPES.MULTI_SELECT ||
-		type === FormBuilderTypes.FIELD_TYPES.MULTI_RADIO
-			? 'div'
-			: 'label'
+	const WrapperCompnent = divWrapperdTypes.includes(type) ? 'div' : 'label'
 
 	if (
 		!label ||

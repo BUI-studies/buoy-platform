@@ -7,7 +7,16 @@ const getFeedbackByMeetingId = async (meeting: string, studentId: string) => {
 }
 
 export const save = async (req: Request, res: Response) => {
-	const { meeting, impression, understanding, mentoring, selfFeeling, teamwork, student } = req.body
+	const {
+		meeting,
+		impression,
+		understanding,
+		mentoring,
+		selfFeeling,
+		teamwork,
+		student,
+		isMentorVisible = false,
+	} = req.body
 
 	const feedback = await getFeedbackByMeetingId(meeting, student)
 	if (feedback.length) {
@@ -23,6 +32,7 @@ export const save = async (req: Request, res: Response) => {
 			selfFeeling,
 			teamwork,
 			student,
+			isMentorVisible,
 		})
 		await newFeedback.save()
 		res.status(200).send(newFeedback)

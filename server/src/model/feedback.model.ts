@@ -11,6 +11,7 @@ export interface Feedback extends mongoose.Document {
 	selfFeeling: string
 	teamwork: string
 	student: ObjectId
+	isMentorVisible?: boolean
 }
 
 export const FeedbackSchema = new Schema<Feedback>({
@@ -21,6 +22,7 @@ export const FeedbackSchema = new Schema<Feedback>({
 	selfFeeling: { type: String, required: true },
 	teamwork: { type: String, required: true },
 	student: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+	isMentorVisible: { type: Boolean, default: false },
 })
 
 export const FeedbackModel = mongoose.model<Feedback>('Feedback', FeedbackSchema)

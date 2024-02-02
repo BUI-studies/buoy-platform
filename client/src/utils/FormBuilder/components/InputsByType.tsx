@@ -86,13 +86,16 @@ const InputsByType = Object.freeze({
 		),
 	),
 	[FormBuilderTypes.FIELD_TYPES.CHECKBOX]: forwardRef<HTMLInputElement, Populated>(
-		({ classes, control: _, ...props }, ref) => (
-			<input
-				ref={ref}
-				type={FormBuilderTypes.FIELD_TYPES.CHECKBOX}
-				className={classes.input}
-				{...props}
-			/>
+		({ classes, control: _, text, ...props }, ref) => (
+			<label className={classes.checkbox}>
+				<input
+					ref={ref}
+					type={FormBuilderTypes.FIELD_TYPES.CHECKBOX}
+					className={classes.input}
+					{...props}
+				/>
+				{text}
+			</label>
 		),
 	),
 	[FormBuilderTypes.FIELD_TYPES.COLOR]: forwardRef<HTMLInputElement, Populated>(
@@ -196,13 +199,16 @@ const InputsByType = Object.freeze({
 		),
 	),
 	[FormBuilderTypes.FIELD_TYPES.RADIO]: forwardRef<HTMLInputElement, Populated>(
-		({ classes, control: _, ...props }, ref) => (
-			<input
-				ref={ref}
-				type={FormBuilderTypes.FIELD_TYPES.RADIO}
-				className={classes.input}
-				{...props}
-			/>
+		({ classes, control: _, text, ...props }, ref) => (
+			<label className={classes.label}>
+				<input
+					ref={ref}
+					type={FormBuilderTypes.FIELD_TYPES.RADIO}
+					className={classes.input}
+					{...props}
+				/>
+				{text}
+			</label>
 		),
 	),
 	[FormBuilderTypes.FIELD_TYPES.MULTI_RADIO]: forwardRef<HTMLInputElement, Populated>(

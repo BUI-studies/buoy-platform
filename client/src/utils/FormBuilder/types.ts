@@ -56,6 +56,7 @@ export type Field = {
 	placeholder?: string
 	required?: boolean
 	options?: SelectOption[]
+	text?: string
 }
 
 export type SelectOption = {
@@ -73,6 +74,7 @@ export type InputProps = {
 	error?: FieldError
 	options?: SelectOption[]
 	value?: string | number
+	text?: string
 	control?: Control
 	disabled?: boolean
 }

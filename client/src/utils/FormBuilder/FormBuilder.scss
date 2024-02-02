@@ -48,7 +48,7 @@
 	}
 
 	&__checkbox {
-		@apply py-2 px-4 rounded-md border border-gray-300;
+		@apply py-2 px-4 rounded-md border border-gray-300 flex flex-row gap-2 items-center cursor-pointer;
 	}
 
 	&__radio {
