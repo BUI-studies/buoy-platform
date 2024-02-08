@@ -4,7 +4,11 @@ import * as API from '@/api'
 import { REQUEST_STATUS } from '@/types'
 import { dateParser } from '@/utils'
 import { useAuth, useHomeworks, useModal } from '@/context'
-import { DataTable, DataTableRowProps, HomewoksItem, IFrame } from '@/components'
+import { DataTable, DataTableRowProps, HomewoksItem } from '@/components'
+
+import { FormBuilder } from '@/utils'
+import { Homework, useHomeworkStudentMutation } from '@/api'
+import { getHomeworkFormFields, getHomeworkSchema } from './Homeworks.helper'
 
 import classes from './Homeworks.module.scss'
 import { Link } from 'react-router-dom'
@@ -23,6 +27,8 @@ const Homeworks = () => {
 	const { homeworks, setHomeworks } = useHomeworks()
 	const { user } = useAuth()
 	const { setModal } = useModal()
+	const homeworkStudentMutation = useHomeworkStudentMutation()
+	console.log(user)
 	const homeworksData = homeworks.data || []
 	const userInfo = user?.data?.data
 	const userToken = user?.data?.token
@@ -36,7 +42,23 @@ const Homeworks = () => {
 
 	const handleAddHomework = () => {
 		setModal(
-			<IFrame link="https://docs.google.com/forms/d/e/1FAIpQLSdr0Qm7h8PqQ-vUSr7HQlo3JTv3_PFj30pd7-CMTmbHqhXBWg/viewform?embedded=true" />,
+			<FormBuilder.Form
+				mode="onBlur"
+				formProps={{ name: 'homeworkStudentForm' }}
+				fields={getHomeworkFormFields()}
+				schema={getHomeworkSchema()}
+				onSubmit={(values: Homework) => {
+					if (!user?.data?.data?._id)
+						throw new Error(
+							'Something really nasty happened. There is no authorised user, but you are trying to create a feedback.',
+						)
+
+					homeworkStudentMutation.mutate({
+						...values,
+						student: user?.data?.data?._id,
+					})
+				}}
+			/>,
 		)
 	}
 
