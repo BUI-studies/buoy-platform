@@ -1,16 +1,20 @@
 import { useQuery, useMutation } from '@tanstack/react-query'
 
-import { _URL, fetcher, getHeaders } from '@/api'
+import { MeetingDTO, _URL, fetcher, getHeaders } from '@/api'
 import { useAuth } from '@/context'
 
 export type Feedback = {
 	_id: string
-	meeting: string
+	date: Date
+	meeting: MeetingDTO
 	impression: string
 	understanding: string
 	mentoring: string
 	selfFeeling: string
 	teamwork: string
+	insides: string
+	downsides: string
+	comment: string
 }
 
 export const useFeedbacks = (limit?: number) => {
@@ -24,15 +28,15 @@ export const useFeedbacks = (limit?: number) => {
 	if (limit) params.append('limit', limit.toString())
 
 	return useQuery({
-		queryKey: [_URL.meetings, params],
-		queryFn: () => fetcher(`${_URL.feedback}?${params}`),
+		queryKey: [_URL.feedbacks, params],
+		queryFn: () => fetcher(`${_URL.feedbacks}?${params}`),
 	})
 }
 
 export const useFeedbackMutation = () =>
 	useMutation({
 		mutationFn: (data: Feedback & { student: string }) =>
-			fetcher(_URL.feedback, {
+			fetcher(_URL.feedbacks, {
 				method: 'POST',
 				headers: getHeaders(),
 				body: JSON.stringify(data),

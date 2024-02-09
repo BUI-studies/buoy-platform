@@ -1,12 +1,19 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 
-import { _URL, fetcher, getHeaders, Mentor, Student } from '@/api'
+import { _URL, fetcher, getHeaders, MentorDTO, Student } from '@/api'
 import { useAuth } from '@/context'
 
 export enum MeetingTypes {
 	INDIVIDUAL = 'individual',
 	PLANING = 'planing',
 	SYNC = 'sync',
+}
+
+export type MeetingDTO = {
+	date: Date | string
+	type: MeetingTypes
+	title: string
+	mentor: MentorDTO
 }
 
 export type Meeting = {
@@ -16,7 +23,7 @@ export type Meeting = {
 	title: string
 	type: MeetingTypes
 	students: string[] | Student[]
-	mentor: Mentor | string
+	mentor: MentorDTO
 	comment: string
 	report: string
 }

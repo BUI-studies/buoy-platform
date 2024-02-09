@@ -8,4 +8,7 @@ export type FeedbacksTableItem = {
 	teamwork: number
 	student: string
 	isMentorVisible: boolean
+	insides: string
+	downsides: string
+	comment: string
 }

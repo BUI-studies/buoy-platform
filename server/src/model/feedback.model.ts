@@ -4,6 +4,7 @@ import mongoose, { ObjectId } from 'mongoose'
 const Schema = mongoose.Schema
 
 export interface Feedback extends mongoose.Document {
+	date: Date
 	meeting: ObjectId
 	impression: string
 	understanding: string
@@ -18,6 +19,7 @@ export interface Feedback extends mongoose.Document {
 }
 
 export const FeedbackSchema = new Schema<Feedback>({
+	date: { type: Date, default: Date.now },
 	meeting: { type: Schema.Types.ObjectId, ref: 'Meetings', required: true },
 	impression: { type: String, required: true },
 	understanding: { type: String, required: true },

@@ -2,6 +2,7 @@ import * as yup from 'yup'
 
 import { FormBuilderTypes } from '@/utils'
 import { ERRORS } from '@/enums'
+import { feedbacksReactionsMap } from '@/helpers'
 
 export const getFeedbackSchema = (meetingOptions: string[]) =>
 	yup.object().shape({
@@ -31,116 +32,31 @@ export const getFeedbackFormFields = (
 		label: 'Твоє враження',
 		description:
 			"Як тобі взагалі? Чекаю твою суб'єктивну інтуїтивну емоційну відповідь. Це обов'язкове питання. Без суб'єктиву і оцінок в розвитку, нажаль, ніяк.",
-		options: [
-			{
-				label: '🤩🥳🔥🥰',
-				value: '5',
-			},
-			{
-				label: '😍🥰😘',
-				value: '4',
-			},
-			{
-				label: '😊🙂😀',
-				value: '3',
-			},
-			{
-				label: '😐😑😶',
-				value: '2',
-			},
-			{
-				label: '😒😕😐',
-				value: '1',
-			},
-			{
-				label: '💩🤢🤮🤡',
-				value: '0',
-			},
-		],
+		options: feedbacksReactionsMap.impressions,
 	},
 	{
 		type: FormBuilderTypes.FIELD_TYPES.MULTI_RADIO,
 		name: 'understanding',
 		label: 'Оціни рівень зрозумілості теми.',
-		options: [
-			{
-				label: '😎 Ізі катка, я можу вчити інших',
-				value: '4',
-			},
-			{
-				label: '🤗 Цілком зрозуміло',
-				value: '3',
-			},
-			{
-				label: '🤔 Трохи заплутано, але розібрались',
-				value: '2',
-			},
-			{
-				label: '🫤 Погано зрозуміло, треба повторити',
-				value: '1',
-			},
-			{
-				label: '😭 Зовсім не зрозуміло',
-				value: '0',
-			},
-		],
+		options: feedbacksReactionsMap.understanding,
 	},
 	{
 		type: FormBuilderTypes.FIELD_TYPES.MULTI_RADIO,
 		name: 'mentoring',
 		label: 'Що там ментор, звертався до тебе? Задавав запитання, давав завдання, питав твою думку?',
-		options: [
-			{
-				label: '😢 Про мене сьогодні забули',
-				value: '0',
-			},
-			{
-				label: '😂 Так, ментор відволікав мене від навчання своїми тупими задачами і запитаннями',
-				value: '1',
-			},
-		],
+		options: feedbacksReactionsMap.mentoring,
 	},
 	{
 		type: FormBuilderTypes.FIELD_TYPES.MULTI_RADIO,
 		name: 'selfFeeling',
 		label: 'А ти там шо? Що по ініціативі? Задавав/ла запитання, брав/ла участь у дискусіях?',
-		options: [
-			{
-				label: "🤪 моє перше ім'я – гіпер, а друге – активність, а третє в паспорті",
-				value: '2',
-			},
-			{
-				label: '🙂 шось було',
-				value: '1',
-			},
-			{
-				label: '😵 я труп, мене нема',
-				value: '0',
-			},
-		],
+		options: feedbacksReactionsMap.selfFeeling,
 	},
 	{
 		type: FormBuilderTypes.FIELD_TYPES.MULTI_RADIO,
 		name: 'teamwork',
 		label: 'А команда шо?',
-		options: [
-			{
-				label: '🐺 Я працюю наодинці',
-				value: '0',
-			},
-			{
-				label: '🐸🐍 *були конфлікти*',
-				value: '1',
-			},
-			{
-				label: '🦞 Вони раки, але смачні',
-				value: '2',
-			},
-			{
-				label: '🐈 Всі котики, мяу',
-				value: '3',
-			},
-		],
+		options: feedbacksReactionsMap.teamwork,
 	},
 	{
 		type: FormBuilderTypes.FIELD_TYPES.TEXTAREA,

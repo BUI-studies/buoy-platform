@@ -26,7 +26,8 @@ export const get = async (req: Request, res: Response) => {
 	res.send(
 		await FeedbackModel.find(Object.fromEntries(query) as MongooseQueryOptions).populate({
 			path: 'meeting',
-			select: 'title',
+			select: 'title date type',
+			populate: { path: 'mentor', select: 'fullName' },
 		}),
 	)
 }

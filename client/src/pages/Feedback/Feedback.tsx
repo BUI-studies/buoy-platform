@@ -35,6 +35,7 @@ const Feedback = () => {
 					feedbackMutation.mutate({
 						...values,
 						student: auth.user?.data?.data?._id,
+						date: new Date(),
 					})
 				}}
 			/>

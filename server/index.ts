@@ -28,7 +28,7 @@ app.use('/api/meetings', auth, meetingsRoutes)
 app.use('/api/payments', auth, paymentsRoutes)
 app.use('/api/homeworks', auth, homeworksRoutes)
 app.use('/api/users', auth, usersRoutes)
-app.use('/api/feedback', auth, feedbackRoutes)
+app.use('/api/feedbacks', auth, feedbackRoutes)
 
 //handling client routes
 app.get('*', (req, res) => {
