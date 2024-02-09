@@ -11,6 +11,9 @@ export const getFeedbackSchema = (meetingOptions: string[]) =>
 		mentoring: yup.string().required(ERRORS.required),
 		selfFeeling: yup.string().required(ERRORS.required),
 		teamwork: yup.string().required(ERRORS.required),
+		insides: yup.string().min(5, ERRORS.minLength).required(ERRORS.required),
+		downsides: yup.string().min(5, ERRORS.minLength).required(ERRORS.required),
+		comment: yup.string().min(5, ERRORS.minLength).required(ERRORS.required),
 	})
 
 export const getFeedbackFormFields = (
@@ -138,6 +141,26 @@ export const getFeedbackFormFields = (
 				value: '3',
 			},
 		],
+	},
+	{
+		type: FormBuilderTypes.FIELD_TYPES.TEXTAREA,
+		name: 'insides',
+		label: 'Якісь корисні інсайди?',
+		description:
+			'Шось, шо прийло тобі в голову протягом зустрічі, пофіг шо в цілому. Просто поділись, шоб нам обом стало трошки тепліше))',
+	},
+	{
+		type: FormBuilderTypes.FIELD_TYPES.TEXTAREA,
+		name: 'downsides',
+		label: 'Де ми лохи? Що порадиш покращити/змінити?',
+		description:
+			'Не бійся, ніхто не побачить шо це написав саме ти. Нам дуже важливо знати про моменти які здавались фіговими, бо якшо ти не даси нам про це знати, ми нічо і не виправимо, бо як інакше ми дізнаємось.',
+	},
+	{
+		type: FormBuilderTypes.FIELD_TYPES.TEXTAREA,
+		name: 'comment',
+		label: 'Коментар',
+		description: 'Тут уже як твоя фантазія плясатиме, так і фігач.',
 	},
 	{
 		type: FormBuilderTypes.FIELD_TYPES.CHECKBOX,

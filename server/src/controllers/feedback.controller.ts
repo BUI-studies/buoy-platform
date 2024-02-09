@@ -41,6 +41,9 @@ export const save = async (req: Request, res: Response) => {
 		teamwork,
 		student,
 		isMentorVisible = false,
+		insides,
+		downsides,
+		comment,
 	} = req.body
 
 	const feedback = await getFeedbackByMeetingId(meeting, student)
@@ -58,6 +61,9 @@ export const save = async (req: Request, res: Response) => {
 			teamwork,
 			student,
 			isMentorVisible,
+			insides,
+			downsides,
+			comment,
 		})
 		await newFeedback.save()
 		res.status(200).send(newFeedback)
