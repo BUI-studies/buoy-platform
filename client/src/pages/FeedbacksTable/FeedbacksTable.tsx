@@ -1,12 +1,11 @@
 import { Feedback, MentorDTO, useFeedbacks } from '@/api'
 
-import { DataTableRowProps, DataTable } from '@/components'
+import { DataTableRowProps, DataTable, FeedbacksItem } from '@/components'
+import { useModal } from '@/context'
+import { dateParser } from '@/utils'
 
 import { FeedbacksTableItem } from './FeedbacksTable.helper'
 import classes from './FeedbacksTable.module.scss'
-import { useModal } from '@/context'
-import { dateParser } from '@/utils'
-import FeedbacksItem from '@/components/Items/FeedbacksItem'
 
 const FeedbackTable = () => {
 	const feedbacks = useFeedbacks()
