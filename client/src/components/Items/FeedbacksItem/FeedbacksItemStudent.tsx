@@ -1,17 +1,17 @@
 import { FC, PropsWithChildren } from 'react'
-
-import { Feedback, Meeting, MentorDTO } from '@/api'
 import { dateParser } from '@/utils'
+
 import { feedbacksReactionsMap } from '@/helpers'
+import { ROLES } from '@/types'
 
-import { typeToColorMap } from './Items.helper'
-import classes from './Items.module.scss'
+import { typeToColorMap } from '../Items.helper'
+import classes from '../Items.module.scss'
 
-type FeedbackItemProps = {
-	data: Feedback
-}
+import { FeedbackItemBaseProps } from './FeedbacksItem.types'
 
-const FeedbacksItem: FC<PropsWithChildren & FeedbackItemProps> = ({ data }) => {
+const FeedbacksItemStudent: FC<PropsWithChildren & FeedbackItemBaseProps<ROLES.STUDENT>> = ({
+	data,
+}) => {
 	const {
 		date: dateSrc,
 		meeting,
@@ -47,7 +47,7 @@ const FeedbacksItem: FC<PropsWithChildren & FeedbackItemProps> = ({ data }) => {
 				<p className={[classes.badgesItem, typeToColorMap[meeting.type]].join(' ')}>
 					{meeting.type}
 				</p>
-				<p className={classes.badgesItem}>{(meeting.mentor as MentorDTO).fullName}</p>
+				<p className={classes.badgesItem}>{meeting.mentor.fullName}</p>
 			</div>
 
 			<div>
@@ -104,4 +104,4 @@ const FeedbacksItem: FC<PropsWithChildren & FeedbackItemProps> = ({ data }) => {
 	)
 }
 
-export default FeedbacksItem
+export default FeedbacksItemStudent

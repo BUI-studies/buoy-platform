@@ -1,40 +1,45 @@
 import { Request, Response } from 'express'
 
-import { FeedbackModel } from '@/model'
+import { FeedbackModel, MeetingsModel } from '@/model'
 import { MongooseQueryOptions } from 'mongoose'
+import { USER_ROLES } from '@/types'
 
 const getFeedbackByMeetingId = async (meeting: string, studentId: string) => {
 	return FeedbackModel.find({ _id: meeting, students: { $in: [studentId] } })
 }
 
 export const get = async (req: Request, res: Response) => {
-	const { id, role, limit } = req.query
-	//if role is mentor get all feedbacks that has the id in meeting.mentor
-	//if role is student get all feedbacks that has the id in students
-	const query = []
+	const { id, role } = req.query
 
-	if (role === 'mentor') {
-		// query.push(['meeting.mentor', id])
-		// throw new Error('Not implemented yet')
-	} else {
-		query.push(['student', id])
-	}
+	let result = null
 
-	if (limit) {
-		query.push(['limit', limit])
-	}
-
-	console.log(query)
-
-	res.send(
-		await FeedbackModel.find(Object.fromEntries(query) as MongooseQueryOptions)
-			.where(`this.meeting.mentor === ${id}`)
+	if (role === USER_ROLES.STUDENT) {
+		result = await FeedbackModel.find({
+			student: id,
+		} as MongooseQueryOptions)
+			.sort({ date: -1 })
 			.populate({
 				path: 'meeting',
 				select: 'title date type',
 				populate: { path: 'mentor', select: 'fullName' },
-			}),
-	)
+			})
+	} else if (role === USER_ROLES.MENTOR) {
+		result = await FeedbackModel.find({
+			isMentorVisible: true,
+			meeting: {
+				$in: await MeetingsModel.find({ mentor: id }).distinct('_id'),
+			},
+		} as MongooseQueryOptions)
+			.sort({ date: -1 })
+			.populate({
+				path: 'meeting',
+				select: 'title date type',
+			})
+			.select('-student -isMentorVisible')
+			.exec()
+	}
+
+	res.send(result)
 }
 
 export const save = async (req: Request, res: Response) => {
