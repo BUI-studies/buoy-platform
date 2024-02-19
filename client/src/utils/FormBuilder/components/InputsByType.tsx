@@ -1,8 +1,9 @@
 import { forwardRef } from 'react'
-import { Controller } from 'react-hook-form'
+import { Controller, useFormContext } from 'react-hook-form'
 
 import { Populated } from '@/types'
 import { FormBuilderTypes } from '@/utils'
+import { useResolvedPath } from 'react-router-dom'
 
 const InputsByType = Object.freeze({
 	[FormBuilderTypes.FIELD_TYPES.SELECT]: forwardRef<HTMLSelectElement, Populated>(
@@ -34,7 +35,7 @@ const InputsByType = Object.freeze({
 		),
 	),
 	[FormBuilderTypes.FIELD_TYPES.MULTI_SELECT]: forwardRef<HTMLFieldSetElement, Populated>(
-		({ options, name, classes, control, onChange: _, ...props }, ref) => {
+		({ options, name, classes, control, onChange: _, onBlur, ...props }, ref) => {
 			return (
 				<Controller
 					name={name}

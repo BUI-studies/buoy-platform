@@ -47,10 +47,10 @@ export const reportSchema = yup.object().shape({
 	students: yup
 		.array()
 		.of(yup.string())
-		.when('type', ([type], schema) => {
-			return type === REPORT_TYPES.INDIVIDUAL
-				? schema.min(1, ERRORS.required).max(1, ERRORS.indStudentsLength)
-				: schema.min(1, ERRORS.required)
+		.when('type', {
+			is: REPORT_TYPES.INDIVIDUAL,
+			then: schema => schema.min(1, ERRORS.selectNoValue).max(1, ERRORS.indStudentsLength),
+			otherwise: schema => schema.min(1, ERRORS.selectNoValue),
 		})
 		.required(ERRORS.required),
 	report: yup.string().url().required(ERRORS.required),

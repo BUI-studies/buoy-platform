@@ -12,9 +12,10 @@ export const get = async (req: Request, res: Response) => {
 	//if role is mentor get all feedbacks that has the id in meeting.mentor
 	//if role is student get all feedbacks that has the id in students
 	const query = []
+
 	if (role === 'mentor') {
-		query.push(['meeting.mentor', id])
-		throw new Error('Not implemented yet')
+		// query.push(['meeting.mentor', id])
+		// throw new Error('Not implemented yet')
 	} else {
 		query.push(['student', id])
 	}
@@ -23,12 +24,16 @@ export const get = async (req: Request, res: Response) => {
 		query.push(['limit', limit])
 	}
 
+	console.log(query)
+
 	res.send(
-		await FeedbackModel.find(Object.fromEntries(query) as MongooseQueryOptions).populate({
-			path: 'meeting',
-			select: 'title date type',
-			populate: { path: 'mentor', select: 'fullName' },
-		}),
+		await FeedbackModel.find(Object.fromEntries(query) as MongooseQueryOptions)
+			.where(`this.meeting.mentor === ${id}`)
+			.populate({
+				path: 'meeting',
+				select: 'title date type',
+				populate: { path: 'mentor', select: 'fullName' },
+			}),
 	)
 }
 

@@ -3,7 +3,7 @@ import { FormBuilderTypes } from '@/utils'
 
 import InputsByType from './InputsByType'
 
-const divWrapperdTypes = [
+const divWrapperTypes = [
 	FormBuilderTypes.FIELD_TYPES.MULTI_SELECT,
 	FormBuilderTypes.FIELD_TYPES.MULTI_RADIO,
 	FormBuilderTypes.FIELD_TYPES.CHECKBOX,
@@ -39,7 +39,7 @@ const Input: FC<FormBuilderTypes.InputProps> = ({
 			{...registeredProps}
 		/>
 	)
-	const WrapperCompnent = divWrapperdTypes.includes(type) ? 'div' : 'label'
+	const WrapperCompnent = divWrapperTypes.includes(type) ? 'div' : 'label'
 
 	if (
 		!label ||

@@ -30,6 +30,7 @@ const Report = () => {
 
 	return (
 		<FormBuilder.Form<Meeting>
+			mode="onChange"
 			formProps={{ name: 'reportForm' }}
 			fields={getReportFormFields(studentsOptions)}
 			schema={reportSchema}

@@ -23,7 +23,7 @@ export type Meeting = {
 	title: string
 	type: MeetingTypes
 	students: string[] | Student[]
-	mentor: MentorDTO
+	mentor: MentorDTO | string
 	comment: string
 	report: string
 }
