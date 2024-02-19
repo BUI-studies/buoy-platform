@@ -5,7 +5,7 @@ import { useAuth } from '@/context'
 
 export enum MeetingTypes {
 	INDIVIDUAL = 'individual',
-	PLANING = 'planing',
+	PLANING = 'planning',
 	SYNC = 'sync',
 }
 

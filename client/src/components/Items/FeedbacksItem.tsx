@@ -1,13 +1,11 @@
 import { FC, PropsWithChildren } from 'react'
-import { Link } from 'react-router-dom'
 
-import { GitHub } from '@/components'
 import { Feedback, Meeting, MentorDTO } from '@/api'
 import { dateParser } from '@/utils'
+import { feedbacksReactionsMap } from '@/helpers'
 
 import { typeToColorMap } from './Items.helper'
 import classes from './Items.module.scss'
-import { feedbacksReactionsMap } from '@/helpers'
 
 type FeedbackItemProps = {
 	data: Feedback
@@ -28,10 +26,20 @@ const FeedbacksItem: FC<PropsWithChildren & FeedbackItemProps> = ({ data }) => {
 		isMentorVisible,
 	} = data
 	const date = dateParser(dateSrc)
+	const mentorVisibilityClasses = [
+		classes.isMentorVisible,
+		classes[`isMentorVisible${isMentorVisible ? 'Show' : 'Hide'}`],
+	].join(' ')
 
 	return (
 		<div className={classes.wrapper}>
-			<h2>
+			<h2 className={classes.titleWrapper}>
+				<span
+					className={mentorVisibilityClasses}
+					title={isMentorVisible ? 'показувати ментору' : 'ментор цього не побачить'}
+				>
+					{isMentorVisible ? '👀' : '🙈'}
+				</span>
 				Коментар по зустрічі - <span className="text-teal-500 underline">"{meeting.title}"</span>
 			</h2>
 
@@ -86,14 +94,6 @@ const FeedbacksItem: FC<PropsWithChildren & FeedbackItemProps> = ({ data }) => {
 				<div>
 					<p className={classes.commentTitle}>Де ми лохи:</p>
 					<p className={classes.comment}>{downsides}</p>
-				</div>
-				<div>
-					<p className={classes.commentTitle}>Чи показувать ментору:</p>
-					<p className={classes.comment}>
-						{isMentorVisible
-							? 'Хай подивицця і оце зробе шось!'
-							: 'Ну нах, йому краще це не бачить'}
-					</p>
 				</div>
 				<div>
 					<p className={classes.commentTitle}>Коментар:</p>

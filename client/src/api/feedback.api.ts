@@ -14,6 +14,7 @@ export type Feedback = {
 	teamwork: string
 	insides: string
 	downsides: string
+	isMentorVisible: boolean
 	comment: string
 }
 
