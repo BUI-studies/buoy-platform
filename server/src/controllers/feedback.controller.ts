@@ -37,9 +37,11 @@ export const get = async (req: Request, res: Response) => {
 			})
 			.select('-student -isMentorVisible')
 			.exec()
+	} else {
+		return res.status(400).send({ message: 'Invalid role' })
 	}
 
-	res.send(result)
+	return res.send(result)
 }
 
 export const save = async (req: Request, res: Response) => {

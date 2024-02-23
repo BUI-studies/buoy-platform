@@ -57,9 +57,7 @@ const FeedbackTable = () => {
 		}),
 	})
 
-	const tableData: DataTableRowProps<FeedbackByRole<typeof role>>[] = feedbacks.data.map(
-		mappers[role],
-	)
+	const tableData: DataTableRowProps<FeedbackByRole<ROLES>>[] = feedbacks.data.map(mappers[role])
 
 	return (
 		<>

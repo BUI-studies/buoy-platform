@@ -1,9 +1,10 @@
-import { Feedback as FeedbackModel, Meeting, useFeedbackMutation, useMeetings } from '@/api'
+import { FeedbackByRole, Meeting, useFeedbackMutation, useMeetings } from '@/api'
 
 import { FormBuilder, FormBuilderTypes } from '@/utils'
 
 import { getFeedbackFormFields, getFeedbackSchema } from './Feedback.helper'
 import { useAuth } from '@/context'
+import { ROLES } from '@/types'
 
 const Feedback = () => {
 	const auth = useAuth()
@@ -26,7 +27,7 @@ const Feedback = () => {
 				formProps={{ name: 'feedbackForm' }}
 				fields={getFeedbackFormFields(lastMeetingsOptions)}
 				schema={getFeedbackSchema(lastMeetingsOptions.map(o => o.value))}
-				onSubmit={(values: FeedbackModel) => {
+				onSubmit={(values: FeedbackByRole<ROLES>) => {
 					if (!auth.user?.data?.data?._id)
 						throw new Error(
 							'Something really nasty happened. There is no authorised user, but you are trying to create a feedback.',
@@ -38,6 +39,7 @@ const Feedback = () => {
 						date: new Date(),
 					})
 				}}
+				mutation={feedbackMutation}
 			/>
 		</>
 	)

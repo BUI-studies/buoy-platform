@@ -1,3 +1,5 @@
+import { CLASSES } from './helper'
+import { UseMutationResult } from '@tanstack/react-query'
 import { ObjectSchema, AnyObject } from 'yup'
 
 import { Populated } from '@/types'
@@ -85,6 +87,7 @@ export type FormProps<T> = {
 	fields: Field[]
 	schema: ObjectSchema<AnyObject>
 	onSubmit: (data: T) => void
-	classes?: { form: string } & FieldClasses
+	classes?: typeof CLASSES
 	watchers?: (watch: (name: string) => void) => void
+	mutation?: UseMutationResult<T, unknown, T, unknown>
 }
