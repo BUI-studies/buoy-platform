@@ -8,14 +8,13 @@ import { dateParser } from '@/utils'
 import { HEADERS } from './FeedbacksTable.helper'
 import classes from './FeedbacksTable.module.scss'
 import { feedbacksReactionsMap } from '@/helpers'
-import { useMemo } from 'react'
 
 const FeedbackTable = () => {
 	const auth = useAuth()
 	const role = auth.user?.data?.data?.role as ROLES
-	const feedbacks = useFeedbacks()
+	const feedbacks = useFeedbacks(role)
 	const { setModal } = useModal()
-	const headers = useMemo(() => HEADERS[role] || [], [role])
+	const headers = HEADERS[role]
 
 	if (feedbacks.isLoading) return <span className="">Loading...</span>
 

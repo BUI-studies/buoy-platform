@@ -43,10 +43,10 @@ export interface FeedbackMentor extends FeedbackBase {
 export type FeedbackByRole<Role extends ROLES> = Role extends ROLES.STUDENT
 	? FeedbackStudent
 	: Role extends ROLES.MENTOR
-	  ? FeedbackMentor
-	  : FeedbackBase
+	? FeedbackMentor
+	: FeedbackBase
 
-export const useFeedbacks = (limit?: number) => {
+export const useFeedbacks = (role: ROLES, limit?: number) => {
 	const auth = useAuth()
 
 	const params = new URLSearchParams([
@@ -57,7 +57,7 @@ export const useFeedbacks = (limit?: number) => {
 	if (limit) params.append('limit', limit.toString())
 
 	return useQuery({
-		queryKey: [_URL.feedbacks, params],
+		queryKey: [_URL.feedbacks, params, role],
 		queryFn: () => fetcher(`${_URL.feedbacks}?${params}`),
 	})
 }
