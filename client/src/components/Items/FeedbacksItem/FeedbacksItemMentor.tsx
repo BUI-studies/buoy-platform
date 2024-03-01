@@ -8,6 +8,7 @@ import { typeToColorMap } from '../Items.helper'
 import classes from '../Items.module.scss'
 
 import { FeedbackItemBaseProps } from './FeedbacksItem.types'
+import FeedbackItemRow from './FeedbacksItemRow'
 
 const FeedbacksItemMentor: FC<PropsWithChildren & FeedbackItemBaseProps<ROLES.MENTOR>> = ({
 	data,
@@ -40,53 +41,43 @@ const FeedbacksItemMentor: FC<PropsWithChildren & FeedbackItemBaseProps<ROLES.ME
 
 			<div>
 				<p className={classes.commentTitle}>Дата:{date}</p>
-				<div>
-					<p className={classes.commentTitle}>Враження:</p>
-					<p className={classes.comment}>
-						{feedbacksReactionsMap.impressions.find(imp => imp.value === impression)?.label ||
-							'...а шось нема нічо...'}
-					</p>
-				</div>
-				<div>
-					<p className={classes.commentTitle}>Розуміння:</p>
-					<p className={classes.comment}>
-						{feedbacksReactionsMap.understanding.find(imp => imp.value === understanding)?.label ||
-							'...а шось нема нічо...'}
-					</p>
-				</div>
-				<div>
-					<p className={classes.commentTitle}>Шо там ментор:</p>
-					<p className={classes.comment}>
-						{feedbacksReactionsMap.mentoring.find(imp => imp.value === mentoring)?.label ||
-							'...а шось нема нічо...'}
-					</p>
-				</div>
-				<div>
-					<p className={classes.commentTitle}>А сам як:</p>
-					<p className={classes.comment}>
-						{feedbacksReactionsMap.selfFeeling.find(imp => imp.value === selfFeeling)?.label ||
-							'...а шось нема нічо...'}
-					</p>
-				</div>
-				<div>
-					<p className={classes.commentTitle}>Тімворк:</p>
-					<p className={classes.comment}>
-						{feedbacksReactionsMap.teamwork.find(imp => imp.value === teamwork)?.label ||
-							'...а шось нема нічо...'}
-					</p>
-				</div>
-				<div>
-					<p className={classes.commentTitle}>Інсайди:</p>
-					<p className={classes.comment}>{insides}</p>
-				</div>
-				<div>
-					<p className={classes.commentTitle}>Де ми лохи:</p>
-					<p className={classes.comment}>{downsides}</p>
-				</div>
-				<div>
-					<p className={classes.commentTitle}>Коментар:</p>
-					<p className={classes.comment}>{comment}</p>
-				</div>
+				<FeedbackItemRow
+					collection={feedbacksReactionsMap.impressions}
+					title="Враження:"
+					value={impression}
+				/>
+				<FeedbackItemRow
+					collection={feedbacksReactionsMap.understanding}
+					title="Розуміння:"
+					value={understanding}
+				/>
+				<FeedbackItemRow
+					collection={feedbacksReactionsMap.mentoring}
+					title="Шо там ментор:"
+					value={mentoring}
+				/>
+				<FeedbackItemRow
+					collection={feedbacksReactionsMap.selfFeeling}
+					title="А сам як:"
+					value={selfFeeling}
+				/>
+				<FeedbackItemRow
+					collection={feedbacksReactionsMap.teamwork}
+					title="Тімворк:"
+					value={teamwork}
+				/>
+				<FeedbackItemRow
+					title="Інсайди:"
+					value={insides}
+				/>
+				<FeedbackItemRow
+					title="Де ми лохи:"
+					value={downsides}
+				/>
+				<FeedbackItemRow
+					title="Коментар:"
+					value={comment}
+				/>
 			</div>
 		</div>
 	)

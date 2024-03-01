@@ -14,7 +14,8 @@ const FeedbacksItem: FC<PropsWithChildren & FeedbacksItemProp> = ({ role, data }
 		case ROLES.MENTOR:
 			return <FeedbacksItemMentor data={data as FeedbackByRole<ROLES.MENTOR>} />
 		default:
-			return <></>
+			const _exhaustiveRole: never = role
+			return _exhaustiveRole
 	}
 }
 
