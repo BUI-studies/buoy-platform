@@ -23,6 +23,10 @@ export type Populated = {
 	[k: string]: unknown
 }
 
+export interface Identifyable extends Populated {
+	id: string
+}
+
 export type SVGProps = {
 	className?: string
 	onClick?: () => void

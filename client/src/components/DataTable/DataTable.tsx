@@ -15,7 +15,7 @@ const DataTable = <T extends Populated>({
 			? (e: React.MouseEvent<HTMLLIElement>) => {
 					if (!row.id) throw new Error('Row must have an id')
 
-					rowClick(row.id, e)
+					rowClick(row.id as string, e)
 			  }
 			: undefined
 	return data.length ? (
@@ -33,7 +33,7 @@ const DataTable = <T extends Populated>({
 			<ul className={classes.tableBody}>
 				{data.map((row, index) => (
 					<li
-						key={row.id || index}
+						key={(row.id || index) as KeyType}
 						className={classes.tableRow}
 						onClick={rowClickHandler(row)}
 					>
@@ -43,7 +43,7 @@ const DataTable = <T extends Populated>({
 								className={[classes.tableCell, classes['col' + item.grow]].join(' ')}
 								title={row[item.title as keyof T] as string}
 							>
-								{cutString(row[item.title as keyof T], 50)}
+								{cutString(row[item.title as keyof T] as string, 50)}
 							</span>
 						))}
 					</li>

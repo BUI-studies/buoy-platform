@@ -14,7 +14,11 @@ const HomewoksItem: FC<HomeworksItemProps> = ({ data }) => {
 	const hwdate = ` | ${dateParser(data.timestamp)} | `
 	return (
 		<div className={classes.wrapper}>
-			<Link to={data.github} target="_blank" className={classes.title}>
+			<Link
+				to={data.github}
+				target="_blank"
+				className={classes.title}
+			>
 				{data.isReviewed ? '🟢' : '⚪️'}
 				{hwdate}
 				{data.homeworkName}
@@ -23,7 +27,11 @@ const HomewoksItem: FC<HomeworksItemProps> = ({ data }) => {
 			{data.studentsComment && <p>{data.studentsComment}</p>}
 
 			{data.reviewLink && (
-				<Link to={data.reviewLink} target="_blank" className={classes.link}>
+				<Link
+					to={data.reviewLink}
+					target="_blank"
+					className={classes.link}
+				>
 					Mentors Review Link
 				</Link>
 			)}
