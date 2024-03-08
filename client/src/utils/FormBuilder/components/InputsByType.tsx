@@ -1,13 +1,17 @@
 import { forwardRef } from 'react'
-import { Controller, useFormContext } from 'react-hook-form'
+import { Controller } from 'react-hook-form'
 
 import { Populated } from '@/types'
 import { FormBuilderTypes } from '@/utils'
-import { useResolvedPath } from 'react-router-dom'
+
+//TODO: aggregate common used props throughout the file and type them here
+type Gogi = Populated & {
+	classes?: FormBuilderTypes.FieldClasses
+}
 
 const InputsByType = Object.freeze({
-	[FormBuilderTypes.FIELD_TYPES.SELECT]: forwardRef<HTMLSelectElement, Populated>(
-		({ options, classes, control: _, ...props }, ref) => (
+	[FormBuilderTypes.FIELD_TYPES.SELECT]: forwardRef<HTMLSelectElement & Populated, Populated>(
+		({ options, classes, control: _, ...props }: Gogi, ref) => (
 			<select
 				{...props}
 				ref={ref}

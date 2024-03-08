@@ -20,7 +20,7 @@ export type Populated = {
 	 * @description
 	 * This represents the properties that get loaded using the header row
 	 */
-	[k: string]: any // eslint-disable-line @typescript-eslint/no-explicit-any
+	[k: string]: unknown
 }
 
 export type SVGProps = {
