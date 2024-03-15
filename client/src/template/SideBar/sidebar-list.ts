@@ -12,11 +12,13 @@ export const navLinkList: LinksMap = {
 	[ROLES.MENTOR]: [
 		{ url: _URL.REPORT, name: 'репорт' },
 		{ url: _URL.MEETINGS, name: 'зустрічі' },
+		{ url: _URL.FEEDBACKS, name: 'відгуки' },
 		{ url: _URL.HOMEWORKS, name: 'домашки' },
 	],
 	[ROLES.STUDENT]: [
 		{ url: _URL.MEETINGS, name: 'зустрічі' },
 		{ url: _URL.FEEDBACK, name: 'відгук по зустрічі' },
+		{ url: _URL.FEEDBACKS, name: 'відгуки' },
 		{ url: _URL.HOMEWORKS, name: 'домашки' },
 	],
 }

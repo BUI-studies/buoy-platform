@@ -2,10 +2,11 @@ import { FC, PropsWithChildren } from 'react'
 import { Link } from 'react-router-dom'
 
 import { GitHub } from '@/components'
-import { Meeting, MeetingTypes, Mentor } from '@/api'
+import { Meeting, MentorDTO } from '@/api'
 import { dateParser } from '@/utils'
 
-import classes from './MeetingsItem.module.scss'
+import { typeToColorMap } from './Items.helper'
+import classes from './Items.module.scss'
 
 type MeetingsItemProps = {
 	data: Meeting
@@ -15,12 +16,6 @@ const MeetingsItem: FC<PropsWithChildren & MeetingsItemProps> = ({ data }) => {
 	const { title, date: dateSrc, type, mentor, report, comment } = data
 	const date = dateParser(dateSrc)
 
-	const mapTypeToColor = {
-		[MeetingTypes.INDIVIDUAL]: 'bg-pink-800',
-		[MeetingTypes.PLANING]: 'bg-green-800',
-		[MeetingTypes.SYNC]: 'bg-cyan-700',
-	}
-
 	return (
 		<div className={classes.wrapper}>
 			<h2>
@@ -28,8 +23,8 @@ const MeetingsItem: FC<PropsWithChildren & MeetingsItemProps> = ({ data }) => {
 			</h2>
 
 			<div className={classes.badges}>
-				<p className={[classes.badgesItem, mapTypeToColor[type]].join(' ')}>{type}</p>
-				<p className={classes.badgesItem}>{(mentor as Mentor).fullName}</p>
+				<p className={[classes.badgesItem, typeToColorMap[type]].join(' ')}>{type}</p>
+				<p className={classes.badgesItem}>{(mentor as MentorDTO).fullName}</p>
 			</div>
 
 			<Link

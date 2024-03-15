@@ -6,6 +6,10 @@
 	}
 }
 
+.titleWrapper {
+	@apply flex items-center gap-4;
+}
+
 .link {
 	@apply flex items-center gap-2 underline;
 	justify-self: flex-start;
@@ -24,5 +28,18 @@
 
 	&Title {
 		@apply mb-1;
+	}
+}
+
+.isMentorVisible {
+	@extend .badgesItem;
+	@apply text-sm cursor-pointer;
+
+	&Show {
+		@apply bg-teal-500;
+	}
+
+	&Hide {
+		@apply bg-slate-800;
 	}
 }

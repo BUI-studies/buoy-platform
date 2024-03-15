@@ -2,6 +2,7 @@ import * as FormBuilderTypes from './types'
 
 export enum CLASSES {
 	form = 'form-builder',
+	formBlocked = 'form-builder--blocked',
 	label = 'form-builder__label',
 	labelSelected = 'form-builder__label--selected',
 	input = 'form-builder__input',
@@ -14,6 +15,7 @@ export enum CLASSES {
 	radio = 'form-builder__radio',
 	multiRadio = 'form-builder__radio--multi',
 	button = 'form-builder__button',
+	message = 'form-builder__message',
 }
 
 export function getInputClassesByType(

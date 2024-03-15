@@ -3,17 +3,19 @@ import { yupResolver } from '@hookform/resolvers/yup'
 
 import { FormBuilder, FormBuilderTypes } from '@/utils'
 
-import '../FormBuilder.scss'
 import { getInputClassesByType } from '../helper'
 
+import '../FormBuilder.scss'
+
 const Form = <T extends FieldValues>({
-	mode = 'onTouched',
+	mode = 'onChange',
 	formProps,
 	fields = [],
 	schema,
 	classes,
 	onSubmit,
 	watchers,
+	mutation,
 }: FormBuilderTypes.FormProps<T>): JSX.Element => {
 	if (!classes) classes = FormBuilder.defaultClasses
 	const {
@@ -30,6 +32,8 @@ const Form = <T extends FieldValues>({
 
 	watchers && watchers(watch)
 
+	const formClasses = [classes.form, mutation?.isPending ? classes.formBlocked : ''].join(' ')
+
 	return (
 		<form
 			{...formProps}
@@ -37,8 +41,26 @@ const Form = <T extends FieldValues>({
 				onSubmit(data as T)
 				reset()
 			})}
-			className={classes.form}
+			className={formClasses}
 		>
+			{mutation?.isError && (
+				<div className={classes.message}>
+					<span>Something went wrong</span>
+				</div>
+			)}
+
+			{mutation?.isSuccess && (
+				<div className={classes.message}>
+					<span>Success</span>
+				</div>
+			)}
+
+			{mutation?.isPending && (
+				<div className={classes.message}>
+					<span>Loading...</span>
+				</div>
+			)}
+
 			{fields.map(
 				({
 					defaultValue,
@@ -58,6 +80,7 @@ const Form = <T extends FieldValues>({
 						defaultValue={defaultValue}
 						options={options}
 						value={value}
+						text={restProps.text}
 						control={control}
 						doRegister={() =>
 							register(fieldName, {

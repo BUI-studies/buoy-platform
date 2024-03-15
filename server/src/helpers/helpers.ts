@@ -1,5 +1,5 @@
-export const parseTimeStamp = (value: number) => {
+export const parseTimeStamp = (value: number): Date => {
 	const unixTimestamp = (value - 25569) * 86400
 
-	return Math.round(unixTimestamp * 1000)
+	return new Date(unixTimestamp * 1000)
 }

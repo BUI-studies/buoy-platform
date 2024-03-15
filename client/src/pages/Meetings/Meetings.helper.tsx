@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 
 import { DataTableRowProps, MeetingsItem } from '@/components'
-import { Meeting, Mentor, Student } from '@/api'
+import { Meeting, MentorDTO, Student } from '@/api'
 import { ROLES } from '@/types'
 import { dateParser } from '@/utils'
 
@@ -48,7 +48,7 @@ const mapFlickeringProps = (meeting: Meeting, role: ROLES) => {
 			}
 		case ROLES.STUDENT:
 			return {
-				mentor: (meeting.mentor as Mentor).fullName,
+				mentor: (meeting.mentor as MentorDTO).fullName,
 			}
 		default:
 			return {}

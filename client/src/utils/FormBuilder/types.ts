@@ -1,3 +1,5 @@
+import { CLASSES } from './helper'
+import { UseMutationResult } from '@tanstack/react-query'
 import { ObjectSchema, AnyObject } from 'yup'
 
 import { Populated } from '@/types'
@@ -56,6 +58,7 @@ export type Field = {
 	placeholder?: string
 	required?: boolean
 	options?: SelectOption[]
+	text?: string
 }
 
 export type SelectOption = {
@@ -73,6 +76,7 @@ export type InputProps = {
 	error?: FieldError
 	options?: SelectOption[]
 	value?: string | number
+	text?: string
 	control?: Control
 	disabled?: boolean
 }
@@ -83,6 +87,7 @@ export type FormProps<T> = {
 	fields: Field[]
 	schema: ObjectSchema<AnyObject>
 	onSubmit: (data: T) => void
-	classes?: { form: string } & FieldClasses
+	classes?: typeof CLASSES
 	watchers?: (watch: (name: string) => void) => void
+	mutation?: UseMutationResult<T, unknown, T, unknown>
 }

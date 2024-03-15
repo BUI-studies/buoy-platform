@@ -15,4 +15,5 @@ export interface DataTableProps<T> {
 	header: DataTableHeader
 	data: DataTableRowProps<T>[]
 	noDataMessage?: string | ReactNode
+	rowClick?: (id: string, e: React.MouseEvent) => void
 }
