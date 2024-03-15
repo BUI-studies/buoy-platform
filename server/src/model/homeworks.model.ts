@@ -6,7 +6,7 @@ import { ObjectId } from 'mongodb'
 
 const Schema = mongoose.Schema
 
-export interface Homerwok extends mongoose.Document {
+export interface Homework extends mongoose.Document {
 	timestamp: number
 	sender: string
 	homeworkName: number
@@ -28,7 +28,7 @@ export const homeworksMapper = (cellsArray: TableCell[]) => ({
 	studentsComment: Sheets.getCellValueFromRawData(cellsArray[8]) || null,
 })
 
-export const HomerwoksSchema = new Schema<Homerwok>({
+export const HomeworksSchema = new Schema<Homework>({
 	id: {
 		type: ObjectId,
 	},
@@ -43,4 +43,4 @@ export const HomerwoksSchema = new Schema<Homerwok>({
 	studentsComment: { type: String },
 })
 
-export const HomeworksModel = mongoose.model<Homerwok>('Homerwoks', HomerwoksSchema)
+export const HomeworksModel = mongoose.model<Homework>('Homeworks', HomeworksSchema)
