@@ -29,18 +29,12 @@ export const getAllHomeworks = async (
 	}
 }
 
-export const get = async (req: Request, res: Response): Promise<HomeworksResponse> => {
-	return res.send({})
-}
+export const get = async (req: Request, res: Response): Promise<HomeworksResponse> => res.send({})
 
-export const save = async (req: Request, res: Response): Promise<HomeworksResponse> => {
-	return res.send({})
-}
+export const save = async (req: Request, res: Response): Promise<HomeworksResponse> => res.send({})
 
-export const update = async (req: Request, res: Response): Promise<HomeworksResponse> => {
-	return res.send({})
-}
+export const update = async (req: Request, res: Response): Promise<HomeworksResponse> =>
+	res.send({})
 
-export const remove = async (req: Request, res: Response): Promise<HomeworksResponse> => {
-	return res.send({})
-}
+export const remove = async (req: Request, res: Response): Promise<HomeworksResponse> =>
+	res.send({})
