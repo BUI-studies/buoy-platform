@@ -6,7 +6,6 @@ import { FormBuilder, FormBuilderTypes } from '@/utils'
 import { getInputClassesByType } from '../helper'
 
 import '../FormBuilder.scss'
-import { Loader } from '@/components'
 
 const Form = <T extends FieldValues>({
 	mode = 'onChange',
@@ -58,7 +57,7 @@ const Form = <T extends FieldValues>({
 
 			{mutation?.isPending && (
 				<div className={classes.message}>
-					<Loader />
+					<span>Loading...</span>
 				</div>
 			)}
 

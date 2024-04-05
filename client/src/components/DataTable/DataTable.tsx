@@ -1,8 +1,10 @@
+import { ReactNode } from 'react'
+
 import { Populated } from '@/types'
 import { DataTableProps } from '@/components'
+import { cutString } from '@/utils'
 
 import classes from './DataTable.module.scss'
-import { cutString } from '@/utils'
 
 const DataTable = <T extends Populated>({
 	header = [],
@@ -43,7 +45,9 @@ const DataTable = <T extends Populated>({
 								className={[classes.tableCell, classes['col' + item.grow]].join(' ')}
 								title={row[item.title as keyof T] as string}
 							>
-								{cutString(row[item.title as keyof T] as string, 50)}
+								{typeof row[item.title as keyof T] === 'string'
+									? cutString(row[item.title as keyof T] as string, 50)
+									: (row[item.title as keyof T] as ReactNode)}
 							</span>
 						))}
 					</li>

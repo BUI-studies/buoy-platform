@@ -72,7 +72,7 @@ export const getMapper = (role: ROLES, setModal: (node: ReactNode) => void) =>
 			id: feedback._id,
 			date: dateParser(feedback.date),
 			type: feedback.meeting.type,
-			title: <span className={classes.rowTitle}>{feedback.meeting.title}</span>,
+			title: feedback.meeting.title,
 			impression: feedback.impression,
 			understanding: feedback.understanding,
 			mentoring: feedback.mentoring,
