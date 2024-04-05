@@ -1,7 +1,7 @@
 import { FeedbackByRole, useFeedbacks } from '@/api'
 
 import { ROLES } from '@/types'
-import { DataTableRowProps, DataTable, FeedbacksItem } from '@/components'
+import { DataTableRowProps, DataTable, FeedbacksItem, Loader } from '@/components'
 import { useAuth, useModal } from '@/context'
 
 import { HEADERS, getMapper } from './FeedbacksTable.helper'
@@ -14,7 +14,7 @@ const FeedbackTable = () => {
 	const headers = HEADERS[role]
 	const mapper = getMapper(role, setModal)
 
-	if (feedbacks.isLoading) return <span className="">Loading...</span>
+	if (feedbacks.isLoading) return <Loader />
 
 	const tableData: DataTableRowProps<FeedbackByRole<ROLES>>[] = feedbacks.data.map(mapper)
 

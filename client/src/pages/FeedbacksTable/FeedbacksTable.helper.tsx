@@ -1,4 +1,4 @@
-import { FeedbackByRole, MentorDTO } from '@/api'
+import { FeedbackByRole, MeetingDTO, MentorDTO } from '@/api'
 import { ROLES } from '@/types'
 import { dateParser } from '@/utils'
 import { feedbacksReactionsMap } from '@/helpers'
@@ -29,29 +29,44 @@ export const HEADERS = Object.freeze({
 	],
 })
 
+const mapMeetingRelatedProps = (
+	role: ROLES,
+	feedback: FeedbackByRole<ROLES.STUDENT>,
+	setModal: (node: ReactNode) => void,
+) =>
+	!feedback.meeting
+		? {
+				mentor: 'No mentor',
+				title: 'No title',
+				type: 'No type',
+		  }
+		: {
+				mentor: (feedback.meeting.mentor as MentorDTO).fullName,
+				title: (
+					<span
+						className={classes.rowTitle}
+						onClick={() =>
+							setModal(
+								<FeedbacksItem
+									role={role}
+									data={feedback}
+								/>,
+							)
+						}
+					>
+						{feedback.meeting.title}
+					</span>
+				),
+				type: feedback.meeting.type,
+		  }
+
 export const getMapper = (role: ROLES, setModal: (node: ReactNode) => void) =>
 	Object.freeze({
 		[ROLES.STUDENT]: (feedback: FeedbackByRole<ROLES.STUDENT>) => ({
 			id: feedback._id,
 			date: dateParser(feedback.date),
-			mentor: (feedback.meeting.mentor as MentorDTO).fullName,
-			title: (
-				<span
-					className={classes.rowTitle}
-					onClick={() =>
-						setModal(
-							<FeedbacksItem
-								role={role}
-								data={feedback}
-							/>,
-						)
-					}
-				>
-					{feedback.meeting.title}
-				</span>
-			),
-			type: feedback.meeting.type,
 			comment: feedback.comment,
+			...mapMeetingRelatedProps(role, feedback, setModal),
 		}),
 		[ROLES.MENTOR]: (feedback: FeedbackByRole<ROLES.MENTOR>) => ({
 			id: feedback._id,

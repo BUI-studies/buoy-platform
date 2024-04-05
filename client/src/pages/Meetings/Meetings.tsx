@@ -2,7 +2,7 @@ import { ROLES } from '@/types'
 import { useMeetings, Meeting } from '@/api'
 import { useAuth, useModal } from '@/context'
 
-import { DataTable, DataTableRowProps } from '@/components'
+import { DataTable, DataTableRowProps, Loader } from '@/components'
 
 import { MeetingTableItem } from './Meetings.types'
 import { makeTableData } from './Meetings.helper'
@@ -12,7 +12,7 @@ const Meetings = () => {
 	const meetings = useMeetings()
 	const { setModal } = useModal()
 
-	if (meetings.isLoading) return <span className="">Loading...</span>
+	if (meetings.isLoading) return <Loader />
 
 	const tableData: DataTableRowProps<MeetingTableItem>[] =
 		makeTableData({

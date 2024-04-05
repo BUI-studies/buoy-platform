@@ -2,16 +2,18 @@ import { FeedbackByRole, Meeting, useFeedbackMutation, useMeetings } from '@/api
 
 import { FormBuilder, FormBuilderTypes } from '@/utils'
 
-import { getFeedbackFormFields, getFeedbackSchema } from './Feedback.helper'
 import { useAuth } from '@/context'
 import { ROLES } from '@/types'
+import { Loader } from '@/components'
+
+import { getFeedbackFormFields, getFeedbackSchema } from './Feedback.helper'
 
 const Feedback = () => {
 	const auth = useAuth()
 	const lastMeetings = useMeetings(10)
 	const feedbackMutation = useFeedbackMutation()
 
-	if (lastMeetings.isLoading) return <span>Loading...</span>
+	if (lastMeetings.isLoading) return <Loader />
 
 	const lastMeetingsOptions: FormBuilderTypes.SelectOption[] = lastMeetings.data?.map(
 		(meeting: Meeting) => ({
