@@ -1,4 +1,4 @@
-import { FeedbackByRole, MeetingDTO, MentorDTO } from '@/api'
+import { FeedbackByRole, MentorDTO } from '@/api'
 import { ROLES } from '@/types'
 import { dateParser } from '@/utils'
 import { feedbacksReactionsMap } from '@/helpers'

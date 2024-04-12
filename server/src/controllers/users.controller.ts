@@ -3,7 +3,7 @@ import { Request, Response } from 'express'
 
 import { UsersModel } from '@/model'
 
-import { getToken, Sheets } from '@/utils'
+import { getToken } from '@/utils'
 
 export const get = async (req: Request, res: Response) => {
 	const { fullname, mentor, role, status } = req.query

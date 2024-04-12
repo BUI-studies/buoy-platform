@@ -1,15 +1,7 @@
 import { Request, Response } from 'express'
 
-import { payemntsMapper } from '@/model'
-
-import { SHEETS_TITLES } from '@/types'
-import { Sheets } from '@/utils'
-
 const getAllPayments = async () => {
-	await Sheets.getDoc()
-	Sheets.tables?.[SHEETS_TITLES.PAYMENTS].loadCells()
-
-	return Sheets.parseRows(Sheets.tables?.[SHEETS_TITLES.PAYMENTS]._cells, payemntsMapper)
+	return []
 }
 
 export const get = async (req: Request, res: Response) => {
