@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { fetcher, _URL } from '@/api'
 
-export type Mentor = {
+export type MentorDTO = {
 	_id: string
 	fullName: string
 }
@@ -9,7 +9,7 @@ export type Mentor = {
 export type Student = {
 	_id: string
 	fullName: string
-	mentor: Mentor | Mentor[] | string
+	mentor: MentorDTO | MentorDTO[] | string
 	status: string
 }
 

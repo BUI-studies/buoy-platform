@@ -1,7 +1,16 @@
 import { Navigate, RouteObject } from 'react-router-dom'
 
 import { Layout } from '@/template'
-import { Login, Meetings, Resources, Feedbacks, Homeworks, Report, UnPaid } from '@/pages'
+import {
+	Login,
+	Meetings,
+	Resources,
+	Feedback,
+	Homeworks,
+	Report,
+	UnPaid,
+	FeedbacksTable,
+} from '@/pages'
 import { ProtectedRoute, _URL, Logout } from '@/routes'
 import { PaymentsProvider, HomeworksProvider } from '@/context'
 import { USER_STATUSES } from '@/types'
@@ -48,7 +57,15 @@ export const routesListStudent: RouteObject[] = [
 				path: _URL.FEEDBACK,
 				element: (
 					<ProtectedRoute>
-						<Feedbacks />
+						<Feedback />
+					</ProtectedRoute>
+				),
+			},
+			{
+				path: _URL.FEEDBACKS,
+				element: (
+					<ProtectedRoute>
+						<FeedbacksTable />
 					</ProtectedRoute>
 				),
 			},
@@ -94,6 +111,14 @@ export const getRoutesListMentor = (status: USER_STATUSES): RouteObject[] => {
 					element: (
 						<ProtectedRoute>
 							<Meetings />
+						</ProtectedRoute>
+					),
+				},
+				{
+					path: _URL.FEEDBACKS,
+					element: (
+						<ProtectedRoute>
+							<FeedbacksTable />
 						</ProtectedRoute>
 					),
 				},

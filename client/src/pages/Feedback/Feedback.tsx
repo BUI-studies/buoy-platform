@@ -1,16 +1,19 @@
-import { Feedback, Meeting, useFeedbackMutation, useMeetings } from '@/api'
+import { FeedbackByRole, Meeting, useFeedbackMutation, useMeetings } from '@/api'
 
 import { FormBuilder, FormBuilderTypes } from '@/utils'
 
-import { getFeedbackFormFields, getFeedbackSchema } from './Feedback.helper'
 import { useAuth } from '@/context'
+import { ROLES } from '@/types'
+import { Loader } from '@/components'
 
-const Feedbacks = () => {
+import { getFeedbackFormFields, getFeedbackSchema } from './Feedback.helper'
+
+const Feedback = () => {
 	const auth = useAuth()
 	const lastMeetings = useMeetings(10)
 	const feedbackMutation = useFeedbackMutation()
 
-	if (lastMeetings.isLoading) return <span>Loading...</span>
+	if (lastMeetings.isLoading) return <Loader />
 
 	const lastMeetingsOptions: FormBuilderTypes.SelectOption[] = lastMeetings.data?.map(
 		(meeting: Meeting) => ({
@@ -26,7 +29,7 @@ const Feedbacks = () => {
 				formProps={{ name: 'feedbackForm' }}
 				fields={getFeedbackFormFields(lastMeetingsOptions)}
 				schema={getFeedbackSchema(lastMeetingsOptions.map(o => o.value))}
-				onSubmit={(values: Feedback) => {
+				onSubmit={(values: FeedbackByRole<ROLES>) => {
 					if (!auth.user?.data?.data?._id)
 						throw new Error(
 							'Something really nasty happened. There is no authorised user, but you are trying to create a feedback.',
@@ -35,11 +38,13 @@ const Feedbacks = () => {
 					feedbackMutation.mutate({
 						...values,
 						student: auth.user?.data?.data?._id,
+						date: new Date(),
 					})
 				}}
+				mutation={feedbackMutation}
 			/>
 		</>
 	)
 }
 
-export default Feedbacks
+export default Feedback

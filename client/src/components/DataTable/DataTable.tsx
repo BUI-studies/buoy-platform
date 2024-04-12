@@ -1,5 +1,8 @@
+import { ReactNode } from 'react'
+
 import { Populated } from '@/types'
 import { DataTableProps } from '@/components'
+import { cutString } from '@/utils'
 
 import classes from './DataTable.module.scss'
 
@@ -7,13 +10,16 @@ const DataTable = <T extends Populated>({
 	header = [],
 	data = [],
 	noDataMessage = 'No data found',
+	rowClick,
 }: DataTableProps<T>) => {
-	const growSum = header.reduce((acc, item) => acc + item.grow, 0)
+	const rowClickHandler = (row: T) =>
+		rowClick
+			? (e: React.MouseEvent<HTMLLIElement>) => {
+					if (!row.id) throw new Error('Row must have an id')
 
-	if (growSum !== 12) {
-		throw new Error('DataTable header grow values must add up to 12')
-	}
-
+					rowClick(row.id as string, e)
+			  }
+			: undefined
 	return data.length ? (
 		<section className={classes.table}>
 			<ul className={classes.tableHeader}>
@@ -28,13 +34,20 @@ const DataTable = <T extends Populated>({
 			</ul>
 			<ul className={classes.tableBody}>
 				{data.map((row, index) => (
-					<li key={row.id || index} className={classes.tableRow}>
+					<li
+						key={(row.id || index) as KeyType}
+						className={classes.tableRow}
+						onClick={rowClickHandler(row)}
+					>
 						{header.map((item, index) => (
 							<span
 								key={`${item}-${index}`}
 								className={[classes.tableCell, classes['col' + item.grow]].join(' ')}
+								title={row[item.title as keyof T] as string}
 							>
-								{row[item.title as keyof T]}
+								{typeof row[item.title as keyof T] === 'string'
+									? cutString(row[item.title as keyof T] as string, 50)
+									: (row[item.title as keyof T] as ReactNode)}
 							</span>
 						))}
 					</li>

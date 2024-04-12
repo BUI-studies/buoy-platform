@@ -16,7 +16,7 @@ const Plus: FC<SVGProps & Populated> = ({ size = 24, width = 24, height = 24, th
 				x2="12"
 				y2="22"
 				stroke="white"
-				strokeWidth={thickness}
+				strokeWidth={thickness as number}
 				strokeLinecap="round"
 			/>
 			<line
@@ -25,7 +25,7 @@ const Plus: FC<SVGProps & Populated> = ({ size = 24, width = 24, height = 24, th
 				x2="22"
 				y2="12"
 				stroke="white"
-				strokeWidth={thickness}
+				strokeWidth={thickness as number}
 				strokeLinecap="round"
 			/>
 		</svg>

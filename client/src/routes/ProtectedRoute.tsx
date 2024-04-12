@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom'
 
 import { REQUEST_STATUS } from '@/types'
 import { AuthContextType, useAuth } from '@/context/'
+import { Loader } from '@/components'
 
 type ProtectedRouteProps = PropsWithChildren<{
 	children?: ReactNode
@@ -15,7 +16,7 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ children }) => {
 		case REQUEST_STATUS.LOADING:
 			return (
 				<main className="py-8 prose dark:prose-invert flex items-center justify-center flex-col">
-					<h2>Loading...</h2>
+					<Loader />
 				</main>
 			)
 		case REQUEST_STATUS.SUCCESS:

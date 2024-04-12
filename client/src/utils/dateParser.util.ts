@@ -1,4 +1,4 @@
-export const dateParser = (date: Date) => {
+export const dateParser = (date: Date | number) => {
 	const dateObj = new Date(date)
 	return dateObj
 		.toLocaleDateString('en-GB', {

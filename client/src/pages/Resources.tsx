@@ -1,3 +1,4 @@
+import { Loader } from '@/components'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
@@ -26,7 +27,7 @@ const Resources = () => {
 
 	return (
 		<>
-			{!showFrame && <span className="">Loading...</span>}
+			{!showFrame && <Loader />}
 
 			<iframe
 				src={resourceURL}
@@ -37,7 +38,7 @@ const Resources = () => {
 				allow="allow-same-origin allow-presentation allow-scripts allow-popups allow-formsaccelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 				className={`${showFrame ? 'block' : 'hidden'}`}
 			>
-				<span className="">Loading...</span>
+				<Loader />
 			</iframe>
 		</>
 	)

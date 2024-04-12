@@ -3,4 +3,5 @@ export enum ERRORS {
 	wrongType = 'Wrong type',
 	selectNoValue = 'Select an option',
 	indStudentsLength = 'Individual meeting should have only one student',
+	minLength = 'Minimum length has not being reached',
 }

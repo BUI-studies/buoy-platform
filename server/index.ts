@@ -3,7 +3,7 @@ import * as dotenv from 'dotenv'
 import mongoose, { ConnectOptions } from 'mongoose'
 import express, { json, urlencoded } from 'express'
 
-import { Sheets, auth } from '@/utils'
+import { auth } from '@/utils'
 
 import {
 	meetingsRoutes,
@@ -28,7 +28,7 @@ app.use('/api/meetings', auth, meetingsRoutes)
 app.use('/api/payments', auth, paymentsRoutes)
 app.use('/api/homeworks', auth, homeworksRoutes)
 app.use('/api/users', auth, usersRoutes)
-app.use('/api/feedback', auth, feedbackRoutes)
+app.use('/api/feedbacks', auth, feedbackRoutes)
 
 //handling client routes
 app.get('*', (req, res) => {
@@ -44,6 +44,5 @@ mongoose
 	.catch(err => console.error(err))
 
 app.listen(process.env.SERVER_PORT, () => {
-	Sheets.getDoc()
 	console.log(`Server is running on port: ${process.env.SERVER_PORT}`)
 })

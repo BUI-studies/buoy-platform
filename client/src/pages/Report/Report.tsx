@@ -2,6 +2,8 @@ import { useActiveUsersByMentor, useMeetingMutation, Meeting } from '@/api'
 import { useAuth } from '@/context'
 import { FormBuilderTypes, FormBuilder } from '@/utils'
 
+import { Loader } from '@/components'
+
 import { getReportFormFields, reportSchema } from './Report.helper'
 
 const Report = () => {
@@ -9,7 +11,7 @@ const Report = () => {
 	const mutation = useMeetingMutation()
 	const students = useActiveUsersByMentor(auth.user?.data?.data?._id)
 
-	if (students.isLoading) return <span className="">Loading...</span>
+	if (students.isLoading) return <Loader />
 
 	const studentsOptions: FormBuilderTypes.SelectOption[] = students.data.map(
 		(student: { fullName: string; _id: string }) => ({

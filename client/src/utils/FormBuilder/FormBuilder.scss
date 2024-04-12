@@ -1,5 +1,9 @@
 .form-builder {
-	@apply flex flex-col gap-4;
+	@apply flex flex-col gap-4 relative;
+
+	&--blocked {
+		@apply pointer-events-none;
+	}
 
 	&__label {
 		@apply flex flex-col gap-2;
@@ -48,7 +52,18 @@
 	}
 
 	&__checkbox {
-		@apply py-2 px-4 rounded-md border border-gray-300;
+		@apply py-2 px-4 rounded-md border border-gray-300 flex flex-row gap-2 items-center cursor-pointer self-start;
+		transition:
+			border 0.2s,
+			color 0.2s;
+
+		&:focus {
+			@apply border-blue-700;
+		}
+
+		&:hover {
+			@apply text-blue-700;
+		}
 	}
 
 	&__radio {
@@ -91,6 +106,16 @@
 			&:hover {
 				@apply bg-slate-700;
 			}
+		}
+	}
+
+	&__message {
+		user-select: none;
+		-webkit-appearance: none;
+		@apply absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center bg-black bg-opacity-90;
+
+		& span {
+			@apply text-black p-4 bg-white rounded-md sticky top-20;
 		}
 	}
 }
