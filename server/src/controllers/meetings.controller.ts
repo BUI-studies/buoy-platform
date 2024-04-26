@@ -1,32 +1,55 @@
+import { Request, Response, NextFunction } from 'express'
 import { ObjectId, Types } from 'mongoose'
-import { Request, Response } from 'express'
 
 import { MeetingsModel } from '@/model'
 
 import { USER_ROLES } from '@/types'
+import { count } from 'console'
 
 export const get = async (req: Request, res: Response) => {
-	const { id, role, limit } = req.query
-	const mentorPopulation = { path: 'mentor', select: '_id fullName' }
-	const studentsPopulation = { path: 'students', select: '_id fullName' }
+	try {
+		const { id, role, limit, page } = req.query
+		const mentorPopulation = { path: 'mentor', select: '_id fullName' }
+		const studentsPopulation = { path: 'students', select: '_id fullName' }
 
-	if (role === USER_ROLES.MENTOR) {
-		return res.send(
-			await MeetingsModel.find({ mentor: id })
-				.sort({ date: -1 })
-				.populate([studentsPopulation, mentorPopulation]),
-		)
-	} else if (role === USER_ROLES.STUDENT) {
-		const studentId = new Types.ObjectId(id as string)
-
-		return res.send(
-			await MeetingsModel.find({ students: { $in: [studentId] } })
-				.sort({ date: -1 })
+		if (role === USER_ROLES.MENTOR) {
+			const count = await MeetingsModel.countDocuments({ mentor: id })
+			const data = await MeetingsModel.find({ mentor: id })
 				.limit(Number(limit))
-				.populate(mentorPopulation),
-		)
-	} else {
-		return res.status(400).send({ message: 'Bad request: no role specified' })
+				.skip(Number(limit) * (Number(page) - 1))
+				.sort({ date: -1 })
+				.populate([studentsPopulation, mentorPopulation])
+			return res.send({
+				count,
+				limit,
+				totalPages: Math.ceil(count / Number(limit)),
+				page,
+				data,
+			})
+		} else if (role === USER_ROLES.STUDENT) {
+			const studentId = new Types.ObjectId(id as string)
+			const count = await MeetingsModel.countDocuments({ students: { $in: [studentId] } })
+			const data = await MeetingsModel.find({ students: { $in: [studentId] } })
+				.limit(Number(limit))
+				.skip(Number(limit) * (Number(page) - 1))
+				.sort({ date: -1 })
+				.populate(mentorPopulation)
+
+			return res.send({
+				count,
+				limit,
+				totalPages: Math.ceil(count / Number(limit)),
+				page,
+				data,
+			})
+		} else {
+			return res.status(400).send({ message: 'Bad request: unknown role specified ' + role })
+		}
+	} catch (error) {
+		res.status(500).send({
+			message: 'Server error',
+			error,
+		})
 	}
 }
 

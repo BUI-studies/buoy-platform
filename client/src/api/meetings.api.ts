@@ -28,18 +28,18 @@ export type Meeting = {
 	report: string
 }
 
-export const useMeetings = (limit?: number) => {
+export const useMeetings = (limit: string = '20', page: string = '1') => {
 	const auth = useAuth()
 
 	const params = new URLSearchParams([
 		['id', auth.user?.data?.data?._id || ''],
 		['role', auth.user?.data?.data?.role || ''],
+		['page', page],
+		['limit', limit],
 	])
 
-	if (limit) params.append('limit', limit.toString())
-
 	return useQuery({
-		queryKey: [_URL.meetings, params],
+		queryKey: [_URL.meetings, auth.user?.data?.data?._id, auth.user?.data?.data?.role, page, limit],
 		queryFn: () => fetcher(`${_URL.meetings}?${params}`),
 	})
 }

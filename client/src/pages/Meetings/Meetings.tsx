@@ -1,18 +1,23 @@
+import { useSearchParams } from 'react-router-dom'
+
 import { ROLES } from '@/types'
 import { useMeetings, Meeting } from '@/api'
 import { useAuth, useModal } from '@/context'
 
-import { DataTable, DataTableRowProps, Loader } from '@/components'
+import { DataTable, DataTableRowProps, Loader, Pagination } from '@/components'
 
 import { MeetingTableItem } from './Meetings.types'
 import { makeTableData } from './Meetings.helper'
 
 const Meetings = () => {
+	const [params, setParams] = useSearchParams()
+	console.log('params', params.get('limit'), params.get('page'))
 	const auth = useAuth()
-	const meetings = useMeetings()
+	const meetingsResponse = useMeetings(params.get('limit') || '20', params.get('page') || '1')
+	const meetings = meetingsResponse.data
 	const { setModal } = useModal()
 
-	if (meetings.isLoading) return <Loader />
+	if (meetingsResponse.isLoading) return <Loader />
 
 	const tableData: DataTableRowProps<MeetingTableItem>[] =
 		makeTableData({
@@ -37,7 +42,24 @@ const Meetings = () => {
 	return (
 		<section>
 			{meetings.isError && <p>Error</p>}
-
+			<Pagination
+				goNext={() => {
+					setParams(
+						new URLSearchParams([
+							['limit', meetings.limit.toString()],
+							['page', (Number(params.get('page')) + 1).toString()],
+						]),
+					)
+				}}
+				goPrev={() => {
+					setParams(
+						new URLSearchParams([
+							['limit', meetings.limit.toString()],
+							['page', (Number(params.get('page')) - 1).toString()],
+						]),
+					)
+				}}
+			/>
 			<DataTable
 				header={headers}
 				data={tableData}
