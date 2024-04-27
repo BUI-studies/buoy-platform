@@ -1,50 +1,41 @@
-import { Request, Response, NextFunction } from 'express'
-import { ObjectId, Types } from 'mongoose'
-
-import { MeetingsModel } from '@/model'
+import { Request, Response, NextFunction, query } from 'express'
+import { ObjectId, PopulateOptions, SortOrder, Types } from 'mongoose'
 
 import { USER_ROLES } from '@/types'
-import { count } from 'console'
+import { MeetingsModel } from '@/model'
+import { getPaginated } from '@/utils/getPaginated'
 
 export const get = async (req: Request, res: Response) => {
 	try {
 		const { id, role, limit, page } = req.query
 		const mentorPopulation = { path: 'mentor', select: '_id fullName' }
 		const studentsPopulation = { path: 'students', select: '_id fullName' }
+		const paginationProps = {
+			Model: MeetingsModel,
+			config: {
+				limit: Number(limit),
+				page: Number(page),
+				sort: { date: -1 as SortOrder },
+				query: {},
+				populate: [] as PopulateOptions[],
+			},
+		}
 
 		if (role === USER_ROLES.MENTOR) {
-			const count = await MeetingsModel.countDocuments({ mentor: id })
-			const data = await MeetingsModel.find({ mentor: id })
-				.limit(Number(limit))
-				.skip(Number(limit) * (Number(page) - 1))
-				.sort({ date: -1 })
-				.populate([studentsPopulation, mentorPopulation])
-			return res.send({
-				count,
-				limit,
-				totalPages: Math.ceil(count / Number(limit)),
-				page,
-				data,
-			})
+			paginationProps.config.query = { mentor: id }
+			paginationProps.config.populate = [studentsPopulation, mentorPopulation]
 		} else if (role === USER_ROLES.STUDENT) {
-			const studentId = new Types.ObjectId(id as string)
-			const count = await MeetingsModel.countDocuments({ students: { $in: [studentId] } })
-			const data = await MeetingsModel.find({ students: { $in: [studentId] } })
-				.limit(Number(limit))
-				.skip(Number(limit) * (Number(page) - 1))
-				.sort({ date: -1 })
-				.populate(mentorPopulation)
-
-			return res.send({
-				count,
-				limit,
-				totalPages: Math.ceil(count / Number(limit)),
-				page,
-				data,
-			})
+			paginationProps.config.query = { students: { $in: [id] } }
+			paginationProps.config.populate = [mentorPopulation]
 		} else {
 			return res.status(400).send({ message: 'Bad request: unknown role specified ' + role })
 		}
+
+		const paginatedResult = await getPaginated(paginationProps)
+
+		return paginatedResult
+			? res.status(200).send(paginatedResult)
+			: res.status(404).send({ message: 'Meetings not found' })
 	} catch (error) {
 		res.status(500).send({
 			message: 'Server error',
