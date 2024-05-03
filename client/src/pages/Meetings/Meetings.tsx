@@ -1,18 +1,26 @@
-import { ROLES } from '@/types'
+import { useSearchParams } from 'react-router-dom'
+
+import { PAGINATION_DEFAULTS, ROLES } from '@/types'
 import { useMeetings, Meeting } from '@/api'
 import { useAuth, useModal } from '@/context'
 
-import { DataTable, DataTableRowProps, Loader } from '@/components'
+import { DataTable, DataTableRowProps, Loader, Pagination } from '@/components'
 
 import { MeetingTableItem } from './Meetings.types'
 import { makeTableData } from './Meetings.helper'
 
 const Meetings = () => {
+	const [params] = useSearchParams()
+	const meetingsResponse = useMeetings(
+		params.get('limit') || PAGINATION_DEFAULTS.LIMIT.toString(),
+		params.get('page') || PAGINATION_DEFAULTS.PAGE.toString(),
+	)
 	const auth = useAuth()
-	const meetings = useMeetings()
 	const { setModal } = useModal()
 
-	if (meetings.isLoading) return <Loader />
+	const meetings = meetingsResponse.data
+
+	if (meetingsResponse.isLoading) return <Loader />
 
 	const tableData: DataTableRowProps<MeetingTableItem>[] =
 		makeTableData({
@@ -37,7 +45,7 @@ const Meetings = () => {
 	return (
 		<section>
 			{meetings.isError && <p>Error</p>}
-
+			<Pagination totalPages={meetings.totalPages} />
 			<DataTable
 				header={headers}
 				data={tableData}
@@ -54,6 +62,7 @@ const Meetings = () => {
 					</>
 				}
 			/>
+			<Pagination totalPages={meetings.totalPages} />
 		</section>
 	)
 }
