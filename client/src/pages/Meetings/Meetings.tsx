@@ -11,7 +11,10 @@ import { makeTableData } from './Meetings.helper'
 
 const Meetings = () => {
 	const [params] = useSearchParams()
-	const meetingsResponse = useMeetings(params.get('limit'), params.get('page'))
+	const meetingsResponse = useMeetings(
+		params.get('limit') || PAGINATION_DEFAULTS.LIMIT.toString(),
+		params.get('page') || PAGINATION_DEFAULTS.PAGE.toString(),
+	)
 	const auth = useAuth()
 	const { setModal } = useModal()
 
@@ -59,6 +62,7 @@ const Meetings = () => {
 					</>
 				}
 			/>
+			<Pagination totalPages={meetings.totalPages} />
 		</section>
 	)
 }
