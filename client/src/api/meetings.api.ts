@@ -2,6 +2,7 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 
 import { _URL, fetcher, getHeaders, MentorDTO, Student } from '@/api'
 import { useAuth } from '@/context'
+import { PAGINATION_DEFAULTS } from '@/types'
 
 export enum MeetingTypes {
 	INDIVIDUAL = 'individual',
@@ -28,14 +29,17 @@ export type Meeting = {
 	report: string
 }
 
-export const useMeetings = (limit: string = '20', page: string = '1') => {
+export const useMeetings = (
+	limit: string | null = PAGINATION_DEFAULTS.PAGE.toString(),
+	page: string | null = PAGINATION_DEFAULTS.LIMIT.toString(),
+) => {
 	const auth = useAuth()
 
 	const params = new URLSearchParams([
 		['id', auth.user?.data?.data?._id || ''],
 		['role', auth.user?.data?.data?.role || ''],
-		['page', page],
-		['limit', limit],
+		['page', page || PAGINATION_DEFAULTS.PAGE.toString()],
+		['limit', limit || PAGINATION_DEFAULTS.LIMIT.toString()],
 	])
 
 	return useQuery({

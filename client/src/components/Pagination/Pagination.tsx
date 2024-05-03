@@ -1,39 +1,75 @@
-import PaginationItem from './PaginationItem'
-import Icons from './Icons'
-import classes from './Pagination.module.scss'
-import { Link } from 'react-router-dom'
 import { FC } from 'react'
+import { useSearchParams } from 'react-router-dom'
+
+import { PAGINATION_DEFAULTS } from '@/types'
+
+import Icons from './Icons'
+import PaginationItem from './PaginationItem'
+
+import classes from './Pagination.module.scss'
+
+const mapPaginationItems = (page: number, isActive: boolean, action?: () => void) => (
+	<PaginationItem
+		key={page}
+		page={page}
+		active={isActive}
+		action={action}
+	/>
+)
 
 type PaginationProps = {
-	goNext: () => void
-	goPrev: () => void
+	totalPages: number
 }
 
-const Pagination: FC<PaginationProps> = ({ goNext, goPrev }) => {
+const makeChangePage =
+	(setParams: (params: URLSearchParams) => void, page: number, limit: number) => () => {
+		setParams(
+			new URLSearchParams([
+				['page', page.toString()],
+				['limit', limit.toString()],
+			]),
+		)
+	}
+
+const Pagination: FC<PaginationProps> = ({ totalPages }) => {
+	const [params, setParams] = useSearchParams()
+
+	const pageFromParams = Number(params.get('page'))
+	const limitFromParams = Number(params.get('limit'))
+	const page: number =
+		(pageFromParams < 1 ? 0 : pageFromParams > totalPages ? totalPages : pageFromParams) ||
+		PAGINATION_DEFAULTS.PAGE
+	const limit = limitFromParams || PAGINATION_DEFAULTS.LIMIT
+
 	return (
 		<nav
 			className="isolate inline-flex -space-x-px rounded-md shadow-sm"
 			aria-label="Pagination"
 		>
 			<button
-				className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-				onClick={goPrev}
+				disabled={page === PAGINATION_DEFAULTS.PAGE}
+				className={[classes.arrowBtn, classes.arrowBtnPrev].join(' ')}
+				onClick={page !== 1 ? makeChangePage(setParams, page - 1, limit) : undefined}
 			>
 				<span className="sr-only">Previous</span>
 				<Icons.Prev />
 			</button>
-			<PaginationItem
-				active
-				page={1}
-			/>
 
-			<span className="relative inline-flex items-center px-4 py-2 text-sm ring-1 ring-inset ring-gray-300 focus:outline-offset-0">
-				...
-			</span>
-			<PaginationItem page={10} />
+			<div className={classes.pagesWrapper}>
+				{Array.from({ length: totalPages }, (_, i) => {
+					const num = i + 1
+					return mapPaginationItems(
+						num as number,
+						num === page,
+						page !== num ? makeChangePage(setParams, num, limit) : undefined,
+					)
+				})}
+			</div>
+
 			<button
-				className={classes.prevBtn}
-				onClick={goNext}
+				disabled={page === totalPages}
+				className={[classes.arrowBtn, classes.arrowBtnNext].join(' ')}
+				onClick={page !== totalPages ? makeChangePage(setParams, page + 1, limit) : undefined}
 			>
 				<span className="sr-only">Next</span>
 				<Icons.Next />
