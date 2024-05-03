@@ -51,3 +51,9 @@ export enum REPORT_TYPES {
 	PLANNING = 'planning',
 	SYNC = 'sync',
 }
+
+export enum PAGINATION_DEFAULTS {
+	LIMIT = 20,
+	PAGE = 1,
+	TOTAL_PAGES = 1,
+}

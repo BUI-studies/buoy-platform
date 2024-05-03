@@ -14,14 +14,79 @@
 	}
 }
 
-.prevBtn {
-	@apply relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300;
+.pagesWrapper {
+	width: 20ch;
+	display: flex;
+	align-items: center;
+	overflow-y: auto;
 
-	&:hover {
+	&::-webkit-scrollbar {
+		width: 0.15rem;
+		height: 0.15rem;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		@apply bg-indigo-600;
+	}
+
+	&::-webkit-scrollbar-track {
+		background-color: transparent;
+	}
+
+	&::-webkit-scrollbar-thumb:hover {
+		@apply bg-indigo-600;
+	}
+
+	&::-webkit-scrollbar-thumb:active {
+		@apply bg-indigo-600;
+	}
+
+	&::-webkit-scrollbar-thumb:window-inactive {
+		@apply bg-indigo-600;
+	}
+
+	&::-webkit-scrollbar-button {
+		display: none;
+	}
+
+	&::-webkit-scrollbar-corner {
+		display: none;
+	}
+
+	&::-webkit-resizer {
+		display: none;
+	}
+
+	&::-webkit-scrollbar-track-piece {
+		display: none;
+	}
+
+	&::-webkit-scrollbar-corner {
+		display: none;
+	}
+}
+
+.arrowBtn {
+	margin-bottom: 0.15rem;
+	@apply relative inline-flex items-center px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300;
+
+	&:not(:disabled):hover {
 		@apply bg-gray-50;
 	}
 
 	&:focus {
 		@apply outline-offset-0;
+	}
+
+	&:disabled {
+		@apply opacity-50 cursor-not-allowed;
+	}
+
+	&Prev {
+		@apply rounded-l-md;
+	}
+
+	&Next {
+		@apply rounded-r-md;
 	}
 }
