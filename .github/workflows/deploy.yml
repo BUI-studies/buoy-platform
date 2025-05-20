@@ -1,36 +1,40 @@
-name: Deploy to DO Droplet (rsync)
+name: CI & Deploy
 
 on:
+  # PRs trigger a full build (no deploy)
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+  # Only pushes to main trigger the actual production deploy
   push:
-    branches: [main] # change if your prod branch is different
-  workflow_dispatch: {} # manual trigger FTW
+    branches: [main]
+
+  # Manual button in the Actions tab
+  workflow_dispatch: {}
 
 env:
-  # where the server code lives on the droplet
-  APP_DIR: /buoy-platform
-  # name PM2 will track
-  PM2_APP: buoy-platform
+  APP_DIR: /var/www/buoy # where the server lives on the droplet
+  PM2_APP: buoy # pm2 process name
 
 jobs:
-  deploy:
+  build-and-maybe-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: ⬇️  Checkout code
+      - name: ⬇️  Checkout
         uses: actions/checkout@v4
 
-      - name: 🟢 Set up Node LTS
+      - name: 🟢 Setup Node LTS
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
-          cache: 'yarn'
+          cache: yarn
 
-      - name: 📦 Install deps & build (mono-repo)
+      - name: 📦 Install & Build mono-repo
         run: |
           yarn install --frozen-lockfile
-          yarn build                      # uses your root build script
+          yarn build                      # root build: client → server → copy
 
-      # ───────── create trimmed artifact ─────────
       - name: 🗜️  Tar production bundle
         run: |
           mkdir -p deploy
@@ -38,29 +42,38 @@ jobs:
           cp -r server/dist deploy/dist
           tar -czf bundle.tar.gz -C deploy .
 
-      # ───────── prepare SSH key ─────────
-      - name: 🛂 Add SSH key
+      # ───────────────────────────────────────────────
+      # Everything below ONLY runs on pushes to main
+      # ───────────────────────────────────────────────
+      - name: ⏭️  Skip deploy on PRs
+        if: github.event_name == 'pull_request'
+        run: echo "PR build — tests pass, deploy skipped."
+
+      - name: 🛂 Start SSH agent & add key
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.DO_SSH_KEY }}
 
       - name: 🏗️  Rsync bundle to droplet
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           rsync -avz --delete \
             -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.DO_SSH_PORT }}" \
             bundle.tar.gz ${{ secrets.DO_USER }}@${{ secrets.DO_HOST }}:${{ env.APP_DIR }}/
 
-      - name: 🚀 Remote deploy & restart
+      - name: 🚀 Remote deploy & PM2 reload
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           ssh -o StrictHostKeyChecking=no -p ${{ secrets.DO_SSH_PORT }} \
-            ${{ secrets.DO_USER }}@${{ secrets.DO_HOST }} << 'EOF'
+            ${{ secrets.DO_USER }}@${{ secrets.DO_HOST }} << 'EOSSH'
             set -e
             cd $APP_DIR
             tar -xzf bundle.tar.gz
             rm bundle.tar.gz
 
-            # install prod deps only on first run or if lockfile changes
-            if [ ! -d node_modules ] || [ bundle.tar.gz -nt node_modules ]; then
+            # install prod deps once or when lockfile changes
+            if [ ! -d node_modules ] || [ deploy/yarn.lock -nt node_modules ]; then
               yarn install --production --frozen-lockfile
             fi
 
@@ -69,6 +82,6 @@ jobs:
               pm2 reload $PM2_APP
             else
               pm2 start dist/index.js --name $PM2_APP
-              pm2 save              # auto-boot on reboot
+              pm2 save
             fi
-          EOF
+          EOSSH
