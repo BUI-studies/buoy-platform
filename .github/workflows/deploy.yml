@@ -72,7 +72,9 @@ jobs:
           passphrase: ${{ secrets.DO_SSH_PASSPHRASE }}
           port: ${{ secrets.DO_SSH_PORT }}
           source: 'bundle.tar.gz'
-          target: '~/' # <- WAS "~/bundle.tar.gz", now just home dir
+          target: '~' # still copy into $HOME
+          rm: true # ⚡ NEW – nuke existing file/dir first
+          overwrite: true # ⚡ NEW – force overwrite inside untar
 
       - name: 🚀 Remote untar & PM2 reload
         uses: appleboy/ssh-action@v1.0.3
