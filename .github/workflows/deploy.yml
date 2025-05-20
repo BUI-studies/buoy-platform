@@ -5,16 +5,16 @@ on:
     types: [opened, synchronize, reopened]
 
   push:
-    branches: [master]
+    branches: [master] # <─ repo’s main branch
 
   workflow_dispatch: {}
 
 env:
-  APP_DIR: /var/www/buoy # remote folder holding the server
-  PM2_APP: buoy # pm2 process label
+  APP_DIR: /home/deploy/buoy-platform # <─ new location
+  PM2_APP: buoy
 
 jobs:
-  # ───────────────────────────── 1) BUILD ─────────────────────────────
+  # ───────────────────────── 1) BUILD ─────────────────────────
   build:
     runs-on: ubuntu-latest
 
@@ -27,17 +27,16 @@ jobs:
           node-version: 'lts/*'
           cache: yarn
 
-      # root install without recursive script, then per-package installs
-      - name: 📦 Install deps (mono-repo, safe)
+      - name: 📦 Install deps (mono-repo, no recursion)
         run: |
           yarn install --frozen-lockfile --ignore-scripts
           (cd client && yarn install --frozen-lockfile)
           (cd server && yarn install --frozen-lockfile)
 
-      - name: 🏗️  Build project
-        run: yarn build # root build script
+      - name: 🏗️ Build project
+        run: yarn build
 
-      - name: 🗜️  Package production bundle
+      - name: 🗜️ Package production bundle
         run: |
           mkdir -p deploy
           cp server/package.json server/yarn.lock deploy/
@@ -51,7 +50,7 @@ jobs:
           path: bundle.tar.gz
           retention-days: 7
 
-  # ───────────────────────────── 2) DEPLOY ─────────────────────────────
+  # ───────────────────────── 2) DEPLOY ─────────────────────────
   deploy:
     needs: build
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
@@ -64,7 +63,6 @@ jobs:
           name: bundle
           path: .
 
-      # —— secure copy via Appleboy (key + passphrase) ——
       - name: 🚚 SCP bundle to droplet
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -74,9 +72,8 @@ jobs:
           passphrase: ${{ secrets.DO_SSH_PASSPHRASE }}
           port: ${{ secrets.DO_SSH_PORT }}
           source: 'bundle.tar.gz'
-          target: '${{ env.APP_DIR }}/'
+          target: '~/bundle.tar.gz' # always writable
 
-      # —— remote deploy commands over SSH (same passphrase-aware action) ——
       - name: 🚀 Remote untar & PM2 reload
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -90,16 +87,17 @@ jobs:
             APP_DIR="${{ env.APP_DIR }}"
             PM2_APP="${{ env.PM2_APP }}"
 
-            cd "$APP_DIR"
-            tar -xzf bundle.tar.gz
-            rm bundle.tar.gz
+            mkdir -p "$APP_DIR"
+            tar -xzf ~/bundle.tar.gz -C "$APP_DIR"
+            rm ~/bundle.tar.gz
 
-            # install prod deps if first run or lockfile newer
+            cd "$APP_DIR"
+
+            # install prod deps first time or when lockfile newer
             if [ ! -d node_modules ] || [ deploy/yarn.lock -nt node_modules ]; then
               yarn install --production --frozen-lockfile
             fi
 
-            # start or reload via PM2
             if pm2 ls | grep -q "$PM2_APP"; then
               pm2 reload "$PM2_APP"
             else
