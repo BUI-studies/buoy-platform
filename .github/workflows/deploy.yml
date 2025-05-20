@@ -5,7 +5,7 @@ on:
     types: [opened, synchronize, reopened]
 
   push:
-    branches: [main]
+    branches: [master]
 
   workflow_dispatch: {}
 
@@ -56,7 +56,7 @@ jobs:
   # ───────────────────────────── 2) DEPLOY ─────────────────────────────
   deploy:
     needs: build
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
 
     steps:
