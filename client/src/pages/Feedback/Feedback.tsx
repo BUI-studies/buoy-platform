@@ -10,10 +10,10 @@ import { getFeedbackFormFields, getFeedbackSchema } from './Feedback.helper'
 
 const Feedback = () => {
 	const auth = useAuth()
-	const lastMeetings = useMeetings(10)
+	const { data: lastMeetings, isLoading } = useMeetings('10')
 	const feedbackMutation = useFeedbackMutation()
 
-	if (lastMeetings.isLoading) return <Loader />
+	if (isLoading) return <Loader />
 
 	const lastMeetingsOptions: FormBuilderTypes.SelectOption[] = lastMeetings.data?.map(
 		(meeting: Meeting) => ({

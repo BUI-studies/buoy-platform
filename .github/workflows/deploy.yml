@@ -1,0 +1,74 @@
+name: Deploy to DO Droplet (rsync)
+
+on:
+  push:
+    branches: [main] # change if your prod branch is different
+  workflow_dispatch: {} # manual trigger FTW
+
+env:
+  # where the server code lives on the droplet
+  APP_DIR: /buoy-platform
+  # name PM2 will track
+  PM2_APP: buoy-platform
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⬇️  Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🟢 Set up Node LTS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+          cache: 'yarn'
+
+      - name: 📦 Install deps & build (mono-repo)
+        run: |
+          yarn install --frozen-lockfile
+          yarn build                      # uses your root build script
+
+      # ───────── create trimmed artifact ─────────
+      - name: 🗜️  Tar production bundle
+        run: |
+          mkdir -p deploy
+          cp server/package.json server/yarn.lock deploy/
+          cp -r server/dist deploy/dist
+          tar -czf bundle.tar.gz -C deploy .
+
+      # ───────── prepare SSH key ─────────
+      - name: 🛂 Add SSH key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.DO_SSH_KEY }}
+
+      - name: 🏗️  Rsync bundle to droplet
+        run: |
+          rsync -avz --delete \
+            -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.DO_SSH_PORT }}" \
+            bundle.tar.gz ${{ secrets.DO_USER }}@${{ secrets.DO_HOST }}:${{ env.APP_DIR }}/
+
+      - name: 🚀 Remote deploy & restart
+        run: |
+          ssh -o StrictHostKeyChecking=no -p ${{ secrets.DO_SSH_PORT }} \
+            ${{ secrets.DO_USER }}@${{ secrets.DO_HOST }} << 'EOF'
+            set -e
+            cd $APP_DIR
+            tar -xzf bundle.tar.gz
+            rm bundle.tar.gz
+
+            # install prod deps only on first run or if lockfile changes
+            if [ ! -d node_modules ] || [ bundle.tar.gz -nt node_modules ]; then
+              yarn install --production --frozen-lockfile
+            fi
+
+            # start or reload via PM2
+            if pm2 ls | grep -q $PM2_APP; then
+              pm2 reload $PM2_APP
+            else
+              pm2 start dist/index.js --name $PM2_APP
+              pm2 save              # auto-boot on reboot
+            fi
+          EOF
