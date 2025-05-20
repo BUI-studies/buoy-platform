@@ -72,7 +72,7 @@ jobs:
           passphrase: ${{ secrets.DO_SSH_PASSPHRASE }}
           port: ${{ secrets.DO_SSH_PORT }}
           source: 'bundle.tar.gz'
-          target: '~/bundle.tar.gz' # always writable
+          target: '~/' # <- WAS "~/bundle.tar.gz", now just home dir
 
       - name: 🚀 Remote untar & PM2 reload
         uses: appleboy/ssh-action@v1.0.3
