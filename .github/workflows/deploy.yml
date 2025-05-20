@@ -1,0 +1,100 @@
+name: CI & Deploy
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+  push:
+    branches: [master]
+
+  workflow_dispatch: {}
+
+env:
+  APP_DIR: /var/www/buoy
+  PM2_APP: buoy
+
+jobs:
+  # ───────────────────────────── 1) BUILD ─────────────────────────────
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⬇️  Checkout
+        uses: actions/checkout@v4
+
+      - name: 🟢 Setup Node (LTS)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+          cache: yarn
+
+      - name: 📦 Install deps (skip root recursion)
+        run: |
+          # root packages without triggering "install" script hell
+          yarn install --frozen-lockfile --ignore-scripts
+          # install each part cleanly
+          (cd client && yarn install --frozen-lockfile)
+          (cd server && yarn install --frozen-lockfile)
+
+      - name: 🏗️  Build mono-repo
+        run: yarn build # calls build:client → build:server → build:cts
+
+      - name: 🗜️  Package production bundle
+        run: |
+          mkdir -p deploy
+          cp server/package.json server/yarn.lock deploy/
+          cp -r server/dist deploy/dist
+          tar -czf bundle.tar.gz -C deploy .
+
+      - name: 📡 Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: bundle
+          path: bundle.tar.gz
+          retention-days: 7
+
+  # ───────────────────────────── 2) DEPLOY ─────────────────────────────
+  deploy:
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: bundle
+          path: .
+
+      - name: 🛂 Start SSH agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.DO_SSH_KEY }}
+
+      - name: 🚚 Rsync to droplet
+        run: |
+          rsync -avz --delete \
+            -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.DO_SSH_PORT }}" \
+            bundle.tar.gz ${{ secrets.DO_USER }}@${{ secrets.DO_HOST }}:${{ env.APP_DIR }}/
+
+      - name: 🚀 Remote untar & PM2 reload
+        run: |
+          ssh -o StrictHostKeyChecking=no -p ${{ secrets.DO_SSH_PORT }} \
+            ${{ secrets.DO_USER }}@${{ secrets.DO_HOST }} << 'EOSSH'
+            set -e
+            cd $APP_DIR
+            tar -xzf bundle.tar.gz
+            rm bundle.tar.gz
+
+            # install prod deps if missing / changed
+            if [ ! -d node_modules ] || [ deploy/yarn.lock -nt node_modules ]; then
+              yarn install --production --frozen-lockfile
+            fi
+
+            if pm2 ls | grep -q $PM2_APP; then
+              pm2 reload $PM2_APP
+            else
+              pm2 start dist/index.js --name $PM2_APP
+              pm2 save
+            fi
+          EOSSH
