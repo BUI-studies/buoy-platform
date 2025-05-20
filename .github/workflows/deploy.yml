@@ -5,13 +5,13 @@ on:
     types: [opened, synchronize, reopened]
 
   push:
-    branches: [master]
+    branches: [main]
 
   workflow_dispatch: {}
 
 env:
-  APP_DIR: /var/www/buoy
-  PM2_APP: buoy
+  APP_DIR: /var/www/buoy # remote folder holding the server
+  PM2_APP: buoy # pm2 process label
 
 jobs:
   # ───────────────────────────── 1) BUILD ─────────────────────────────
@@ -19,25 +19,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: ⬇️  Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: 🟢 Setup Node (LTS)
+      - name: 🟢 Setup Node LTS
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
           cache: yarn
 
-      - name: 📦 Install deps (skip root recursion)
+      # root install without recursive script, then per-package installs
+      - name: 📦 Install deps (mono-repo, safe)
         run: |
-          # root packages without triggering "install" script hell
           yarn install --frozen-lockfile --ignore-scripts
-          # install each part cleanly
           (cd client && yarn install --frozen-lockfile)
           (cd server && yarn install --frozen-lockfile)
 
-      - name: 🏗️  Build mono-repo
-        run: yarn build # calls build:client → build:server → build:cts
+      - name: 🏗️  Build project
+        run: yarn build # root build script
 
       - name: 🗜️  Package production bundle
         run: |
@@ -56,7 +54,7 @@ jobs:
   # ───────────────────────────── 2) DEPLOY ─────────────────────────────
   deploy:
     needs: build
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
     steps:
@@ -66,35 +64,45 @@ jobs:
           name: bundle
           path: .
 
-      - name: 🛂 Start SSH agent
-        uses: webfactory/ssh-agent@v0.9.0
+      # —— secure copy via Appleboy (key + passphrase) ——
+      - name: 🚚 SCP bundle to droplet
+        uses: appleboy/scp-action@v0.1.7
         with:
-          ssh-private-key: ${{ secrets.DO_SSH_KEY }}
+          host: ${{ secrets.DO_HOST }}
+          username: ${{ secrets.DO_USER }}
+          key: ${{ secrets.DO_SSH_KEY }}
+          passphrase: ${{ secrets.DO_SSH_PASSPHRASE }}
+          port: ${{ secrets.DO_SSH_PORT }}
+          source: 'bundle.tar.gz'
+          target: '${{ env.APP_DIR }}/'
 
-      - name: 🚚 Rsync to droplet
-        run: |
-          rsync -avz --delete \
-            -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.DO_SSH_PORT }}" \
-            bundle.tar.gz ${{ secrets.DO_USER }}@${{ secrets.DO_HOST }}:${{ env.APP_DIR }}/
-
+      # —— remote deploy commands over SSH (same passphrase-aware action) ——
       - name: 🚀 Remote untar & PM2 reload
-        run: |
-          ssh -o StrictHostKeyChecking=no -p ${{ secrets.DO_SSH_PORT }} \
-            ${{ secrets.DO_USER }}@${{ secrets.DO_HOST }} << 'EOSSH'
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DO_HOST }}
+          username: ${{ secrets.DO_USER }}
+          key: ${{ secrets.DO_SSH_KEY }}
+          passphrase: ${{ secrets.DO_SSH_PASSPHRASE }}
+          port: ${{ secrets.DO_SSH_PORT }}
+          script: |
             set -e
-            cd $APP_DIR
+            APP_DIR="${{ env.APP_DIR }}"
+            PM2_APP="${{ env.PM2_APP }}"
+
+            cd "$APP_DIR"
             tar -xzf bundle.tar.gz
             rm bundle.tar.gz
 
-            # install prod deps if missing / changed
+            # install prod deps if first run or lockfile newer
             if [ ! -d node_modules ] || [ deploy/yarn.lock -nt node_modules ]; then
               yarn install --production --frozen-lockfile
             fi
 
-            if pm2 ls | grep -q $PM2_APP; then
-              pm2 reload $PM2_APP
+            # start or reload via PM2
+            if pm2 ls | grep -q "$PM2_APP"; then
+              pm2 reload "$PM2_APP"
             else
-              pm2 start dist/index.js --name $PM2_APP
+              pm2 start dist/index.js --name "$PM2_APP"
               pm2 save
             fi
-          EOSSH
