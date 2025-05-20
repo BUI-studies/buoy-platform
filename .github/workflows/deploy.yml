@@ -1,69 +1,83 @@
 name: CI & Deploy
 
 on:
-  # PRs trigger a full build (no deploy)
   pull_request:
     types: [opened, synchronize, reopened]
 
-  # Only pushes to main trigger the actual production deploy
   push:
     branches: [main]
 
-  # Manual button in the Actions tab
   workflow_dispatch: {}
 
 env:
-  APP_DIR: /var/www/buoy # where the server lives on the droplet
-  PM2_APP: buoy # pm2 process name
+  APP_DIR: /var/www/buoy
+  PM2_APP: buoy
 
 jobs:
-  build-and-maybe-deploy:
+  # ───────────────────────────── 1) BUILD ─────────────────────────────
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - name: ⬇️  Checkout
         uses: actions/checkout@v4
 
-      - name: 🟢 Setup Node LTS
+      - name: 🟢 Setup Node (LTS)
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
           cache: yarn
 
-      - name: 📦 Install & Build mono-repo
+      - name: 📦 Install deps (skip root recursion)
         run: |
-          yarn install --frozen-lockfile
-          yarn build                      # root build: client → server → copy
+          # root packages without triggering "install" script hell
+          yarn install --frozen-lockfile --ignore-scripts
+          # install each part cleanly
+          (cd client && yarn install --frozen-lockfile)
+          (cd server && yarn install --frozen-lockfile)
 
-      - name: 🗜️  Tar production bundle
+      - name: 🏗️  Build mono-repo
+        run: yarn build # calls build:client → build:server → build:cts
+
+      - name: 🗜️  Package production bundle
         run: |
           mkdir -p deploy
           cp server/package.json server/yarn.lock deploy/
           cp -r server/dist deploy/dist
           tar -czf bundle.tar.gz -C deploy .
 
-      # ───────────────────────────────────────────────
-      # Everything below ONLY runs on pushes to main
-      # ───────────────────────────────────────────────
-      - name: ⏭️  Skip deploy on PRs
-        if: github.event_name == 'pull_request'
-        run: echo "PR build — tests pass, deploy skipped."
+      - name: 📡 Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: bundle
+          path: bundle.tar.gz
+          retention-days: 7
 
-      - name: 🛂 Start SSH agent & add key
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+  # ───────────────────────────── 2) DEPLOY ─────────────────────────────
+  deploy:
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: bundle
+          path: .
+
+      - name: 🛂 Start SSH agent
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.DO_SSH_KEY }}
 
-      - name: 🏗️  Rsync bundle to droplet
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      - name: 🚚 Rsync to droplet
         run: |
           rsync -avz --delete \
             -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.DO_SSH_PORT }}" \
             bundle.tar.gz ${{ secrets.DO_USER }}@${{ secrets.DO_HOST }}:${{ env.APP_DIR }}/
 
-      - name: 🚀 Remote deploy & PM2 reload
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      - name: 🚀 Remote untar & PM2 reload
         run: |
           ssh -o StrictHostKeyChecking=no -p ${{ secrets.DO_SSH_PORT }} \
             ${{ secrets.DO_USER }}@${{ secrets.DO_HOST }} << 'EOSSH'
@@ -72,12 +86,11 @@ jobs:
             tar -xzf bundle.tar.gz
             rm bundle.tar.gz
 
-            # install prod deps once or when lockfile changes
+            # install prod deps if missing / changed
             if [ ! -d node_modules ] || [ deploy/yarn.lock -nt node_modules ]; then
               yarn install --production --frozen-lockfile
             fi
 
-            # start or reload via PM2
             if pm2 ls | grep -q $PM2_APP; then
               pm2 reload $PM2_APP
             else
