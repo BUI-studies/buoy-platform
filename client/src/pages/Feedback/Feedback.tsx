@@ -10,7 +10,7 @@ import { getFeedbackFormFields, getFeedbackSchema } from './Feedback.helper'
 
 const Feedback = () => {
 	const auth = useAuth()
-	const { data: lastMeetings, isLoading } = useMeetings('10')
+	const { data: lastMeetings, isLoading } = useMeetings('50', '1')
 	const feedbackMutation = useFeedbackMutation()
 
 	if (isLoading) return <Loader />
@@ -28,7 +28,7 @@ const Feedback = () => {
 				mode="onBlur"
 				formProps={{ name: 'feedbackForm' }}
 				fields={getFeedbackFormFields(lastMeetingsOptions)}
-				schema={getFeedbackSchema(lastMeetingsOptions.map(o => o.value))}
+				schema={getFeedbackSchema(lastMeetingsOptions?.map(o => o.value))}
 				onSubmit={(values: FeedbackByRole<ROLES>) => {
 					if (!auth.user?.data?.data?._id)
 						throw new Error(
